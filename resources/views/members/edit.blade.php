@@ -52,7 +52,7 @@
                 'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
               },
               data: {
-                RFID: value[0],
+                RFID: value,
                 Owner: ID,
               },
               success: function(data) {
@@ -70,7 +70,7 @@
                   Swal.fire({
                     type: 'success',
                     title: 'Pavyko!',
-                    text: 'Narys sekmingai istrintas is sistemos',
+                    text: 'RFID irenginys priskirtas sekmingai!',
                   });
                 }
               }
@@ -86,6 +86,15 @@
   <div class="sectionHeader mb-4">
       <h1>{{$data->firstName}} {{$data->lastName}}</h1>
       {{ Breadcrumbs::render('member', $data->firstName, $data->lastName, $data->id) }}
+      <div class="mt-2">
+      	@if(strpos($data->primaryPhone, '370') == false)
+      		@if(strpos($data->primaryPhone, '86') == false)
+	      		<div class="alert alert-warning">
+	      			Tikriausiai nurodytas klaidingas telefono numeris
+	      		</div>
+      		@endif
+      	@endif
+      </div>
   </div>
     <div class="row justify-content-center">
       <div class="col-md-4">
@@ -105,7 +114,7 @@
               {{$balance}} euru
               </h3>
               <h3 class="mt-3 mb-2">Greiti veiksmai:</h3>
-              <button class="btn btn-primary" onclick="newPayment({{$data->id}});">
+              <button class="btn btn-primary" onclick="newPayment({{$data->id}});" @if($data->VIP == 'yes') disabled @endif>
                 <span class="icon icon-white" data-feather="dollar-sign"></span>
               </button>
               <button class="btn btn-success">
@@ -125,7 +134,7 @@
             <div class="row">
               <div class="col">
                 <h3 class="title">Moketina suma</h3>
-                <input type="number" name="fee" class="form-control" placeholder="35 eurai" value="{{$data->fee}}">
+                <input type="number" name="fee" class="form-control" placeholder="35 eurai" @if($data->VIP == 'yes')  value="35" @else value="{{$data->fee}}" @endif>
               </div>
               <div class="col">
                 <h3 class="title">Atleisti nuo mokejimo (VIP)</h3>
@@ -195,7 +204,12 @@
           <div class="card-header flex-inline">
             <h2 class="vertical-align">RFID korteles ir apyrankes</h2>
             <div class="actionButtons">
-              <button class="btn btn-primary" onclick="assignRFID({{$data->id}});">Priskirti kortele</button>
+              <button class="btn btn-primary" onclick="assignRFID({{$data->id}});" @isset($data->rfid) disabled @endisset>Priskirti kortele</button>
+              @isset($data->rfid)
+              <button class="btn btn-danger" onclick="">
+              	<span class="icon-white" data-feather="delete"></span>
+              </button>
+              @endisset
             </div>
           </div>
           <div class="card-body">
@@ -214,66 +228,6 @@
             @empty($data->rfid)
             <div class="alert alert-warning">Joks RFID irenginys nera priskirtas</div>
             @endempty
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header flex-inline">
-            <h2 class="vertical-align">Apsilankymai</h2>
-          </div>
-          <div class="card-body">
-             <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>#ID</th>
-                                  <th>Data ir laikas</th>
-                                  <th>RFID</th>
-                                  <th>Veiksmai</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($payments as $payment)
-                                  <tr>
-                                      <td> {{ $payment->id }} </td>
-                                      <td> {{ $payment->created_at }} </td>
-                                      <td> 0000000 </td>
-                                      <td>-</td>
-                                  </tr>
-                              @endforeach
-                          </tbody>
-                      </table>
-          </div>
-        </div>
-      </div>
-      <div class="col-md-6">
-        <div class="card">
-          <div class="card-header flex-inline">
-            <h2 class="vertical-align">Spinteles</h2>
-          </div>
-          <div class="card-body">
-             <table class="table">
-                          <thead>
-                              <tr>
-                                  <th>Nr.</th>
-                                  <th>Data ir laikas</th>
-                                  <th>RFID</th>
-                                  <th>Veiksmai</th>
-                              </tr>
-                          </thead>
-                          <tbody>
-                              @foreach ($payments as $payment)
-                                  <tr>
-                                      <td> {{ $payment->id }} </td>
-                                      <td> {{ $payment->created_at }} </td>
-                                      <td> 0000000 </td>
-                                      <td>-</td>
-                                  </tr>
-                              @endforeach
-                          </tbody>
-                      </table>
           </div>
         </div>
       </div>
@@ -307,6 +261,28 @@
                               @endforeach
                           </tbody>
                       </table>
+          </div>
+        </div>
+      </div>
+    </div>
+     <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header flex-inline">
+            <h2 class="vertical-align">Apsilankymai</h2>
+          </div>
+          <div class="card-body">
+             <div class="alert alert-primary">Kolkas neprieinama</div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header flex-inline">
+            <h2 class="vertical-align">Spinteles</h2>
+          </div>
+          <div class="card-body">
+              <div class="alert alert-primary">Kolkas neprieinama</div>
           </div>
         </div>
       </div>

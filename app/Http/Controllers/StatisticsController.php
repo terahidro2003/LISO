@@ -47,9 +47,16 @@ class StatisticsController extends Controller
             $months = [];
             $balances = paymentStatistics::where('range', 'ALL')->get();
             foreach ($balances as $balance) {
-                array_push($months, $balance->month);
+                array_push($months, convertMonthsToStrings($balance->month));
                 array_push($JSONedBalances, $balance->balance);
             }
+            $currentDate = date('Y-m');
+            //dd($currentDate);
+            $currentPayments = payments::where('created_at', 'LIKE', '%'.$currentDate.'%')->get();
+            $currentFees = fees::where('created_at', 'LIKE', '%'.$currentDate.'%')->get();
+            $currentBalance = calculateBalance($currentPayments, $currentFees);
+            array_push($months, 'Dabar');
+            array_push($JSONedBalances, $currentBalance);
             return response()->json(['months' => $months, 'balances' => $JSONedBalances]);
         }
         //

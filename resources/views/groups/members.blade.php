@@ -36,6 +36,8 @@
                                     <td>
                                       @if($data->balance < 0)
                                       <label class="bg-label bg-label-danger">Skola</label>
+                                      @elseif($data->VIP == 'yes')
+                                      <label class="bg-label bg-label-primary">VIP</label>
                                       @else
                                       <label class="bg-label bg-label-success">Skolu nerasta</label>
                                       @endif

@@ -10662,7 +10662,7 @@ a.text-dark:focus {
   text-transform: uppercase;
   will-change: transform;
   letter-spacing: 0.025em;
-  font-size: 0.875rem;
+  font-size: 0.875rem !important;
 }
 
 .btn:hover,
@@ -10801,7 +10801,7 @@ a.btn-icon-only {
 .swal2-cancel {
   line-height: 1;
   font-weight: 500;
-  font-size: 0.85rem;
+  font-size: 0.85rem !important;
   padding: 0.63rem 2rem;
   text-transform: uppercase;
   display: inline-block;
@@ -10829,7 +10829,7 @@ a.btn-icon-only {
 
 .btn-small {
   padding: 0.3rem 1.3rem;
-  font-size: 0.7rem;
+  font-size: 0.7rem !important;
 }
 
 .btn-rounded {
@@ -10846,20 +10846,20 @@ a.btn-icon-only {
 .btn-primary,
 .swal2-confirm {
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: #645E9D !important;
+  background-color: #645E9D !important;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .btn-white {
-  color: #5e72e4;
-  border-color: #5e72e4;
+  color: #645E9D;
+  border-color: #645E9D;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .btn-white:hover {
-  color: #5e72e4;
+  color: #645E9D;
 }
 
 .btn-danger {
@@ -10982,7 +10982,8 @@ p {
 }
 
 .form-control,
-.swal2-input {
+.swal2-input,
+.swal2-select {
   font-size: 1rem;
   line-height: 1.5;
   display: block;
@@ -11001,7 +11002,8 @@ p {
 }
 
 .form-control:focus,
-.swal2-input:focus {
+.swal2-input:focus,
+.swal2-select:focus {
   outline: none;
   border-color: #5e72e4;
   box-shadow: none;
@@ -11166,7 +11168,7 @@ select {
 }
 
 #sideNavigation .items .active {
-  background-color: #5e72e4;
+  background-color: #645E9D;
   color: #fff !important;
 }
 
@@ -11331,7 +11333,7 @@ th {
 }
 
 .alert-primary {
-  background-color: #5e72e4;
+  background-color: #645E9D;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -11341,5 +11343,19 @@ th {
 
 .swal2-title {
   color: #30323D !important;
+}
+
+.swal2-progress-step,
+.swal2-progress-step-line {
+  background-color: #8898aa !important;
+  color: #ffffff !important;
+}
+
+.swal2-progress-step-line {
+  background-color: rgba(136, 152, 170, 0.5) !important;
+}
+
+.swal2-active-progress-step {
+  background-color: #645E9D !important;
 }
 

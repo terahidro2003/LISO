@@ -70,7 +70,7 @@ p{
 
 $input-border-focus: transparent;
 
-.form-control, .swal2-input{
+.form-control, .swal2-input, .swal2-select{
 	font-size: 1rem;
     line-height: 1.5;
     display: block;
@@ -406,4 +406,17 @@ select{
 .swal2-title
 {
 	color: $MainColor !important;
+}
+.swal2-progress-step, .swal2-progress-step-line
+{
+	background-color: $MutedColor!important;
+	color: $white !important;
+}
+.swal2-progress-step-line
+{
+	background-color: rgba($MutedColor, 0.5) !important;
+}
+.swal2-active-progress-step
+{
+	background-color: $PrimaryColor !important;
 }

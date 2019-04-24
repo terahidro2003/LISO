@@ -5,7 +5,7 @@
     text-transform: uppercase;
     will-change: transform;
     letter-spacing: .025em;
-    font-size: .875rem;
+    font-size: .875rem !important;
 
     &:hover {
         box-shadow: 0 4px 6px rgba(50,50,93,.11), 0 1px 3px rgba(0,0,0,.08);
@@ -142,7 +142,7 @@ a.btn-icon-only {
 .btn, .swal2-confirm, .swal2-cancel{
     line-height: 1;
     font-weight: 500;
-    font-size: .85rem;
+    font-size: .85rem !important;
     padding: .63rem 2rem;
     text-transform: uppercase;
     display: inline-block;
@@ -165,7 +165,7 @@ a.btn-icon-only {
 }
 .btn-small{
     padding: 0.3rem 1.30rem;
-    font-size: .7rem;
+    font-size: .7rem !important;
 }
 .btn-rounded{
   border-radius: 25px;
@@ -178,8 +178,8 @@ a.btn-icon-only {
 }
 .btn-primary, .swal2-confirm{
   color: #fff;
-  border-color: #5e72e4;
-  background-color: #5e72e4;
+  border-color: $PrimaryColor !important;
+  background-color: $PrimaryColor !important;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .btn-white{
