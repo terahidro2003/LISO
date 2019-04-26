@@ -2,6 +2,9 @@
 
 @section('content')
 
+<?php
+  $showVip = (isset($_GET['vip']) && $_GET['vip'] == 1 ? true : false);
+ ?>
 
 <div class="container">
     <div class="sectionHeader mb-4">
@@ -31,7 +34,8 @@
                         </thead>
                         <tbody>
                             @foreach ($members as $data)
-                                <tr>
+                              @if($showVip && $data->VIP != "yes") @continue @endif
+                                <tr style="@if($data->VIP == "yes") background-color: #FFFF33; @endif">
                                     <td> {{ $data->id }} </td>
                                     <td> {{ $data->firstName }} </td>
                                     <td> {{ $data->lastName }} </td>
