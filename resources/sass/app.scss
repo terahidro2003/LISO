@@ -52,6 +52,16 @@ p{
 /*    max-width: 75%;*/
 }
 
+//links
+.link
+{
+	text-decoration: none;
+	color: $PrimaryColor;
+	&:hover{
+		border-bottom: $PrimaryColor;
+	}
+}
+
 //layout styles
 .flex-inline{
 	display: flex;
@@ -419,4 +429,12 @@ select{
 .swal2-active-progress-step
 {
 	background-color: $PrimaryColor !important;
+}
+
+//other
+.bottomAction
+{
+	position: fixed;
+	bottom: 2rem;
+	right: 2.5rem;
 }

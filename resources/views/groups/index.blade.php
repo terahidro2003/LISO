@@ -2,7 +2,7 @@
 
 @section('content')
 <script type="text/javascript">
-   async function newGroup(){
+async function newGroup(){
     Swal.mixin({
       input: 'text',
       confirmButtonText: 'Sekantis &rarr;',
@@ -49,7 +49,7 @@
             });
   }
 });
-  }
+}
 </script>
 <div class="container">
    <div class="sectionHeader mb-4">
@@ -92,7 +92,7 @@
                                     <td> {{ $data->description }} </td>
                                     <td>
                                       <a href="{{ route('groups.show', $data->id) }}" class="btn btn-small btn-primary">Nariu sarasas</a>
-                                      <a class="btn btn-small btn-warning">Redaguoti</a>
+                                      <a class="btn btn-small btn-warning" href="{{ route('groups.edit', $data->id) }}">Redaguoti</a>
                                     </td>
                                 </tr>
                             @endforeach

@@ -9,5 +9,10 @@ class payments extends Model
 	protected $fillable = [
 		'price', 'member'
 	];
+
+	public function Owner()
+	{
+		return $this->belongsTo(dancer::class, 'member');
+	}
     //
 }

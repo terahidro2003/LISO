@@ -10957,6 +10957,15 @@ p {
   /*    max-width: 75%;*/
 }
 
+.link {
+  text-decoration: none;
+  color: #645E9D;
+}
+
+.link:hover {
+  border-bottom: #645E9D;
+}
+
 .flex-inline {
   display: flex;
   flex-direction: row;
@@ -11357,5 +11366,11 @@ th {
 
 .swal2-active-progress-step {
   background-color: #645E9D !important;
+}
+
+.bottomAction {
+  position: fixed;
+  bottom: 2rem;
+  right: 2.5rem;
 }
 

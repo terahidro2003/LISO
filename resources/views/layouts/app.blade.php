@@ -44,7 +44,7 @@
           }
             });
     }
-           async function newPayment(ID){
+    async function newPayment(ID){
       const {value: group} = await Swal.fire({
         title: 'Naujas mokejimas',
         input: 'text',
@@ -106,6 +106,67 @@
 
       });
   }
+
+   async function scanRFID(){
+      const {value: group} = await Swal.fire({
+        title: 'Nuskenuokite RFID irengini',
+        input: 'text',
+        inputPlaceholder: 'RFID korteles duomenys',
+        showCancelButton: true,
+        confirmButtonText: 'Patvirtinti',
+        showLoaderOnConfirm: true,
+        preConfirm: (value) => {
+          $.ajax({
+              url: '/rfid/scan',
+              type: 'POST',
+              headers:{
+                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+              },
+              data: {
+                RFID: value,
+              },
+              dataType: 'JSON',
+              success: function(data) {
+                if (data.status != 'OK'){
+                  if (data.cause == 1){
+                    Swal.fire({
+                      type: 'error',
+                      title: 'Klaida!',
+                      text: 'Procedūra neįvyko veikiausiai dėl sistemos klaidos.',
+                      footer: '<a href>Susisiekti su techniniu personalu</a>'
+                    });
+                  }
+                  if (data.cause == 2){
+                    Swal.fire({
+                      type: 'warning',
+                      title: 'Kortele siandien jau buvo nuskaityta!',
+                      text: 'Prašome patikrinti duomenis.',
+                      footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
+                    });
+                  }
+                  if(data.cause == 3){
+                    Swal.fire({
+                      type: 'error',
+                      title: 'Klaida!',
+                      text: 'Nuskenuotas neatpazintas RFID irenginys',
+                      footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
+                    });
+                  }
+
+                  console.log('FAILED');
+                }else{
+                  Swal.fire({
+                    type: 'success',
+                    title: data.firstName + " " + data.lastName,
+                    text: 'Kortele nuskenuota sekmingai',
+                  });
+                }
+              }
+            });
+        }
+
+      });
+  }
     </script>
 </head>
 <body>
@@ -136,18 +197,23 @@
                 <a href=" {{route('members.index') }} " class="item @if(strpos(Route::currentRouteName(), 'members') !== false) active @endif">Nariai</a>
                 <a href=" {{route('groups.index') }} " class="item @if(strpos(Route::currentRouteName(), 'groups') !== false) active @endif">Grupes</a>
                 <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">Korteles ir apyrankes</a>
+                 <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">Mokejimai</a>
                 <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">Statistika</a>
                  <a href="{{route('stats.studio')}}" class="item">Registras</a>
                 <a href="{{route("members.index")}}?vip=1" class="item @if(strpos(Route::currentRouteName(), 'members')) active @endif"><img src="/vip.png" width="16px" height="16px" alt="Atleisti nuo mokejimu nariai">VIP list</a>
             </div>
             <div class="footer">
-                <h6>SpruceBird Innovations, 2019</h6>
+
             </div>
         </div>
 
         <main class="content">
             @yield('content')
         </main>
+
+        <button class="btn btn-primary btn-rounded bottomAction" onclick="scanRFID();">
+        	<span class="icon-white" data-feather="credit-card"></span>
+        </button>
     </div>
 </body>
 </html>
