@@ -32,6 +32,7 @@ Route::get('groups/{groupID}/show', 'GroupsController@members')->name('groups.sh
 Route::any('payments/new', 'PaymentsController@store')->name('payments.store');
 
 Route::get('rfid', 'RFIDController@index')->name('rfid.index');
+Route::any('rfid/scan', 'RFIDController@scan')->name('rfid.scan');
 Route::any('rfid/store', 'RFIDController@store')->name('rfid.store');
 
 Route::get('stats/studio', 'StatisticsController@index')->name('stats.studio');

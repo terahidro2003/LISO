@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\RFID;
+use App\Entrie;
+use App\dancer;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,6 +19,40 @@ class RFIDController extends Controller
     {
         $rfids = RFID::all();
         return view('rfid.index', compact('rfids'));
+    }
+
+     /**
+     * Scan RFID device via WEB enveroment
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function scan(Request $Req)
+    {
+        $checker = Validator::make($Req->all(), [
+        	'RFID' => 'required',
+        ]);
+        if($checker->fails()){
+        	return response()->json(['status' => 'FAILED', 'cause' => 1]);
+        }
+        $owner = RFID::where('RFID', $Req->input('RFID'))->first();
+
+        if(empty($owner))
+        {
+        	return response()->json(['status' => 'FAILED', 'cause' => 3]);
+        }
+        $ownerData = dancer::where('id', $owner->id)->first();
+
+        $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
+
+
+        if(!empty($todaysEntrie)){
+        	return response()->json(['status' => 'FAILED', 'cause' => 2]);
+        }
+        $entrie = new Entrie;
+        $entrie->RFID = $Req->input('RFID');
+        $entrie->Owner = $owner->Owner;
+        $entrie->save();
+        return response()->json(['status' => 'OK', 'firstName' => $ownerData->firstName, 'lastName' => $ownerData->lastName]);
     }
 
     /**
