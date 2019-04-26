@@ -138,6 +138,7 @@
                 <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">Korteles ir apyrankes</a>
                 <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">Statistika</a>
                  <a href="{{route('stats.studio')}}" class="item">Registras</a>
+                <a href="{{route("members.index")}}?vip=1" class="item @if(strpos(Route::currentRouteName(), 'members')) active @endif"><img src="/vip.png" width="16px" height="16px" alt="Atleisti nuo mokejimu nariai">VIP list</a>
             </div>
             <div class="footer">
                 <h6>SpruceBird Innovations, 2019</h6>

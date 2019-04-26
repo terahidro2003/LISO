@@ -84,7 +84,10 @@
 <div class="container">
 @foreach($dancer as $data)
   <div class="sectionHeader mb-4">
-      <h1>{{$data->firstName}} {{$data->lastName}}</h1>
+    <div style=" width: auto; height: auto; display: flex; flex-direction: row; justify-content: space-between;">
+    <h1>{{$data->firstName}} {{$data->lastName}}</h1>
+    {{-- <img src="/vip.png" alt="Sis narys yra atleistas nuo mokesciu" width="90vw" height="auto" style="margin: 1px;"> --}}
+  </div>
       {{ Breadcrumbs::render('member', $data->firstName, $data->lastName, $data->id) }}
       <div class="mt-2">
       	@if(strpos($data->primaryPhone, '370') == false)
