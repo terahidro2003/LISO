@@ -197,11 +197,12 @@
                 <a href=" {{route('members.index') }} " class="item @if(strpos(Route::currentRouteName(), 'members') !== false) active @endif">Nariai</a>
                 <a href=" {{route('groups.index') }} " class="item @if(strpos(Route::currentRouteName(), 'groups') !== false) active @endif">Grupes</a>
                 <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">Korteles ir apyrankes</a>
+                 <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">Mokejimai</a>
                 <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">Statistika</a>
                  <a href="{{route('stats.studio')}}" class="item">Registras</a>
             </div>
             <div class="footer">
-                
+
             </div>
         </div>
 

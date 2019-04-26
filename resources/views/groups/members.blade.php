@@ -39,7 +39,11 @@
                                       @elseif($data->VIP == 'yes')
                                       <label class="bg-label bg-label-primary">VIP</label>
                                       @else
-                                      <label class="bg-label bg-label-success">Skolu nerasta</label>
+                                      <label class="bg-label bg-label-main">Skolu nerasta</label>
+                                      @endif
+
+                                      @if($data->isEntered == true)
+                                        <label class="bg-label bg-label-success">Skolu nerasta</label>
                                       @endif
                                     </td>
                                     <td>

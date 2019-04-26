@@ -69,8 +69,10 @@ class GroupsController extends Controller
      * @param  \App\groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function edit(groups $groups)
+    public function edit($groupID)
     {
+        $groups = groups::where('id', $groupID)->get();
+        return view('groups.edit', compact('groups'));
         //
     }
 
@@ -81,9 +83,14 @@ class GroupsController extends Controller
      * @param  \App\groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, groups $groups)
+    public function update(Request $request, $groupID)
     {
-        //
+        $groups = groups::find($groupID);
+        $groups->groupName = $request->input('groupName');
+        $groups->leader = $request->input('leader');
+        $groups->description = $request->input('description');
+        $groups->save();
+        return back();
     }
 
     /**

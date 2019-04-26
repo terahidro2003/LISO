@@ -272,7 +272,24 @@
             <h2 class="vertical-align">Apsilankymai</h2>
           </div>
           <div class="card-body">
-             <div class="alert alert-primary">Kolkas neprieinama</div>
+             <table class="table">
+                          <thead>
+                              <tr>
+                                  <th>#ID</th>
+                                  <th>Data ir laikas</th>
+                                  <th>RFID</th>
+                              </tr>
+                          </thead>
+                          <tbody>
+                              @foreach ($data->entries as $entrie)
+                                  <tr>
+                                      <td> {{ $entrie->id }} </td>
+                                      <td> {{ $entrie->created_at }} </td>
+                                      <td> {{ $entrie->RFID }} </td>
+                                  </tr>
+                              @endforeach
+                          </tbody>
+                      </table>
           </div>
         </div>
       </div>

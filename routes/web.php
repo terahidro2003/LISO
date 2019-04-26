@@ -27,9 +27,12 @@ Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('membe
 
 Route::any('groups/store', 'GroupsController@store');
 Route::get('groups', 'GroupsController@index')->name('groups.index');
+Route::get('groups/{groupID}/edit', 'GroupsController@edit')->name('groups.edit');
+Route::post('groups/{groupID}/update', 'GroupsController@update')->name('groups.update');
 Route::get('groups/{groupID}/show', 'GroupsController@members')->name('groups.show');
 
 Route::any('payments/new', 'PaymentsController@store')->name('payments.store');
+Route::get('payments', 'PaymentsController@index')->name('payments.index');
 
 Route::get('rfid', 'RFIDController@index')->name('rfid.index');
 Route::any('rfid/scan', 'RFIDController@scan')->name('rfid.scan');
