@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+
 use App\Signups;
 use App\dancer;
 use App\groups;
+use App\update;
+
 class HomeController extends Controller
 {
     /**
@@ -26,6 +29,26 @@ class HomeController extends Controller
     public function index()
     {
         return view('home');
+    }
+
+
+    public function newVersion(Request $req)
+    {
+      $update = new update;
+      $update->version = $req->version;
+      $update->type = $req->type;
+      $update->part = $req->part;
+      $update->description = $req->description;
+      $update->problemsSolved = $req->problemsSolved;
+      $update->improved = $req->improved;
+      $update->developer = $req->developer;
+      $update->save();
+      return back();
+    }
+    public function versionInfo()
+    {
+      $updates = update::all();
+      return view('system.index', compact('updates'));
     }
 
     public function signupGenerator($amount){

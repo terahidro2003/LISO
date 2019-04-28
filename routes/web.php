@@ -48,6 +48,9 @@ Route::get('api/stats/economy/{range}', 'StatisticsController@economyHistory')->
 Route::any('/api/search', "HomeController@searchAll")->name('search');
 Route::any('/search', "HomeController@search")->name('search.form');
 
+Route::get('system/versions', "HomeController@versionInfo")->name('system.updates');
+Route::post('system/versions/new', "HomeController@newVersion")->name('system.updates.new');
+
 Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/api/factory/signups/generate/{amount}', 'HomeController@signupGenerator');

@@ -71074,6 +71074,17 @@ if (token) {
 
 /***/ }),
 
+/***/ "./resources/sass/auth.scss":
+/*!**********************************!*\
+  !*** ./resources/sass/auth.scss ***!
+  \**********************************/
+/*! no static exports found */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
+
+/***/ }),
+
 /***/ "./resources/sass/public.scss":
 /*!************************************!*\
   !*** ./resources/sass/public.scss ***!
@@ -71086,15 +71097,16 @@ if (token) {
 /***/ }),
 
 /***/ 0:
-/*!******************************************************************************************!*\
-  !*** multi ./resources/js/app.js ./resources/sass/public.scss ./resources/sass/app.scss ***!
-  \******************************************************************************************/
+/*!*********************************************************************************************************************!*\
+  !*** multi ./resources/js/app.js ./resources/sass/public.scss ./resources/sass/app.scss ./resources/sass/auth.scss ***!
+  \*********************************************************************************************************************/
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sprucebird/Documents/Projects/sfinx/resources/js/app.js */"./resources/js/app.js");
-__webpack_require__(/*! /Users/sprucebird/Documents/Projects/sfinx/resources/sass/public.scss */"./resources/sass/public.scss");
-module.exports = __webpack_require__(/*! /Users/sprucebird/Documents/Projects/sfinx/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Juozas\documents\projects\sfinxai\resources\js\app.js */"./resources/js/app.js");
+__webpack_require__(/*! C:\Users\Juozas\documents\projects\sfinxai\resources\sass\public.scss */"./resources/sass/public.scss");
+__webpack_require__(/*! C:\Users\Juozas\documents\projects\sfinxai\resources\sass\app.scss */"./resources/sass/app.scss");
+module.exports = __webpack_require__(/*! C:\Users\Juozas\documents\projects\sfinxai\resources\sass\auth.scss */"./resources/sass/auth.scss");
 
 
 /***/ })

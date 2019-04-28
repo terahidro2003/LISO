@@ -11022,6 +11022,14 @@ select {
   width: 100%;
 }
 
+.loginContainer {
+  height: 100vh;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
 .content {
   position: absolute;
   margin: 0 auto;
