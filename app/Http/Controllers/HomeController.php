@@ -8,6 +8,10 @@ use App\dancer;
 use App\groups;
 class HomeController extends Controller
 {
+  public function __construct()
+    {
+      $this->middleware('auth');
+    }
     /**
      * Create a new controller instance.
      *
