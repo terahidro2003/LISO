@@ -20,7 +20,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
-    <script type="text/javascript">
+   <script type="text/javascript">
       function ajaxSearch() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
         var contentBox = document.getElementById("searchD");
@@ -43,7 +43,7 @@
 
           }
             });
-    }
+          }
     async function newPayment(ID){
       const {value: group} = await Swal.fire({
         title: 'Naujas mokejimas',
@@ -105,9 +105,9 @@
         }
 
       });
-  }
+    }
 
-   async function scanRFID(){
+    async function scanRFID(){
       const {value: group} = await Swal.fire({
         title: 'Nuskenuokite RFID irengini',
         input: 'text',
@@ -166,8 +166,8 @@
         }
 
       });
-  }
-    </script>
+    }
+   </script>
 </head>
 <body>
     <div id="app">
@@ -197,9 +197,9 @@
                 <a href=" {{route('members.index') }} " class="item @if(strpos(Route::currentRouteName(), 'members') !== false) active @endif">Nariai</a>
                 <a href=" {{route('groups.index') }} " class="item @if(strpos(Route::currentRouteName(), 'groups') !== false) active @endif">Grupes</a>
                 <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">Korteles ir apyrankes</a>
-                 <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">Mokejimai</a>
+                <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">Mokejimai</a>
                 <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">Statistika</a>
-                 <a href="{{route('stats.studio')}}" class="item">Registras</a>
+                <a href="{{route('system.updates')}}" class="item">Sistemos versijos</a>
                 <a href="{{route("members.index")}}?vip=1" class="item @if(strpos(Route::currentRouteName(), 'members')) active @endif"><img src="/vip.png" width="16px" height="16px" alt="Atleisti nuo mokejimu nariai">VIP list</a>
             </div>
             <div class="footer">

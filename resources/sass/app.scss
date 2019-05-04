@@ -105,6 +105,16 @@ $input-border-focus: transparent;
 select{
 	width: 100%;
 }
+
+.loginContainer
+{
+	height: 100vh;
+	position: relative;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+
 //Content align
 .content
 {
