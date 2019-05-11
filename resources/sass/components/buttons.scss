@@ -140,10 +140,11 @@ a.btn-icon-only {
 
 
 .btn, .swal2-confirm, .swal2-cancel{
-    line-height: 1;
-    font-weight: 500;
-    font-size: .85rem !important;
-    padding: .63rem 2rem;
+    line-height: 1.5;
+    font-weight: 500 !important;
+    // font-size: .85rem !important;
+
+    padding: .65rem 2rem;
     text-transform: uppercase;
     display: inline-block;
     position: relative;
@@ -178,8 +179,8 @@ a.btn-icon-only {
 }
 .btn-primary, .swal2-confirm{
   color: #fff;
-  border-color: $PrimaryColor !important;
-  background-color: $PrimaryColor !important;
+  // border-color: $PrimaryColor !important;
+  // background-color: $PrimaryColor !important;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 .btn-white{

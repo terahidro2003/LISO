@@ -135,11 +135,16 @@
             <form action="{{route('members.changePaymentSettings', $data->id)}}" method="POST">
             {{ csrf_field() }}
             <div class="row">
-              <div class="col">
+              <div class="col-md-4">
                 <h3 class="title">Moketina suma</h3>
-                <input type="number" name="fee" class="form-control" placeholder="35 eurai" @if($data->VIP == 'yes')  value="35" @else value="{{$data->fee}}" @endif>
+                <div class="input-group">
+                  <span class="input-group-prepend">
+                      <span class="input-group-text">&euro;	</span>
+                  </span>
+                  <input name="fee" type="text" class="form-control text-left" aria-label="Amount (to the nearest dollar)" @if($data->VIP == 'yes')  value="35" @else value="{{$data->fee}}" @endif>
+                </div>
               </div>
-              <div class="col">
+              <div class="col-md-8">
                 <h3 class="title">Atleisti nuo mokejimo (VIP)</h3>
                 <select name="VIP" class="form-control" @if($data->VIP == 'yes') style="border-color: #9561e2; color: #9561e2;" @endif>
                   <option value="no" @if($data->VIP == 'no') selected @endif>Neatleistas</option>

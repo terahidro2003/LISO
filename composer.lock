@@ -4,8 +4,63 @@
         "Read more about it at https://getcomposer.org/doc/01-basic-usage.md#installing-dependencies",
         "This file is @generated automatically"
     ],
-    "content-hash": "098d5182b4276546369dce0ce6f7d0a3",
+    "content-hash": "47fd20a1e451cd018604d4a49a2362f0",
     "packages": [
+        {
+            "name": "cesaramirez/laravel-tabler",
+            "version": "0.2.3",
+            "source": {
+                "type": "git",
+                "url": "https://github.com/cesaramirez/laravel-tabler.git",
+                "reference": "7441082da4b250f0c95c123207aad9164ca68311"
+            },
+            "dist": {
+                "type": "zip",
+                "url": "https://api.github.com/repos/cesaramirez/laravel-tabler/zipball/7441082da4b250f0c95c123207aad9164ca68311",
+                "reference": "7441082da4b250f0c95c123207aad9164ca68311",
+                "shasum": ""
+            },
+            "require": {
+                "laravel/framework": "^5.5"
+            },
+            "require-dev": {
+                "phpunit/phpunit": "~4.5"
+            },
+            "type": "library",
+            "extra": {
+                "branch-alias": {
+                    "dev-master": "1.0-dev"
+                },
+                "laravel": {
+                    "providers": [
+                        "cesaramirez\\Presets\\Tabler\\TablerPresetServiceProvider"
+                    ]
+                }
+            },
+            "autoload": {
+                "psr-4": {
+                    "cesaramirez\\Presets\\Tabler\\": "src/"
+                }
+            },
+            "notification-url": "https://packagist.org/downloads/",
+            "license": [
+                "MIT"
+            ],
+            "authors": [
+                {
+                    "name": "César Ramírez",
+                    "email": "cesar.ramirez.sv@gmail.com"
+                }
+            ],
+            "description": "Laravel 5.5/5.6 Front-end preset for Tabler Bootstrap.",
+            "keywords": [
+                "bootstrap",
+                "laravel",
+                "preset",
+                "tabler"
+            ],
+            "time": "2019-01-28T15:58:53+00:00"
+        },
         {
             "name": "davejamesmiller/laravel-breadcrumbs",
             "version": "5.2.1",

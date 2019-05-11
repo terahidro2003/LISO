@@ -33,7 +33,7 @@
                 </div>
                 <div class="card-body">
                     @if($groups->count() == 0)
-                    <table class="table">
+                    <table class="table card-table table-striped table-vcenter">
                         <thead>
                             <tr>
                                 <th>#ID</th>
@@ -69,7 +69,7 @@
                 </div>
                 <div class="card-body">
                     @if(!empty($members))
-                    <table class="table">
+                    <table class="table card-table table-striped table-vcenter">
                         <thead>
                             <tr>
                                 <th>#ID</th>
@@ -111,7 +111,7 @@
                 </div>
                 <div class="card-body">
                     @if(!empty($signups))
-                    <table class="table">
+                    <table class="table card-table table-striped table-vcenter">
                         <thead>
                             <tr>
                                 <th>#ID</th>
