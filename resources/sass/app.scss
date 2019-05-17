@@ -14,7 +14,7 @@
 // Reset styles
 body{
 	font-family: 'Poppins', sans-serif;
-	// font-size: 15px;
+	font-size: 15px;
 	background: #F0F0F7;
 }
 a{
@@ -127,13 +127,18 @@ select{
 	flex-direction: row;
 	justify-content: center;
 }
+//logotype
+.logo svg
+{
+	width: $sideNavWidth;
+	height: $sideNavWidth;
+}
 //Top navigation
 #topNavigation{
-	width: calc(100% - #{$sideNavWidth});
-	margin-left: $sideNavWidth;
-	padding: 1.2rem 1.5rem;
-	padding-right: 2.5rem;
+	width: 100%;
 	color: #4D4F5C;
+	background: #fff;
+	padding-right: 2.5rem;
 	// box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
  //    -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
  //    -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
@@ -144,8 +149,29 @@ select{
     justify-content: space-between;
     position: absolute;
     font-size: .775rem;
-    background-color: transparent;
     z-index: 1000;
+}
+#topNavigation .firstSide
+{
+	height: 100%;
+	display: inline-flex;
+}
+#topNavigation h3 {font-size: 0.9333333333333333em;}
+#topNavigation h1 {font-size: 1.6em;}
+#topNavigation .secondSide
+{
+	height: inherit;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+}
+#topNavigation .description
+{
+	height: 100%;
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	color: #707070;
 }
 #topNavigation .align{
 	display: flex;
@@ -195,8 +221,7 @@ select{
 }
 #topNavigation .item
 {
-	color: #fff;
-	padding: 0.45rem 0.9rem;
+	padding: 0.45rem 0.6rem;
 	text-align: center;
 }
 #topNavigation .active { border: 1px solid #fff; border-radius: 25px; }
@@ -212,7 +237,7 @@ select{
 }
 
 .icon-white{
-	color: #fff;
+	color: #fff !important;
 	// width: 15px;
 	height: 15px;
 	stroke: currentColor;
@@ -227,6 +252,7 @@ select{
 //Side navigation
 #sideNavigation
 {
+	margin-top: 70px;
 	max-width: $sideNavWidth;
 	width: $sideNavWidth;
 	padding: 1rem;
@@ -244,28 +270,29 @@ select{
 	justify-content: center;
 }
 #sideNavigation .items a{
-	padding: .675rem 1.5rem;
-	font-size: .8rem;
-	border-radius: 8px;
-	color: $MainColor;
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+
+	padding-bottom: 3rem;
+	font-size: 1rem;
+	color: rgba(0,0,0,0.5);
 	&:hover{
 		text-decoration: none;
 	}
 }
 #sideNavigation .items .icon{
-	float: right;
-	color: $SecondColor;
+	color: rgba(0,0,0,.5);
 	// width: 15px;
-	height: 15px;
+	height: 20px;
 	stroke: currentColor;
 	stroke-width: 2;
 	stroke-linecap: round;
 	stroke-linejoin: round;
 	fill: none;
 }
-#sideNavigation .items .active{
-	background-color: $PrimaryColor;
-	color: #fff !important;
+#sideNavigation .items .active .icon{
+	color: $PrimaryColor;
 }
 #sideNavigation .footer{
 	align-self: flex-end;
@@ -363,10 +390,25 @@ select{
 	border-collapse: collapse;
 	font-size: 0.813em;
 }
-.table thead{
-    border:none !important;
-    background-color: #F5F6FA;
-    color: #A3A6B4;
+.table
+{
+	th{
+		border-top: 0;
+		border-bottom-width: 1px;
+		padding-top: .5rem;
+		padding-bottom: .5rem;
+	}
+	thead
+	{
+		text-transform: uppercase;
+		border:none !important;
+    	background-color: #F5F6FA;
+    	color: #A3A6B4;
+	}
+	td, th
+	{
+		vertical-align: middle;
+	}
 }
 .table tbody{
 	color: #4D4F5C;
@@ -382,6 +424,90 @@ select{
 
 .table-body td, th{
     	background-color: transparent;
+    	padding: .5rem;
+}
+
+
+.dataTables_wrapper{
+  thead{
+    .sorting{
+      position: relative;
+      &:after{
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+        content: "\e92d";
+        font-family: 'feather' !important;
+      }
+      &:before{
+        position: absolute;
+        right: 0;
+        top: 5px;
+        content: "\e930";
+        font-family: 'feather' !important;
+      }
+    }
+    .sorting_desc{
+      position: relative;
+      &:after{
+        position: absolute;
+        right: 0;
+        bottom: 5px;
+        content: "\e92d";
+        font-family: 'feather' !important;
+      }
+    }
+    .sorting_asc{
+      position: relative;
+      &:after{
+        position: absolute;
+        right: 0;
+        top: 5px;
+        content: "\e930";
+        font-family: 'feather' !important;
+      }
+    }
+  }
+  .dataTables_length{
+    margin: 1rem 1.5rem;
+    float: left;
+    select{
+      @extend .form-control, .custom-select;
+      width: auto;
+      display: inline-block;
+      margin: 0 0.2rem;
+    }
+  }
+  .dataTables_filter{
+    float: right;
+    margin: 1rem 1.5rem;
+    text-align: right;
+    input{
+      @extend .form-control;
+      width: auto;
+      margin-left: 0.2rem;
+      display: inline-block;
+    }
+  }
+
+  .dataTables_paginate {
+    float: right;
+    text-align: right;
+    margin: 1rem 1.5rem;
+    .paginate_button{
+      margin: 0 0.2rem;
+      @extend .btn, .btn-secondary;
+      &.current{
+        @extend .btn, .btn-primary;
+      }
+    }
+  }
+  .dataTables_info {
+    clear: both;
+    float: left;
+    margin: 1rem 1.5rem;
+    line-height: 38px;
+  }
 }
 //breadcrumbs
 .breadcrumb

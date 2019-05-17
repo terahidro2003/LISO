@@ -172,35 +172,59 @@
 <body>
     <div id="app">
         <header id="topNavigation">
-            <div class="items">
+            <!-- <div class="items">
               <form action="{{route('search.form')}}" method="post">
                 @csrf
                 <input type="text" class="searchField form-control" placeholder="Paieska" name="searchQ" id="searchQ" onkeyup="ajaxSearch();">
               </form>
+            </div> -->
+            <div class="firstSide">
+              <div class="logo">
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 88 88"><rect width="88" height="88" fill="#4062bb"/><g transform="translate(28 28)"><path d="M0,0H32V32H0Z" fill="none"/><path d="M4.444,17.444h8.667A1.449,1.449,0,0,0,14.556,16V4.444A1.449,1.449,0,0,0,13.111,3H4.444A1.449,1.449,0,0,0,3,4.444V16A1.449,1.449,0,0,0,4.444,17.444ZM4.444,29h8.667a1.449,1.449,0,0,0,1.444-1.444V21.778a1.449,1.449,0,0,0-1.444-1.444H4.444A1.449,1.449,0,0,0,3,21.778v5.778A1.449,1.449,0,0,0,4.444,29Zm14.444,0h8.667A1.449,1.449,0,0,0,29,27.556V16a1.449,1.449,0,0,0-1.444-1.444H18.889A1.449,1.449,0,0,0,17.444,16V27.556A1.449,1.449,0,0,0,18.889,29ZM17.444,4.444v5.778a1.449,1.449,0,0,0,1.444,1.444h8.667A1.449,1.449,0,0,0,29,10.222V4.444A1.449,1.449,0,0,0,27.556,3H18.889A1.449,1.449,0,0,0,17.444,4.444Z" transform="translate(0 0)" fill="rgba(255,255,255,0.5)"/></g></svg>
+              </div>
+              <div class="ml-5 mt-4 description">
+                <div class="text">
+                  <h3>Šokių studija</h3>
+                  <h1>VŠĮ, SFINX</h1>
+                </div>
+              </div>
             </div>
-            <div class="align">
+            <div class="secondSide">
                 @auth
-                <span class="mr-2 clickable">
-                    <span data-feather="bell" class="icon"></span>
-                </span>
-                <span class="clickable">
-                    <span data-feather="user" class="icon"></span>
-                    Mano paskyra
-                </span>
+                <div class="items">
+                  <a class="item">
+                      <span data-feather="search" class="icon"></span>
+                  </a>
+                  <a class="item">
+                      <span data-feather="user" class="icon"></span>
+                      {{Auth::user()->name}}
+                  </a>
+                </div>
                 @endauth
             </div>
         </header>
         <div id="sideNavigation">
             <div class="items">
-               <a href=" {{route('home') }} " class="item @if (Route::currentRouteName() == "home" || Route::currentRouteName() == "search.form") active @endif">Pagrindinis</a>
-                <a href=" {{route('viewSignups') }} " class="item @if (Route::currentRouteName() == "viewSignups") active @endif">Registracijos</a>
-                <a href=" {{route('members.index') }} " class="item @if(strpos(Route::currentRouteName(), 'members') !== false) active @endif">Nariai</a>
-                <a href=" {{route('groups.index') }} " class="item @if(strpos(Route::currentRouteName(), 'groups') !== false) active @endif">Grupes</a>
-                <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">Korteles ir apyrankes</a>
-                <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">Mokejimai</a>
-                <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">Statistika</a>
-                <a href="{{route('system.updates')}}" class="item">Sistemos versijos</a>
-                <a href="{{route("members.index")}}?vip=1" class="item @if(strpos(Route::currentRouteName(), 'members')) active @endif"><img src="/vip.png" width="16px" height="16px" alt="Atleisti nuo mokejimu nariai">VIP list</a>
+               <a href=" {{route('home') }} " class="item @if (Route::currentRouteName() == "home" || Route::currentRouteName() == "search.form") active @endif">
+                 <span class="icon" data-feather="home"></span>
+               </a>
+                <a href=" {{route('viewSignups') }} " class="item @if (Route::currentRouteName() == "viewSignups") active @endif">
+                  <span class="icon" data-feather="bar-chart"></span>
+                </a>
+                <a href=" {{route('members.index') }} " class="item @if(strpos(Route::currentRouteName(), 'members') !== false) active @endif">
+                  <span class="icon" data-feather="layers"></span>
+                </a>
+                <a href=" {{route('groups.index') }} " class="item @if(strpos(Route::currentRouteName(), 'groups') !== false) active @endif"><span class="icon" data-feather="home"></span></a>
+                <a href="{{route('rfid.index')}}" class="item @if(strpos(Route::currentRouteName(), 'rfid') !== false) active @endif">
+                  <span class="icon" data-feather="user"></span>
+                </a>
+                <a href="{{route('payments.index')}}" class="item @if(strpos(Route::currentRouteName(), 'payments') !== false) active @endif">
+                  <span class="icon" data-feather="hard-drive"></span>
+                </a>
+                <a href="{{route('stats.studio')}}" class="item @if(strpos(Route::currentRouteName(), 'stats') !== false) active @endif">
+                  <span class="icon" data-feather="dollar-sign"></span>
+                </a>
+
             </div>
             <div class="footer">
 
@@ -212,7 +236,7 @@
         </main>
 
         <button class="btn btn-primary btn-rounded bottomAction" onclick="scanRFID();">
-        	<span class="icon-white" data-feather="credit-card"></span>
+        	<span style="display: none;">-</span> <span class="icon-white" data-feather="credit-card"></span> <span style="display: none;">-</span>
         </button>
     </div>
 </body>

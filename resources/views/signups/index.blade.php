@@ -144,7 +144,7 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table">
+                    <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead>
                             <tr>
                                 <th>#ID</th>

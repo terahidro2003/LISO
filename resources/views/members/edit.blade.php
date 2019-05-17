@@ -86,6 +86,9 @@
   <div class="sectionHeader mb-4">
     <div style=" width: auto; height: auto; display: flex; flex-direction: row; justify-content: space-between;">
     <h1>{{$data->firstName}} {{$data->lastName}}</h1>
+    <button class="btn btn-primary" onclick="newPayment({{$data->id}});" @if($data->VIP == 'yes') disabled @endif>
+      <span class="icon icon-white" data-feather="dollar-sign"></span>
+    </button>
     {{-- <img src="/vip.png" alt="Sis narys yra atleistas nuo mokesciu" width="90vw" height="auto" style="margin: 1px;"> --}}
   </div>
       {{ Breadcrumbs::render('member', $data->firstName, $data->lastName, $data->id) }}
@@ -100,72 +103,9 @@
       </div>
   </div>
     <div class="row justify-content-center">
-      <div class="col-md-4">
-          <div class="card">
-            <div class="card-header">
-              <h1 class="title" style="text-align: center;">{{$data->firstName}} {{$data->lastName}}</h1>
-            </div>
-            <div class="card-body">
-              <h3>Busena:
-              @if($balance < 0)
-              <label class="ml-2 bg-label bg-label-danger">Skoloje</label>
-              @else
-              <label class="ml-2 bg-label bg-label-primary">Susimoketa</label>
-              @endif
-              </h3>
-              <h3>Balansas:
-              {{$balance}} euru
-              </h3>
-              <h3 class="mt-3 mb-2">Greiti veiksmai:</h3>
-              <button class="btn btn-primary" onclick="newPayment({{$data->id}});" @if($data->VIP == 'yes') disabled @endif>
-                <span class="icon icon-white" data-feather="dollar-sign"></span>
-              </button>
-              <button class="btn btn-success">
-                <span class="icon icon-white" data-feather="check"></span>
-              </button>
-            </div>
-          </div>
-        </div>
-        <div class="col-md-8">
-        <div class="card">
-          <div class="card-header flex-inline">
-            <h2 class="vertical-align">Mokejimu nustatymai</h2>
-          </div>
-          <div class="card-body">
-            <form action="{{route('members.changePaymentSettings', $data->id)}}" method="POST">
-            {{ csrf_field() }}
-            <div class="row">
-              <div class="col-md-4">
-                <h3 class="title">Moketina suma</h3>
-                <div class="input-group">
-                  <span class="input-group-prepend">
-                      <span class="input-group-text">&euro;	</span>
-                  </span>
-                  <input name="fee" type="text" class="form-control text-left" aria-label="Amount (to the nearest dollar)" @if($data->VIP == 'yes')  value="35" @else value="{{$data->fee}}" @endif>
-                </div>
-              </div>
-              <div class="col-md-8">
-                <h3 class="title">Atleisti nuo mokejimo (VIP)</h3>
-                <select name="VIP" class="form-control" @if($data->VIP == 'yes') style="border-color: #9561e2; color: #9561e2;" @endif>
-                  <option value="no" @if($data->VIP == 'no') selected @endif>Neatleistas</option>
-                  <option value="yes" @if($data->VIP == 'yes') selected @endif>Atleistas (VIP statusas)</option>
-                </select>
-              </div>
-            </div>
-            <div class="row">
-              <div class="col">
-                <button type="submit" class="mt-3 btn btn-primary">Pakeisti mokejimo nustatymus</button>
-              </div>
-            </div>
-            </form>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header">Redaguoti nario anketa</div>
+                <div class="card-header"><h3 class="card-title">Nario anketa</h3></div>
                 <div class="card-body">
                     <form method="POST" action="{{ action('DancerController@update', $data->id) }}">
                         {{ csrf_field() }}
@@ -198,13 +138,47 @@
                             </div>
                         </div>
                         <button type="submit" class="btn btn-primary">Patvirtinti</button>
-                        <a class="btn btn-danger" onclick="deleteMember({{$data->id}})">
-                          <span class="icon icon-white" data-feather="trash"></span>
-                        </a>
+
+                        <button class="btn btn-danger" onclick="deleteMember({{$data->id}})">
+                           <span class="icon icon-white" data-feather="trash"></span> Pašalinti narį
+                        </button>
                     </form>
                 </div>
             </div>
         </div>
+    </div>
+    <div class="row justify-content-center">
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Atleisti nuo mokėjimų</h3>
+            <div class="card-options">
+              <label class="custom-switch m-0">
+                <input type="checkbox" value="1" class="custom-switch-input" checked>
+                <span class="custom-switch-indicator"></span>
+              </label>
+            </div>
+          </div>
+          <div class="card-body">
+            Aktyvavus šią funkciją, narys bus atleistas nuo fiksuoto mėnesinio mokęsčio, išskyrus nuo mokėjimų už konkursus ir pan.
+          </div>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card">
+          <div class="card-header">
+            <h3 class="card-title">Pakeisti nario mokęsti</h3>
+          </div>
+          <div class="card-body">
+            <div class="input-icon">
+              <span class="input-icon-addon">
+                <i data-feather="dollar-sign"></i>
+              </span>
+              <input type="text" class="form-control" placeholder="Kaina per mėn." value="">
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
     <div class="row justify-content-center">
       <div class="col-md-12">
