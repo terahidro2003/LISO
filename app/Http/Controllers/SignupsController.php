@@ -24,9 +24,18 @@ class SignupsController extends Controller
         $signups = Signups::all();
         $groups = groups::all();
         return view('signups.index', compact('signups', 'groups'));
-        //
     }
 
+    /**
+     * Display a listing of the resource in JSON formating
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAPI()
+    {
+        $signups = Signups::all();
+        return response()->json($signups);
+    }
     /**
      * Show the form for creating a new dancer's signup request.
      *

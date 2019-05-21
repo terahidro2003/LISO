@@ -15,6 +15,8 @@ Route::get('/', 'SignupsController@create')->name('SignupFormPublic');
 Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
 
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
+Route::get('api/signups', 'SignupsController@indexAPI')->name('api.signups');
+
 Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy');
 
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
