@@ -207,7 +207,7 @@
                     <router-link to="/signups" class="item">
                       <span class="icon" data-feather="layers"></span>
                     </router-link>
-                    <router-link to="/groups" class="item"><span class="icon" data-feather="home"></span></router-link>
+                    <router-link to="/groups" class="item"><span class="icon" data-feather="users"></span></router-link>
                     <router-link to="/members" class="item">
                       <span class="icon" data-feather="user"></span>
                     </router-link>

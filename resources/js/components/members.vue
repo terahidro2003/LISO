@@ -2,8 +2,8 @@
   <div>
   <div class="page-header mb-4">
       <div class="description">
-        <h3>Registracijos</h3>
-        <h1>Nepatvirtintos registracijos</h1>
+        <h3>Nariai</h3>
+        <h1>Visi nariai</h1>
       </div>
       <div class="ml-5 stats">
         <div class="stat mr-5">
@@ -66,7 +66,7 @@
     <div class="page-content justify-content-center">
             <div class="card big">
                 <div class="card-header flex-s">
-                  <h2 class="vertical-align">Nepatvirtintos registracijos</h2>
+                  <h2 class="vertical-align">Nariai</h2>
                 </div>
 
                 <div class="card-body">
@@ -114,7 +114,8 @@
       console.log('mounted');
 
       axios.get('/api/members').then(response => {
-        this.API_results = response.data
+        this.API_results = response.data;
+
       });
     }
   }

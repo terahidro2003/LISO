@@ -29,6 +29,17 @@ class DancerController extends Controller
     }
 
     /**
+     * Display a listing of the resource in JSON formatting.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAPI()
+    {
+        $members = dancer::all();
+        return response()->json($members);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response

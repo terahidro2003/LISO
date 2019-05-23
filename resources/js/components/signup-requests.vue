@@ -29,13 +29,6 @@
     <div class="mt-5 mb-5 filter">
         <div class="justify-content-center">
           <div class="row">
-            <div class="col">
-              <label class="label">Grupe</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Visa studija</option>
-                  <option value="0">Squad</option>
-              </select>
-            </div>
 
             <div class="col">
               <label class="label">Menuo</label>
@@ -55,9 +48,9 @@
 
              <div class="col">
               <label class="label">Miestas</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Klaipeda</option>
-                  <option value="0">Vilnius</option>
+              <select class="form-control white" name="group" @change="filterTable('city', $event)">
+                  <option value="1">Klaipeda</option>
+                  <option value="2">Vilnius</option>
               </select>
             </div>
           </div>
@@ -70,7 +63,10 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
+                	<div class="alert alert-warning" v-if="API_results.length === 0">
+						Nerasta
+                	</div>
+                    <table v-if="API_results.length > 0" class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead>
                             <tr>
                                 <th>#ID</th>
@@ -107,6 +103,16 @@
   	data(){
   		return{
   			API_results: []
+  		}
+  	},
+  	methods: {
+  		filterTable(inputType, event){
+  			if(inputType === 'city'){
+  				var reqURL = "api/signups/filter/city/" + event.target.value;
+	  			axios.get(reqURL).then(response => {
+	  				this.API_results = response.data;
+	  			});
+  			}
   		}
   	},
     mounted() {

@@ -36,6 +36,27 @@ class SignupsController extends Controller
         $signups = Signups::all();
         return response()->json($signups);
     }
+
+    /**
+     * Filtering signup resources by current selected city
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCurrentCity($cityID)
+    {
+        switch ($cityID) {
+            case 2:
+                $signups = Signups::where('city', 'Vilnius')->get();
+                break;
+
+            case 1:
+                $signups = Signups::where('city', 'Klaipeda')->get();
+                break;
+        }
+
+        return response()->json($signups);
+    }
+
     /**
      * Show the form for creating a new dancer's signup request.
      *

@@ -16,12 +16,14 @@ Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('Sign
 
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
 Route::get('api/signups', 'SignupsController@indexAPI')->name('api.signups');
+Route::get('api/signups/filter/city/{cityID}', 'SignupsController@showCurrentCity')->name('api.signups.filter.city');
 
 Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy');
 
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
 Route::any('api/members/store', 'DancerController@storeAPI')->name('api.member.store');
 Route::get('members', 'DancerController@index')->name('members.index');
+Route::get('api/members', 'DancerController@indexAPI')->name('api.members');
 Route::any('members/{dancerID}/edit', 'DancerController@edit')->name('members.edit');
 Route::any('members/{dancerID}/update', 'DancerController@update')->name('members.update');
 Route::any('members/{dancerID}/payments/change', 'PaymentsController@changePaymentSettings')->name('members.changePaymentSettings');
@@ -29,6 +31,7 @@ Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('membe
 
 Route::any('groups/store', 'GroupsController@store');
 Route::get('groups', 'GroupsController@index')->name('groups.index');
+Route::get('api/groups', 'GroupsController@indexAPI')->name('api.groups');
 Route::get('groups/{groupID}/edit', 'GroupsController@edit')->name('groups.edit');
 Route::post('groups/{groupID}/update', 'GroupsController@update')->name('groups.update');
 Route::get('groups/{groupID}/show', 'GroupsController@members')->name('groups.show');

@@ -25,6 +25,17 @@ class GroupsController extends Controller
     }
 
     /**
+     * Display a listing of the resource in JSON formatting.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function indexAPI()
+    {
+        $groups = groups::withCount('members')->get();
+        return response()->json($groups);
+    }
+
+    /**
      * Show the form for creating a new resource.
      *
      * @return \Illuminate\Http\Response
