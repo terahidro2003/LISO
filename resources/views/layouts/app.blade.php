@@ -217,6 +217,9 @@
                     <router-link to="/payments" class="item">
                       <span class="icon" data-feather="dollar-sign"></span>
                     </router-link>
+                    <router-link to="/competition" class="item">
+                      <span class="icon" data-feather="user"></span>
+                    </router-link>
 
                 </div>
                 <div class="footer">
