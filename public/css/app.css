@@ -18784,6 +18784,24 @@ p {
   border-bottom: #645E9D;
 }
 
+.link-edit {
+  color: #FCA311;
+  font-weight: bolder;
+}
+
+.link-edit:hover {
+  border-bottom: #FCA311;
+}
+
+.link-show {
+  color: #645E9D;
+  font-weight: bolder;
+}
+
+.link-show:hover {
+  border-bottom: #645E9D;
+}
+
 .flex-inline {
   display: flex;
   flex-direction: row;
@@ -18844,6 +18862,17 @@ select {
   width: 100%;
 }
 
+.filter .form-control,
+.filter .dataTables_wrapper .dataTables_filter input,
+.dataTables_wrapper .dataTables_filter .filter input,
+.filter .dataTables_wrapper .dataTables_length select,
+.dataTables_wrapper .dataTables_length .filter select {
+  background-color: #fff !important;
+  border: none;
+  font-size: 0.85rem;
+  padding-left: 0.9rem;
+}
+
 .loginContainer {
   height: 100vh;
   position: relative;
@@ -18858,9 +18887,79 @@ select {
   top: calc(5% + 4rem);
   width: calc(99% - 70px);
   margin-left: calc(1rem + 70px);
+}
+
+.page-header,
+.page-content,
+.filter {
+  margin-left: 2rem;
+}
+
+.page-header .description h1 {
+  font-size: 1.8rem;
+  color: rgba(0, 0, 0, 0.8);
+}
+
+.page-header .description h3 {
+  font-size: 0.9rem;
+  color: #707070;
+  text-transform: uppercase;
+}
+
+.page-header .stats {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.page-header .stat {
   display: flex;
   flex-direction: row;
   justify-content: center;
+}
+
+.page-header .status {
+  height: 50px;
+  padding: 1.5px;
+}
+
+.status-ok {
+  background-color: #7FB285;
+}
+
+.status-danger {
+  background-color: #e3342f;
+}
+
+.stat h2 {
+  font-size: 14px;
+  text-transform: uppercase;
+  color: #000001;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  padding-bottom: 0;
+}
+
+.stat h3 {
+  font-size: 12px;
+  text-transform: none;
+  color: grey;
+  font-weight: bolder;
+  letter-spacing: 1px;
+  padding-top: 0;
+}
+
+.page-content {
+  max-width: calc(90% + 2rem);
+}
+
+.filter {
+  max-width: calc(52% + 2rem);
+}
+
+.filter label {
+  font-size: 14px;
+  font-weight: 600;
 }
 
 .logo svg {
@@ -18876,7 +18975,7 @@ select {
   display: flex;
   flex-direction: row;
   justify-content: space-between;
-  position: absolute;
+  position: fixed;
   font-size: 0.775rem;
   z-index: 1000;
 }
@@ -19120,6 +19219,51 @@ select {
   padding: 0.4rem 1.3rem;
   padding-left: 0;
   margin-bottom: 0;
+}
+
+.card-group {
+  padding: 1.25rem 2rem;
+}
+
+.group-header {
+  padding: 0.4rem 0.7rem;
+}
+
+.group-header h2 {
+  font-weight: bolder;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+}
+
+.level-color {
+  margin-left: 0.7rem;
+  margin-bottom: 0.66rem;
+  border-radius: 25px;
+  width: 135px;
+  padding: 2.5px;
+  background-color: #645E9D;
+}
+
+.devider {
+  margin: 0;
+  margin-left: 0.7rem !important;
+  margin-bottom: 0.6rem;
+}
+
+.quick-data {
+  margin-left: 0.1rem;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  text-align: left;
+}
+
+.q-data h3 {
+  font-size: 12px;
+}
+
+.quick-actions {
+  margin-left: 0.7rem;
 }
 
 .card .big {

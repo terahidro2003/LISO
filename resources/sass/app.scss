@@ -61,6 +61,24 @@ p{
 		border-bottom: $PrimaryColor;
 	}
 }
+.link-edit
+{
+	color: $WarningColor;
+	font-weight: bolder;
+	&:hover
+	{
+		border-bottom: $WarningColor;
+	}
+}
+.link-show
+{
+	color: $PrimaryColor;
+	font-weight: bolder;
+	&:hover
+	{
+		border-bottom: $PrimaryColor;
+	}
+}
 
 //layout styles
 .flex-inline{
@@ -424,6 +442,43 @@ select{
 	padding: 0.4rem 1.30rem;
 	padding-left: 0;
 	margin-bottom: 0;
+}
+.card-group
+{
+	padding: 1.25rem 2rem;
+}
+.group-header
+{
+	padding: 0.4rem .7rem;
+}
+.group-header h2 {font-weight: bolder; text-transform: uppercase; letter-spacing: 1px;}
+.level-color
+{
+	margin-left: .7rem;
+	margin-bottom: .66rem;
+	border-radius: 25px;
+	width: 135px;
+	padding: 2.5px;
+	background-color: $PrimaryColor;
+}
+.devider
+{
+	margin: 0;
+	margin-left: .7rem !important;
+	margin-bottom: .6rem;
+}
+.quick-data
+{
+	margin-left: .1rem;
+	display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: left;
+}
+.q-data h3 { font-size: 12px; }
+.quick-actions
+{
+	margin-left: .7rem;
 }
 .card .big{
 	min-width: 70%;

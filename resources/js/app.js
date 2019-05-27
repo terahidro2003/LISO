@@ -29,6 +29,9 @@ import home from './components/home.vue';
 import groups from './components/groups.vue';
 import members from './components/members.vue';
 import payments from './components/payments.vue';
+import competition from './components/competition-show.vue';
+
+import groupsCreate from './components/groups-create.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -45,7 +48,9 @@ const routes = [
   { path: '/groups', component: groups },
   { path: '/members', component: members },
   { path: '/groups', component: groups },
+  { path: '/groups/create', component: groupsCreate },
   { path: '/payments', component: payments },
+  { path: '/competition', component: competition },
 ]
 
 // 3. Create the router instance and pass the `routes` option
