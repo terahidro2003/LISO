@@ -63,7 +63,26 @@ const router = new VueRouter({
 // 4. Create and mount the root instance.
 // Make sure to inject the router with the router option to make the
 // whole app router-aware.
+
+// register modal component
+Vue.component('search-modal', {
+  template: '#modal-search'
+});
+
 const app = new Vue({
+  data: {
+    showSearchModal: false,
+    search_results: [],
+  },
+  methods: {
+    makeSearch: function(event){
+      axios.get('/api/search', {
+        query: event.key,
+      }).then(response => {
+        this.search_results = response.data
+      });
+    }
+  },
   router
 }).$mount('#app')
 

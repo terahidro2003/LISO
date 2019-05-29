@@ -85,6 +85,6 @@ class HomeController extends Controller
       $groups = groups::where('groupName', 'LIKE', '%'.$q.'%')->orwhere('id', 'LIKE', '%'.$q.'%')->get();
       $msg = "";
       if(count($members)==0 && count($signups)==0 && count($groups) == 0) return response()->json(['status' => 'error', 'message' => 'null']);
-      return view('search', compact('members', 'signups', 'groups'));
+      return response()->json($members);
     }
 }

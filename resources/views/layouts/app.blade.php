@@ -20,6 +20,44 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
+
+      <!-- template for the modal component -->
+<script type="text/x-template" id="modal-search">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+
+          <div class="modal-header">
+            <slot name="header">
+              default header
+            </slot>
+          </div>
+
+          <div class="modal-body">
+            <slot name="body">
+              <input type="text" name="q" class="form-control input-search" style="font-size: 2em; border: none;" placeholder="Iveskite ieskoma fraze cia..." v-on:keyup="makeSearch">
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+              <div class="search-result" v-for="result in search_results">
+                <div>
+                  <h2>@{result.firstName}} @{{result.lastName}}</h2>
+                  <h5 class="mt-2"></h5>
+                </div>
+                 <div>
+                  <label class="bg-label bg-label-search bg-label-search-success">Narys</label>
+                </div>
+              </div>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
    <script type="text/javascript">
       function ajaxSearch() {
         var CSRF_TOKEN = $('meta[name="csrf-token"]').attr('content');
@@ -171,6 +209,9 @@
 </head>
 <body>
     <div id="app">
+      <search-modal v-if="showSearchModal" @close="showSearchModal = false">
+        <h2 slot="header">Paieska</h2>
+      </search-modal>
       <header id="topNavigation">
 
               <div class="firstSide">
@@ -187,7 +228,7 @@
 
               <div class="secondSide">
                           <div class="items">
-                            <a class="item">
+                            <a href="#" class="item" @click="showSearchModal = true">
                                 <span data-feather="search" class="icon"></span>
                             </a>
                             <a class="item">
@@ -236,5 +277,6 @@
         	<span style="display: none;">-</span> <span class="icon-white" data-feather="credit-card"></span> <span style="display: none;">-</span>
         </button>
     </div>
+
 </body>
 </html>
