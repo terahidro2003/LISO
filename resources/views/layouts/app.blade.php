@@ -27,16 +27,10 @@
     <div class="modal-mask">
       <div class="modal-wrapper">
         <div class="modal-container">
-
-          <div class="modal-header">
-            <slot name="header">
-              default header
-            </slot>
-          </div>
-
           <div class="modal-body">
+            <a href='#' class='icon' style='font-size: 2em;float: right;' @click="$emit('close')">&times;</a>
             <slot name="body">
-              <input type="text" name="q" class="form-control input-search" style="font-size: 2em; border: none;" placeholder="Iveskite ieskoma fraze cia..." v-on:keyup="makeSearch">
+              <input type="text" name="q" class="form-control input-search" style="font-size: 2em; border: none;" placeholder="Iveskite ieskoma fraze cia..." v-on:keyup="makeSearch()" v-model="q">
             </slot>
           </div>
 
@@ -44,10 +38,10 @@
             <slot name="footer">
               <div class="search-result" v-for="result in search_results">
                 <div>
-                  <h2>@{result.firstName}} @{{result.lastName}}</h2>
+                  <h2>@{{result.firstName}} @{{result.lastName}}</h2>
                   <h5 class="mt-2"></h5>
                 </div>
-                 <div>
+                <div>
                   <label class="bg-label bg-label-search bg-label-search-success">Narys</label>
                 </div>
               </div>

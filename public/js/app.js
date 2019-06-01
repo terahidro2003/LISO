@@ -1944,14 +1944,30 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      API_results: []
+      name: null,
+      leader: null,
+      description: null
     };
   },
-  mounted: function mounted() {
-    console.log('mounted');
+  methods: {
+    //console.log('mounted');
+    groupMake: function groupMake() {
+      axios.post('api/groups/create', {
+        groupName: this.name,
+        leader: this.leader,
+        description: this.description
+      }).then(function (response) {
+        if (response.data == 'OK') {
+          console.log('SUCCESS');
+        } else {
+          console.log(response.data);
+        }
+      });
+    }
   }
 });
 
@@ -50896,7 +50912,124 @@ var render = function() {
       ])
     ]),
     _vm._v(" "),
-    _vm._m(1)
+    _c("div", { staticClass: "page-content justify-content-center" }, [
+      _c("div", { staticClass: "card card-big" }, [
+        _c("div", { staticClass: "card-body" }, [
+          _c("div", { staticClass: "col-md-12" }, [
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group col-md-12" }, [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.name,
+                      expression: "name"
+                    }
+                  ],
+                  staticClass: "form-control input-search",
+                  staticStyle: {
+                    "font-size": "1.8em",
+                    border: "none",
+                    "font-weight": "bolder",
+                    padding: "2rem .7rem",
+                    "padding-left": "0"
+                  },
+                  attrs: { type: "text", placeholder: "Grupes pavadinimas" },
+                  domProps: { value: _vm.name },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.name = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c("div", { staticClass: "form-row" }, [
+              _c("div", { staticClass: "form-group col-md-4" }, [
+                _c("label", { attrs: { for: "inputBname" } }, [
+                  _vm._v("Treneris")
+                ]),
+                _vm._v(" "),
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.leader,
+                      expression: "leader"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "inputBname",
+                    placeholder: "Vardenis Pavardenis"
+                  },
+                  domProps: { value: _vm.leader },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.leader = $event.target.value
+                    }
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _vm._m(1),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-group col-md-8" }, [
+                _c("label", { attrs: { for: "inputBname" } }, [
+                  _vm._v("Aprasymas")
+                ]),
+                _vm._v(" "),
+                _c("textarea", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.description,
+                      expression: "description"
+                    }
+                  ],
+                  staticClass: "form-control",
+                  attrs: {
+                    type: "text",
+                    id: "inputBname",
+                    placeholder: "----APRASYMA RASYKITE CIA----"
+                  },
+                  domProps: { value: _vm.description },
+                  on: {
+                    input: function($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.description = $event.target.value
+                    }
+                  }
+                })
+              ])
+            ]),
+            _vm._v(" "),
+            _c(
+              "a",
+              {
+                staticClass: "btn btn-primary",
+                attrs: { href: "#" },
+                on: { click: _vm.groupMake }
+              },
+              [_vm._v("Sukurti nauja grupe")]
+            )
+          ])
+        ])
+      ])
+    ])
   ])
 }
 var staticRenderFns = [
@@ -50914,105 +51047,41 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-content justify-content-center" }, [
-      _c("div", { staticClass: "col-md-12" }, [
-        _c("form", { attrs: { method: "POST", action: "" } }, [
-          _c("div", { staticClass: "form-row" }, [
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _c("label", { attrs: { for: "inputFname" } }, [
-                _vm._v("Grupes pavadinimas")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control form-control-lg",
-                attrs: {
-                  type: "text",
-                  name: "groupName",
-                  id: "inputFname",
-                  placeholder: "Pavadinimas"
-                }
-              })
-            ])
-          ]),
+    return _c("div", { staticClass: "form-group col-md-10" }, [
+      _c("label", { attrs: { for: "inputBname" } }, [_vm._v("Lygis")]),
+      _vm._v(" "),
+      _c("div", { staticClass: "selectgroup w-100" }, [
+        _c("label", { staticClass: "selectgroup-item" }, [
+          _c("input", {
+            staticClass: "selectgroup-input",
+            attrs: { type: "radio", value: "100" }
+          }),
           _vm._v(" "),
-          _c("div", { staticClass: "form-row" }, [
-            _c("div", { staticClass: "form-group col-md-4" }, [
-              _c("label", { attrs: { for: "inputBname" } }, [
-                _vm._v("Treneris")
-              ]),
-              _vm._v(" "),
-              _c("input", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "leader",
-                  id: "inputBname",
-                  placeholder: "Vardenis Pavardenis"
-                }
-              })
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-12" }, [
-              _c("label", { attrs: { for: "inputBname" } }, [_vm._v("Lygis")]),
-              _vm._v(" "),
-              _c("div", { staticClass: "selectgroup w-100" }, [
-                _c("label", { staticClass: "selectgroup-item" }, [
-                  _c("input", {
-                    staticClass: "selectgroup-input",
-                    attrs: { type: "radio", name: "value", value: "100" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "selectgroup-button" }, [
-                    _vm._v("Pradinis")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("label", { staticClass: "selectgroup-item" }, [
-                  _c("input", {
-                    staticClass: "selectgroup-input",
-                    attrs: { type: "radio", name: "value", value: "100" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "selectgroup-button" }, [
-                    _vm._v("Vidutinis")
-                  ])
-                ]),
-                _vm._v(" "),
-                _c("label", { staticClass: "selectgroup-item" }, [
-                  _c("input", {
-                    staticClass: "selectgroup-input",
-                    attrs: { type: "radio", name: "value", value: "100" }
-                  }),
-                  _vm._v(" "),
-                  _c("span", { staticClass: "selectgroup-button" }, [
-                    _vm._v("Pazengusiuju")
-                  ])
-                ])
-              ])
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "form-group col-md-8" }, [
-              _c("label", { attrs: { for: "inputBname" } }, [
-                _vm._v("Aprasymas")
-              ]),
-              _vm._v(" "),
-              _c("textarea", {
-                staticClass: "form-control",
-                attrs: {
-                  type: "text",
-                  name: "description",
-                  id: "inputBname",
-                  placeholder: "----APRASYMA RASYKITE CIA----"
-                }
-              })
-            ])
-          ]),
+          _c("span", { staticClass: "selectgroup-button" }, [
+            _vm._v("Pradinis")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("label", { staticClass: "selectgroup-item" }, [
+          _c("input", {
+            staticClass: "selectgroup-input",
+            attrs: { type: "radio", value: "100" }
+          }),
           _vm._v(" "),
-          _c(
-            "button",
-            { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-            [_vm._v("Sukurti nauja grupe")]
-          )
+          _c("span", { staticClass: "selectgroup-button" }, [
+            _vm._v("Vidutinis")
+          ])
+        ]),
+        _vm._v(" "),
+        _c("label", { staticClass: "selectgroup-item" }, [
+          _c("input", {
+            staticClass: "selectgroup-input",
+            attrs: { type: "radio", value: "100" }
+          }),
+          _vm._v(" "),
+          _c("span", { staticClass: "selectgroup-button" }, [
+            _vm._v("Pazengusiuju")
+          ])
         ])
       ])
     ])
@@ -66693,23 +66762,37 @@ var router = new vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]({
 // register modal component
 
 Vue.component('search-modal', {
+  data: function data() {
+    return {
+      q: null,
+      search_results: []
+    };
+  },
+  watch: {
+    q: function q(after, before) {
+      this.makeSearch();
+    }
+  },
+  methods: {
+    makeSearch: function makeSearch() {
+      var _this = this;
+
+      if (this.q == '') {
+        this.search_results = null;
+      } else {
+        axios.post('/api/search', {
+          searchQ: this.q
+        }).then(function (response) {
+          _this.search_results = response.data;
+        });
+      }
+    }
+  },
   template: '#modal-search'
 });
 var app = new Vue({
   data: {
-    showSearchModal: false,
-    search_results: []
-  },
-  methods: {
-    makeSearch: function makeSearch(event) {
-      var _this = this;
-
-      axios.get('/api/search', {
-        query: event.key
-      }).then(function (response) {
-        _this.search_results = response.data;
-      });
-    }
+    showSearchModal: false
   },
   router: router
 }).$mount('#app'); // Now the app has started!

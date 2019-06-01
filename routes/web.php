@@ -29,7 +29,7 @@ Route::any('members/{dancerID}/update', 'DancerController@update')->name('member
 Route::any('members/{dancerID}/payments/change', 'PaymentsController@changePaymentSettings')->name('members.changePaymentSettings');
 Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('members.delete');
 
-Route::any('groups/store', 'GroupsController@store');
+Route::any('api/groups/create', 'GroupsController@store');
 Route::get('groups', 'GroupsController@index')->name('groups.index');
 Route::get('api/groups', 'GroupsController@indexAPI')->name('api.groups');
 Route::get('groups/{groupID}/edit', 'GroupsController@edit')->name('groups.edit');
@@ -50,12 +50,12 @@ Route::get('api/stats/balance/{range}', 'StatisticsController@balanceHistory')->
 Route::get('api/stats/payments/{range}', 'StatisticsController@paymentsHistory')->name('api.stats.payments');
 Route::get('api/stats/economy/{range}', 'StatisticsController@economyHistory')->name('api.stats.economy');
 
-Route::any('/api/search', "HomeController@searchAll")->name('search');
+Route::any('/api/search', "HomeController@search")->name('search');
 Route::any('/search', "HomeController@search")->name('search.form');
 
 Route::get('system/versions', "HomeController@versionInfo")->name('system.updates');
 Route::post('system/versions/new', "HomeController@newVersion")->name('system.updates.new');
 
-Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/', 'HomeController@index')->name('home');
 
 Route::get('/api/factory/signups/generate/{amount}', 'HomeController@signupGenerator');

@@ -755,7 +755,7 @@ select{
 }
 
 .modal-body {
-  margin: 20px 0;
+
 }
 
 .modal-footer
@@ -811,4 +811,12 @@ select{
 	position: fixed;
 	bottom: 2rem;
 	right: 2.5rem;
+}
+
+
+.selectgroup-input:checked + .selectgroup-button {
+    border-color: $MainColor;
+    z-index: 1;
+    color: #fff;
+    background: $MainColor;
 }

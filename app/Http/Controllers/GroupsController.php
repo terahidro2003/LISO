@@ -54,13 +54,13 @@ class GroupsController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:50',
+            'groupName' => 'required|max:50',
         ]);
         if ($validator->fails()){
             return response()->json(['status' => 'FAILED']);
         }
         $group = groups::create([
-            'groupName' => $request->input('name'),
+            'groupName' => $request->input('groupName'),
             'description' => $request->input('description'),
             'leader' => $request->input('leader'),
         ]);

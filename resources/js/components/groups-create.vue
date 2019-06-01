@@ -16,44 +16,45 @@
     </div>
 
     <div class="page-content justify-content-center">
+    <div class="card card-big">
+      <div class="card-body">
         <div class="col-md-12">
-                  <form method="POST" action="">
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <label for="inputFname">Grupes pavadinimas</label>
-                                <input type="text" name="groupName" class="form-control form-control-lg" id="inputFname" placeholder="Pavadinimas">
+                                <input type="text" class="form-control input-search" style="font-size: 1.8em; border: none;font-weight: bolder; padding: 2rem .7rem;padding-left:0;" placeholder="Grupes pavadinimas" v-model="name">
                             </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputBname">Treneris</label>
-                                <input type="text" name="leader" class="form-control" id="inputBname" placeholder="Vardenis Pavardenis">
+                                <input type="text" class="form-control" id="inputBname" placeholder="Vardenis Pavardenis" v-model="leader">
                             </div>
-                            <div class="form-group col-md-12">
+                            <div class="form-group col-md-10">
                                 <label for="inputBname">Lygis</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
-                                      <input type="radio" name="value" value="100" class="selectgroup-input">
+                                      <input type="radio"  value="100" class="selectgroup-input">
                                       <span class="selectgroup-button">Pradinis</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                      <input type="radio" name="value" value="100" class="selectgroup-input">
+                                      <input type="radio"  value="100" class="selectgroup-input">
                                       <span class="selectgroup-button">Vidutinis</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                      <input type="radio" name="value" value="100" class="selectgroup-input">
+                                      <input type="radio" value="100" class="selectgroup-input">
                                       <span class="selectgroup-button">Pazengusiuju</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="inputBname">Aprasymas</label>
-                                <textarea type="text" name="description" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----"></textarea>
+                                <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                             </div>
                         </div>
-                        <button type="submit" class="btn btn-primary">Sukurti nauja grupe</button>
-                    </form>
+                        <a href="#" class="btn btn-primary" v-on:click="groupMake">Sukurti nauja grupe</a>
         </div>
+      </div>
+    </div>
     </div>
   </div>
 </template>
@@ -63,13 +64,28 @@
   export default {
     data(){
       return{
-        API_results: []
+        name: null,
+        leader: null,
+        description: null,
       }
     },
-    mounted() {
-      console.log('mounted');
+    methods: {
+      //console.log('mounted');
 
-
+      groupMake: function(){
+        axios.post('api/groups/create', {
+          groupName: this.name,
+          leader: this.leader,
+          description: this.description,
+        }).then(response => {
+          if (response.data == 'OK')
+          {
+            console.log('SUCCESS');
+          }else{
+            console.log(response.data);
+          }
+        });
+      }
     }
   }
 </script>

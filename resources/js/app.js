@@ -66,22 +66,37 @@ const router = new VueRouter({
 
 // register modal component
 Vue.component('search-modal', {
+  data: function () {
+    return {
+      q: null,
+      search_results: [],
+    }
+  },
+  watch: {
+    q(after, before) {
+      this.makeSearch();
+    }
+  },
+  methods: {
+    makeSearch: function (){
+      if(this.q == ''){
+        this.search_results = null;
+      }else{
+        axios.post('/api/search', {
+          searchQ: this.q,
+        }).then(response => {
+          this.search_results = response.data
+        });
+      }
+
+    }
+  },
   template: '#modal-search'
 });
 
 const app = new Vue({
   data: {
     showSearchModal: false,
-    search_results: [],
-  },
-  methods: {
-    makeSearch: function(event){
-      axios.get('/api/search', {
-        query: event.key,
-      }).then(response => {
-        this.search_results = response.data
-      });
-    }
   },
   router
 }).$mount('#app')

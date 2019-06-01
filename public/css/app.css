@@ -19551,10 +19551,6 @@ th {
   color: #645E9D;
 }
 
-.modal-body {
-  margin: 20px 0;
-}
-
 .modal-footer {
   flex-direction: column;
 }
@@ -19604,5 +19600,12 @@ th {
   position: fixed;
   bottom: 2rem;
   right: 2.5rem;
+}
+
+.selectgroup-input:checked + .selectgroup-button {
+  border-color: #30323D;
+  z-index: 1;
+  color: #fff;
+  background: #30323D;
 }
 
