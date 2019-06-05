@@ -37,22 +37,6 @@
               </select>
             </div>
 
-            <div class="col">
-              <label class="label">Menuo</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Sausis</option>
-                  <option value="0">Vasaris</option>
-              </select>
-            </div>
-
-            <div class="col">
-              <label class="label">Metai</label>
-              <select class="form-control white" name="group">
-                  <option value="0">2019</option>
-                  <option value="0">2018</option>
-              </select>
-            </div>
-
              <div class="col">
               <label class="label">Miestas</label>
               <select class="form-control white" name="group">
@@ -67,6 +51,12 @@
             <div class="card big">
                 <div class="card-header flex-s">
                   <h2 class="vertical-align">Nariai</h2>
+                  <div class="actions" style="float: right;">
+                    <router-link to="/members/add" class="btn btn-primary btn-small">
+                      <span data-feather="x-circle" class="icon"></span>
+                      <span>Prideti nauja nari</span>
+                    </router-link>
+                    </div>
                 </div>
 
                 <div class="card-body">
