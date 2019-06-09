@@ -1956,13 +1956,17 @@ __webpack_require__.r(__webpack_exports__);
   methods: {
     //console.log('mounted');
     groupMake: function groupMake() {
+      var _this = this;
+
       axios.post('api/groups/create', {
         groupName: this.name,
         leader: this.leader,
         description: this.description
       }).then(function (response) {
-        if (response.data == 'OK') {
+        if (response.data.status == 'OK') {
           console.log('SUCCESS');
+
+          _this.$router.push('/groups');
         } else {
           console.log(response.data);
         }
@@ -2113,16 +2117,6 @@ __webpack_require__.r(__webpack_exports__);
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 //
 //
 //
@@ -51314,7 +51308,32 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "page-content justify-content-center" }, [
       _c("div", { staticClass: "card big" }, [
-        _vm._m(2),
+        _c("div", { staticClass: "card-header flex-s" }, [
+          _c("h2", { staticClass: "vertical-align" }, [_vm._v("Nariai")]),
+          _vm._v(" "),
+          _c(
+            "div",
+            { staticClass: "actions", staticStyle: { float: "right" } },
+            [
+              _c(
+                "router-link",
+                {
+                  staticClass: "btn btn-primary btn-small",
+                  attrs: { to: "/members/add" }
+                },
+                [
+                  _c("span", {
+                    staticClass: "icon",
+                    attrs: { "data-feather": "x-circle" }
+                  }),
+                  _vm._v(" "),
+                  _c("span", [_vm._v("Prideti nauja nari")])
+                ]
+              )
+            ],
+            1
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _c(
@@ -51324,7 +51343,7 @@ var render = function() {
                 "table card-table table-vcenter text-nowrap datatable dataTable no-footer"
             },
             [
-              _vm._m(3),
+              _vm._m(2),
               _vm._v(" "),
               _c(
                 "tbody",
@@ -51340,7 +51359,7 @@ var render = function() {
                     _vm._v(" "),
                     _c("td", [_vm._v(" " + _vm._s(result.primaryPhone) + " ")]),
                     _vm._v(" "),
-                    _vm._m(4, true)
+                    _vm._m(3, true)
                   ])
                 }),
                 0
@@ -51415,34 +51434,6 @@ var staticRenderFns = [
           ]),
           _vm._v(" "),
           _c("div", { staticClass: "col" }, [
-            _c("label", { staticClass: "label" }, [_vm._v("Menuo")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "form-control white", attrs: { name: "group" } },
-              [
-                _c("option", { attrs: { value: "0" } }, [_vm._v("Sausis")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "0" } }, [_vm._v("Vasaris")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col" }, [
-            _c("label", { staticClass: "label" }, [_vm._v("Metai")]),
-            _vm._v(" "),
-            _c(
-              "select",
-              { staticClass: "form-control white", attrs: { name: "group" } },
-              [
-                _c("option", { attrs: { value: "0" } }, [_vm._v("2019")]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "0" } }, [_vm._v("2018")])
-              ]
-            )
-          ]),
-          _vm._v(" "),
-          _c("div", { staticClass: "col" }, [
             _c("label", { staticClass: "label" }, [_vm._v("Miestas")]),
             _vm._v(" "),
             _c(
@@ -51457,14 +51448,6 @@ var staticRenderFns = [
           ])
         ])
       ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header flex-s" }, [
-      _c("h2", { staticClass: "vertical-align" }, [_vm._v("Nariai")])
     ])
   },
   function() {
