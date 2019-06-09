@@ -7,7 +7,7 @@
       </div>
       <div class="ml-5 stats">
          <div class="actions">
-          <router-link to="/members/add" class="btn btn-danger">
+          <router-link to="/members" class="btn btn-danger">
             <span>Atsaukti</span>
           </router-link>
         </div>
@@ -16,21 +16,70 @@
 
     <div class="page-content justify-content-center">
     <div class="card card-big">
+       <div class="alert alert-success" v-if="operationStatus">
+        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Operacija sekmingai atlikta!</h2>
+        <h4>Dziaugemes us Jus!</h4>
+      </div>
+      <div class="alert alert-danger" v-if="serverError">
+        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Serverio klaida</h2>
+        <h4>Pabandykite atlikti si veiksma po keletos minuciu ir jei tai nepadeda susisiekite su techninio aptarnavimo personalu</h4>
+        <h5 style="color: #fff;">Klaidos tekstas: {{serverErrorMessage}} </h5>
+      </div>
+      <div class="alert alert-danger" v-if="alreadyExcists">
+        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Toks narys jau egzistuoja</h2>
+        <h4>Pasinaudokite paieska ir suraskite ji</h4>
+        <h5 style="color: #fff;">Klaidos tekstas: {{serverErrorMessage}} </h5>
+      </div>
+       <div class="alert alert-warning" v-if="validationFailed">
+        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Neuzpildyti visi butini laukeliai</h2>
+        <h4>Dar karta perziurekite raudonai pazymetus laukelius</h4>
+      </div>
       <div class="card-body">
         <div class="col-md-12">
                         <div class="form-row">
                             <div class="form-group col-md-12">
-                                <input type="text" class="form-control input-search" style="font-size: 1.8em; border: none;font-weight: bolder; padding: 2rem .7rem;padding-left:0;" placeholder="Vardas ir Pavarde" v-model="fullName">
+                                <input type="text" class="form-control input-search" v-bind:class="{form_control_danger: fullName_required}" style="font-size: 1.8em; border: none;font-weight: bolder; padding: 2rem .7rem;padding-left:0;" placeholder="Vardas ir Pavarde" v-model="fullName">
+                                <label class="text-danger" v-if="fullName == ''">Šis laukelis privalomas</label>
                             </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                                <div class="description">
+                                  <h3>Asmenine informacija</h3>
+                                </div>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                            <label for="inputBname">Miestas</label>
+                            <select class="form-control form-control-select" v-model="city" v-bind:class="{form_control_danger: city_required}">
+                              <option value="klaipeda" selected>Klaipeda</option>
+                              <option value="vilnius">Vilnius</option>
+                            </select>
+                            <label class="text-danger" v-if="city == null">Šis laukelis privalomas</label>
+                          </div>
+                          <div class="form-group col-md-6">
+                            <label for="inputBname">Gimimo data</label>
+                            <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}">
+                            <label class="text-danger" v-if="birthDate == ''">Šis laukelis privalomas</label>
+                          </div>
+                        </div>
+                        <div class="form-row">
+                          <div class="form-group col-md-6">
+                                <div class="description">
+                                  <h3>Kontaktine informacija</h3>
+                                </div>
+                          </div>
                         </div>
                         <div class="form-row">
                             <div class="form-group col-md-4">
                                 <label for="inputBname">Telefono numeris</label>
-                                <input type="text" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="primaryPhone">
+                                <input type="text" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="primaryPhone" v-bind:class="{form_control_danger: primaryPhone_required}">
+                                <label class="text-danger" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
                             </div>
                             <div class="form-group col-md-4">
                                 <label for="inputBname">Antras telefono numeris</label>
-                                <input type="text" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="secondaryPhone">
+                                <input type="text" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="secondaryPhone" v-bind:class="{form_control_danger: secondaryPhone_required}">
                             </div>
                             <div class="form-group col-md-8">
                                 <label for="inputBname">El. pasto adresas</label>
@@ -44,11 +93,21 @@
                                 <label for="inputBname">Instagram vartotojas</label>
                                 <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="instagram">
                             </div>
+                        </div>
+                         <div class="form-row mt-5 mb-0">
+                              <div class="form-group col-md-6">
+                                    <div class="description">
+                                      <h3>Asmenine informacija</h3>
+                                    </div>
+                              </div>
+                          </div>
+                          <div class="form-row">
                             <div class="form-group col-md-8">
                                 <label for="inputBname">Pastabos, komentarai</label>
                                 <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                             </div>
-                        </div>
+                          </div>
+
                         <a href="#" class="btn btn-primary" v-on:click="memberCreate">Prideti nari</a>
         </div>
       </div>
@@ -62,26 +121,61 @@
   export default {
     data(){
       return{
-        name: null,
-        leader: null,
+        operationStatus: false,
+        serverError: null,
+        serverErrorMessage: null,
+        validationFailed: null,
+        alreadyExcists: false,
+        fullName: null,
+        fullName_required: false,
+        birthDate: null,
+        birthDate_required: false,
+        primaryPhone: null,
+        primaryPhone_required: false,
+        secondaryPhone: null,
+        secondaryPhone_required: false,
+        email: null,
+        email_required: false,
+        instagram: null,
+        instagram_required: false,
+        facebook: null,
+        facebook_required: false,
         description: null,
+        description_required: false,
+        city: null,
+        city_required: false,
       }
     },
     methods: {
-      //console.log('mounted');
-
       memberCreate: function(){
+        var verificationStatus = false;
+        if(this.fullName == '' || this.fullName == null) { this.fullName_required = true; verificationStatus = false }
+        if(this.primaryPhone == '' || this.primaryPhone == null) { this.primaryPhone_required = true;verificationStatus = false }
+        if(this.birthDate == '' || this.birthDate == null) { this.birthDate_required = true; verificationStatus = false }
+        if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
+
+        var fullFullName = this.fullName.split(" ");
         axios.post('api/members/store', {
-          firstName: '-',
-          lastName: this.fullName,
+          firstName: fullFullName[0],
+          lastName: fullFullName[1],
           primaryPhone: this.primaryPhone,
+          birthDate: this.birthDate,
           description: this.description,
+          city: this.city,
         }).then(response => {
           if (response.data.status == 'OK')
           {
-            console.log('SUCCESS');
-            this.$router.push('/groups');
+            this.operationStatus = true;
+            setTimeout(this.$router.push('/members'), 3000);
           }else{
+            if(response.data.cause == 1){
+              this.validationFailed = true;
+            }else{
+              this.serverError = true;
+              this.serverErrorMessage = response.data;
+            }
+
+            if(response.data.cause == 3){this.alreadyExcists = true}
             console.log(response.data);
           }
         });

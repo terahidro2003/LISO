@@ -18858,6 +18858,12 @@ p {
   box-shadow: none;
 }
 
+.form_control_danger {
+  border-style: dashed;
+  border-color: #e3342f;
+  color: #e3342f;
+}
+
 select {
   width: 100%;
 }
@@ -19482,7 +19488,7 @@ th {
 
 .alert-danger {
   background-color: #e3342f;
-  color: rgba(255, 255, 255, 0.8);
+  color: rgba(255, 255, 255, 0.8) !important;
 }
 
 .alert-warning {

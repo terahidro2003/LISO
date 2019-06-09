@@ -6,7 +6,12 @@
 
     <!-- CSRF Token -->
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <script>
+      axios.defaults.headers.common = {
+        'X-Requested-With': 'XMLHttpRequest',
+        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+      };
+    </script>
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Scripts -->
@@ -22,6 +27,11 @@
 
 
       <!-- template for the modal component -->
+      <script>
+          window.CSRF =  <?php echo json_encode([
+              'csrfToken' => csrf_token(),
+          ]); ?>
+        </script>
 <script type="text/x-template" id="modal-search">
   <transition name="modal">
     <div class="modal-mask">
@@ -45,6 +55,33 @@
                   <label class="bg-label bg-label-search bg-label-search-success">Narys</label>
                 </div>
               </div>
+            </slot>
+          </div>
+        </div>
+      </div>
+    </div>
+  </transition>
+</script>
+
+<script type="text/x-template" id="modal-confirm-member">
+  <transition name="modal">
+    <div class="modal-mask">
+      <div class="modal-wrapper">
+        <div class="modal-container">
+          <div class="modal-header">
+            <h1>Patvirtinti naryste</h1>
+          </div>
+          <div class="modal-body">
+            <a href='#' class='icon' style='font-size: 2em;float: right;' @click="$emit('close')">&times;</a>
+            <slot name="body">
+              <h2>@{{sign.firstName}} @{{sign.lastName}}</h2>
+            </slot>
+          </div>
+
+          <div class="modal-footer">
+            <slot name="footer">
+             <button class="btn btn-success" @click="">Patvirtinti</button>
+             <button class="btn btn-danger" @click="">Atsaukti</button>
             </slot>
           </div>
         </div>
@@ -206,6 +243,10 @@
       <search-modal v-if="showSearchModal" @close="showSearchModal = false">
         <h2 slot="header">Paieska</h2>
       </search-modal>
+
+      <confirm-member-modal v-if="showConfirmMemberModal" @close="showConfirmMemberModal = false">
+
+      </confirm-member-modal>
       <header id="topNavigation">
 
               <div class="firstSide">

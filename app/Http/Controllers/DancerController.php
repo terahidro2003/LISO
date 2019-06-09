@@ -35,7 +35,78 @@ class DancerController extends Controller
      */
     public function indexAPI()
     {
+        $groups = groups::all();
         $members = dancer::all();
+        foreach ($members as $member) {
+            foreach ($groups as $group) {
+                if($member->group == $group->id){
+                    $member->groupName = $group->groupName;
+                }
+            }
+        }
+        return response()->json($members);
+    }
+
+        /**
+     * Filtering members resources by current selected city
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCurrentCity($cityID)
+    {
+        $groups = groups::all();
+        switch ($cityID) {
+            case 2:
+                $members = dancer::where('city', 'Vilnius')->get();
+                foreach ($members as $member) {
+                    foreach ($groups as $group) {
+                        if($member->group == $group->id){
+                            $member->groupName = $group->groupName;
+                        }
+                    }
+                }
+                break;
+
+            case 1:
+                $members = dancer::where('city', 'Klaipeda')->get();
+                foreach ($members as $member) {
+                    foreach ($groups as $group) {
+                        if($member->group == $group->id){
+                            $member->groupName = $group->groupName;
+                        }
+                    }
+                }
+                break;
+            case 0:
+                $members = dancer::all();
+                foreach ($members as $member) {
+                    foreach ($groups as $group) {
+                        if($member->group == $group->id){
+                            $member->groupName = $group->groupName;
+                        }
+                    }
+                }
+                break;
+        }
+
+        return response()->json($members);
+    }
+
+    /* Filtering members resources by current selected group
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function showCurrentGroup($groupID)
+    {
+        $groups = groups::all();
+        $members = dancer::where('group', $groupID)->get();
+        foreach ($members as $member) {
+            foreach ($groups as $group) {
+                if($member->group == $group->id){
+                    $member->groupName = $group->groupName;
+                }
+            }
+        }
         return response()->json($members);
     }
 

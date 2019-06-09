@@ -120,6 +120,12 @@ $input-border-focus: transparent;
     	box-shadow:none;
     }
 }
+.form_control_danger
+{
+	border-style: dashed;
+	border-color: $DangerColor;
+	color: $DangerColor;
+}
 select{
 	width: 100%;
 }
@@ -683,7 +689,7 @@ select{
 .alert-danger
 {
 	background-color: $DangerColor;
-	color: rgba(255,255,255,0.8);
+	color: rgba(255,255,255,0.8) !important;
 }
 .alert-warning
 {

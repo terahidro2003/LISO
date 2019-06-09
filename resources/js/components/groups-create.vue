@@ -78,10 +78,9 @@
           leader: this.leader,
           description: this.description,
         }).then(response => {
-          if (response.data.status == 'OK')
+          if (response.data == 'OK')
           {
             console.log('SUCCESS');
-            this.$router.push('/groups');
           }else{
             console.log(response.data);
           }

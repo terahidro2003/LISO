@@ -23,6 +23,8 @@ Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
 Route::any('api/members/store', 'DancerController@storeAPI')->name('api.member.store');
 Route::get('members', 'DancerController@index')->name('members.index');
+Route::get('api/members/filter/city/{cityID}', 'DancerController@showCurrentCity')->name('api.members.filter.city');
+Route::get('api/members/filter/group/{groupID}', 'DancerController@showCurrentGroup')->name('api.members.filter.group');
 Route::get('api/members', 'DancerController@indexAPI')->name('api.members');
 Route::any('members/{dancerID}/edit', 'DancerController@edit')->name('members.edit');
 Route::any('members/{dancerID}/update', 'DancerController@update')->name('members.update');

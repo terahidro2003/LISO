@@ -19,6 +19,8 @@ window.Vue = require('vue');
 import VueRouter from 'vue-router';
 Vue.use(VueRouter);
 
+import axios from 'axios';
+
 
 // 1. Define route components.
 // These can be imported from other files
@@ -32,6 +34,7 @@ import payments from './components/payments.vue';
 import competition from './components/competition-show.vue';
 
 import groupsCreate from './components/groups-create.vue';
+import membersAdd from './components/members-add.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -51,6 +54,7 @@ const routes = [
   { path: '/groups/create', component: groupsCreate },
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
+  { path: '/members/add', component: membersAdd },
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -91,12 +95,14 @@ Vue.component('search-modal', {
 
     }
   },
-  template: '#modal-search'
+  template: '#modal-search',
+  template: '#modal-confirm-member',
 });
 
 const app = new Vue({
   data: {
     showSearchModal: false,
+    showConfirmMemberModal: false,
   },
   router
 }).$mount('#app')
