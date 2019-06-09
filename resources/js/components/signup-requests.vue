@@ -85,7 +85,7 @@
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
-                                        <a href="#confirm" class="link" onclick="confirmMember(result.id);">Patvirtinti</a>
+                                        <a href="#confirm" class="link" @click="showConfirmMemberModal = true">Patvirtinti</a>
                                         <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
                                     </td>
                                 </tr>

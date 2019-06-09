@@ -31,17 +31,21 @@
           <div class="row">
             <div class="col">
               <label class="label">Grupe</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Visa studija</option>
-                  <option value="0">Squad</option>
+              <select class="form-control white" name="group" @change="filterTable('group', $event)">
+                <option value="0">Visa studija</option>
+                <optgroup v-for="group in groups">
+                  <option :value="group.id">{{group.groupName}}</option>
+                </optgroup>
+
               </select>
             </div>
 
              <div class="col">
               <label class="label">Miestas</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Klaipeda</option>
-                  <option value="0">Vilnius</option>
+              <select class="form-control white" name="group" @change="filterTable('city', $event)">
+                  <option value="1">Klaipeda</option>
+                  <option value="2">Vilnius</option>
+                  <option value="0">Visi</option>
               </select>
             </div>
           </div>
@@ -66,6 +70,7 @@
                                 <th>#ID</th>
                                 <th>Vardas</th>
                                 <th>Pavarde</th>
+                                <th>Miestas</th>
                                 <th>Gimimo data</th>
                                 <th>Telefono numeris</th>
                                 <th>Grupe</th>
@@ -77,8 +82,13 @@
                                     <td> {{result.id}} </td>
                                     <td> {{result.firstName}} </td>
                                     <td> {{result.lastName}} </td>
+                                    <td> {{result.city}} </td>
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
+                                    <td>
+                                      {{result.groupName}}
+                                      <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''">Nepriskirtas(-a)</label>
+                                    </td>
                                     <td>
                                         <a href="#confirm" class="link" onclick="confirmMember(result.id);">Patvirtinti</a>
                                         <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
@@ -97,15 +107,40 @@
   export default {
     data(){
       return{
-        API_results: []
+        API_results: [],
+        groups: [],
+      }
+    },
+    methods: {
+      /*
+      Following bugs detected:
+      1. All studio option is not working correctly
+      2. Filters can't work together
+      */
+      filterTable(inputType, event){
+        if(inputType === 'city'){
+          if(event.target.value != 0){
+            var reqURL = "api/members/filter/city/" + event.target.value;
+            axios.get(reqURL).then(response => {
+              this.API_results = response.data;
+            });
+          }
+        }
+
+        if(inputType === 'group'){
+          var reqURL = "api/members/filter/group/" + event.target.value;
+          axios.get(reqURL).then(response => {
+            this.API_results = response.data;
+          });
+        }
       }
     },
     mounted() {
-      console.log('mounted');
-
       axios.get('/api/members').then(response => {
         this.API_results = response.data;
-
+      });
+      axios.get('/api/groups').then(response => {
+        this.groups = response.data;
       });
     }
   }
