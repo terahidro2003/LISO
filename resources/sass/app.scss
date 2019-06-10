@@ -94,6 +94,24 @@ p{
 .centeredH{ margin: 0 auto; } //center element horizontally
 .width-full{ width: 100% !important; } //full width element
 .vertical-align {vertical-align: middle;}
+
+
+//Login, signup, forgot password styles
+.login-card{
+		min-height: 40vh;
+}
+.login-card .card-body{
+	display: flex;
+	flex-direction: column !important;
+	justify-content: center !important;
+}
+.login-card .card-header{
+	border-bottom: none;
+}
+.login-card label{
+	font-weight: bolder;
+	font-size: .9rem;
+}
 //Form controls
 
 $input-border-focus: transparent;

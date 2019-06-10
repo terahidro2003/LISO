@@ -2635,36 +2635,11 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
-      API_results: []
+      API_results: [],
+      newSignups: null
     };
   },
   methods: {
@@ -2685,6 +2660,9 @@ __webpack_require__.r(__webpack_exports__);
     console.log('mounted');
     axios.get('/api/signups').then(function (response) {
       _this2.API_results = response.data;
+    });
+    axios.get('/api/stats/signups/1').then(function (response) {
+      _this2.newSignups = response.data;
     });
   }
 });
@@ -52434,15 +52412,37 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "page-header mb-4" }, [
+      _vm._m(0),
+      _vm._v(" "),
+      _c("div", { staticClass: "ml-5 stats" }, [
+        _c("div", { staticClass: "stat mr-5" }, [
+          _vm.newSignups.count > 0
+            ? _c("span", { staticClass: "mt-1 status status-ok" })
+            : _vm._e(),
+          _vm._v(" "),
+          _vm.newSignups.count <= 0
+            ? _c("span", { staticClass: "mt-1 status status-danger" })
+            : _vm._e(),
+          _vm._v(" "),
+          _c("h1", { staticClass: "number mt-3 ml-2" }, [
+            _c("span", { staticClass: "count" }, [
+              _vm._v(_vm._s(_vm.newSignups.count))
+            ])
+          ]),
+          _vm._v(" "),
+          _c("div", { staticClass: "txt mt-2 ml-2" }, [
+            _c("h2", [_vm._v("Nauju registraciju")]),
+            _vm._v(" "),
+            _c("h3", [_vm._v("Nuo " + _vm._s(_vm.newSignups.date))])
+          ])
+        ])
+      ])
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "mt-5 mb-5 filter" }, [
-      _c("div", { staticClass: "justify-content-center" }, [
+      _c("div", { staticClass: "justify-content-center w-50" }, [
         _c("div", { staticClass: "row" }, [
-          _vm._m(1),
-          _vm._v(" "),
-          _vm._m(2),
-          _vm._v(" "),
           _c("div", { staticClass: "col" }, [
             _c("label", { staticClass: "label" }, [_vm._v("Miestas")]),
             _vm._v(" "),
@@ -52470,7 +52470,7 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "page-content justify-content-center" }, [
       _c("div", { staticClass: "card big" }, [
-        _vm._m(3),
+        _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _vm.API_results.length === 0
@@ -52487,14 +52487,12 @@ var render = function() {
                     "table card-table table-vcenter text-nowrap datatable dataTable no-footer"
                 },
                 [
-                  _vm._m(4),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "tbody",
                     _vm._l(_vm.API_results, function(result) {
                       return _c("tr", [
-                        _c("td", [_vm._v(" " + _vm._s(result.id) + " ")]),
-                        _vm._v(" "),
                         _c("td", [
                           _vm._v(" " + _vm._s(result.firstName) + " ")
                         ]),
@@ -52553,74 +52551,10 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-header mb-4" }, [
-      _c("div", { staticClass: "description" }, [
-        _c("h3", [_vm._v("Registracijos")]),
-        _vm._v(" "),
-        _c("h1", [_vm._v("Nepatvirtintos registracijos")])
-      ]),
+    return _c("div", { staticClass: "description" }, [
+      _c("h3", [_vm._v("Registracijos")]),
       _vm._v(" "),
-      _c("div", { staticClass: "ml-5 stats" }, [
-        _c("div", { staticClass: "stat mr-5" }, [
-          _c("span", { staticClass: "mt-1 status status-ok" }),
-          _vm._v(" "),
-          _c("h1", { staticClass: "number mt-3 ml-2" }, [_vm._v("143")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "txt mt-2 ml-2" }, [
-            _c("h2", [_vm._v("Nauju registraciju")]),
-            _vm._v(" "),
-            _c("h3", [_vm._v("Nuo 2039-02-02")])
-          ])
-        ]),
-        _vm._v(" "),
-        _c("div", { staticClass: "stat" }, [
-          _c("span", { staticClass: "mt-1 status status-danger" }),
-          _vm._v(" "),
-          _c("h1", { staticClass: "number mt-3 ml-2" }, [_vm._v("43%")]),
-          _vm._v(" "),
-          _c("div", { staticClass: "txt mt-2 ml-2" }, [
-            _c("h2", [_vm._v("Maziau registraciju")]),
-            _vm._v(" "),
-            _c("h3", [_vm._v("Lyginant su 2039-02-02")])
-          ])
-        ])
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Menuo")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control white", attrs: { name: "group" } },
-        [
-          _c("option", { attrs: { value: "0" } }, [_vm._v("Sausis")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "0" } }, [_vm._v("Vasaris")])
-        ]
-      )
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "col" }, [
-      _c("label", { staticClass: "label" }, [_vm._v("Metai")]),
-      _vm._v(" "),
-      _c(
-        "select",
-        { staticClass: "form-control white", attrs: { name: "group" } },
-        [
-          _c("option", { attrs: { value: "0" } }, [_vm._v("2019")]),
-          _vm._v(" "),
-          _c("option", { attrs: { value: "0" } }, [_vm._v("2018")])
-        ]
-      )
+      _c("h1", [_vm._v("Nepatvirtintos registracijos")])
     ])
   },
   function() {
@@ -52639,8 +52573,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("thead", [
       _c("tr", [
-        _c("th", [_vm._v("#ID")]),
-        _vm._v(" "),
         _c("th", [_vm._v("Vardas")]),
         _vm._v(" "),
         _c("th", [_vm._v("Pavarde")]),
@@ -67674,6 +67606,18 @@ var app = new Vue({
 // 		});
 //     });
 // });
+
+$('.count').each(function () {
+  $(this).prop('Counter', 0).animate({
+    Counter: $(this).text()
+  }, {
+    duration: 4000,
+    easing: 'swing',
+    step: function step(now) {
+      $(this).text(Math.ceil(now));
+    }
+  });
+});
 
 /***/ }),
 

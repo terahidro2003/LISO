@@ -211,14 +211,14 @@ a.btn-icon-only {
 }
 
 .btn-white {
-  color: #645E9D;
-  border-color: #645E9D;
+  color: #4062BB;
+  border-color: #4062BB;
   background-color: #ffffff;
   box-shadow: 0 4px 6px rgba(50, 50, 93, 0.11), 0 1px 3px rgba(0, 0, 0, 0.08);
 }
 
 .btn-white:hover {
-  color: #645E9D;
+  color: #4062BB;
 }
 
 .btn-danger {
@@ -18777,11 +18777,11 @@ p {
 
 .link {
   text-decoration: none;
-  color: #645E9D;
+  color: #4062BB;
 }
 
 .link:hover {
-  border-bottom: #645E9D;
+  border-bottom: #4062BB;
 }
 
 .link-edit {
@@ -18794,12 +18794,12 @@ p {
 }
 
 .link-show {
-  color: #645E9D;
+  color: #4062BB;
   font-weight: bolder;
 }
 
 .link-show:hover {
-  border-bottom: #645E9D;
+  border-bottom: #4062BB;
 }
 
 .flex-inline {
@@ -18824,6 +18824,25 @@ p {
 
 .vertical-align {
   vertical-align: middle;
+}
+
+.login-card {
+  min-height: 40vh;
+}
+
+.login-card .card-body {
+  display: flex;
+  flex-direction: column !important;
+  justify-content: center !important;
+}
+
+.login-card .card-header {
+  border-bottom: none;
+}
+
+.login-card label {
+  font-weight: bolder;
+  font-size: 0.9rem;
 }
 
 .form-control,
@@ -19144,7 +19163,7 @@ select {
 }
 
 #sideNavigation .items .active .icon {
-  color: #645E9D;
+  color: #4062BB;
 }
 
 #sideNavigation .footer {
@@ -19285,7 +19304,7 @@ select {
   border-radius: 25px;
   width: 135px;
   padding: 2.5px;
-  background-color: #645E9D;
+  background-color: #4062BB;
 }
 
 .devider {
@@ -19497,7 +19516,7 @@ th {
 }
 
 .alert-primary {
-  background-color: #645E9D;
+  background-color: #4062BB;
   color: rgba(255, 255, 255, 0.8);
 }
 
@@ -19520,7 +19539,7 @@ th {
 }
 
 .swal2-active-progress-step {
-  background-color: #645E9D !important;
+  background-color: #4062BB !important;
 }
 
 .modal-mask {
@@ -19554,7 +19573,7 @@ th {
 
 .modal-header h2 {
   margin-top: 0;
-  color: #645E9D;
+  color: #4062BB;
 }
 
 .modal-footer {

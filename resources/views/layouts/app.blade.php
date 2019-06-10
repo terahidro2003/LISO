@@ -243,10 +243,6 @@
       <search-modal v-if="showSearchModal" @close="showSearchModal = false">
         <h2 slot="header">Paieska</h2>
       </search-modal>
-
-      <confirm-member-modal v-if="showConfirmMemberModal" @close="showConfirmMemberModal = false">
-
-      </confirm-member-modal>
       <header id="topNavigation">
 
               <div class="firstSide">
@@ -274,7 +270,7 @@
       </header>
       <div id="sideNavigation">
                 <div class="items">
-                   <router-link to="/home" class="item">
+                   <router-link to="/home" class="item" data-toggle="tooltip" title="Main">
                      <span class="icon" data-feather="home"></span>
                    </router-link>
                     <router-link to="/stats" class="item">

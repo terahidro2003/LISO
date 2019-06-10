@@ -11,7 +11,7 @@
 |
 */
 
-Route::get('/', 'SignupsController@create')->name('SignupFormPublic');
+Route::get('/new', 'SignupsController@create')->name('SignupFormPublic');
 Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
 
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
@@ -51,6 +51,7 @@ Auth::routes();
 Route::get('api/stats/balance/{range}', 'StatisticsController@balanceHistory')->name('api.stats.balance');
 Route::get('api/stats/payments/{range}', 'StatisticsController@paymentsHistory')->name('api.stats.payments');
 Route::get('api/stats/economy/{range}', 'StatisticsController@economyHistory')->name('api.stats.economy');
+Route::get('api/stats/signups/{range}', 'StatisticsController@signupChangeCount')->name('api.stats.signups.perRange');
 
 Route::any('/api/search', "HomeController@search")->name('search');
 Route::any('/search', "HomeController@search")->name('search.form');
