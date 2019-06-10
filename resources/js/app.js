@@ -35,6 +35,8 @@ import competition from './components/competition-show.vue';
 
 import groupsCreate from './components/groups-create.vue';
 import membersAdd from './components/members-add.vue';
+
+import memberEdit from './components/members-edit.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -55,6 +57,7 @@ const routes = [
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd },
+  { path: '/members/:id/edit', component: memberEdit },
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -103,6 +106,7 @@ const app = new Vue({
   data: {
     showSearchModal: false,
     showConfirmMemberModal: false,
+    selectedMemberID: 0,
   },
   router
 }).$mount('#app')
