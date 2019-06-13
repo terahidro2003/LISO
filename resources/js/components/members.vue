@@ -108,8 +108,8 @@
         groups: [],
         membersCount: null,
         operationState: null,
-        filterCity: null,
-        filterGroup: null,
+        filterCity: 0,
+        filterGroup: 0,
       }
     },
     methods: {
@@ -133,33 +133,14 @@
       },
 
       filterTable(){
-        // if(inputType === 'city'){
-        //   if(event.target.value != 0){
-        //     var reqURL = "api/members/filter/city/" + event.target.value;
-        //     axios.get(reqURL).then(response => {
-        //       this.API_results = response.data;
-        //     });
-        //   }
-        // }
-        //
-        // if(inputType === 'group'){
-        //   var reqURL = "api/members/filter/group/" + event.target.value;
-        //   axios.get(reqURL).then(response => {
-        //     this.API_results = response.data;
-        //   });
-        // }
-
         var config = {
-          headers: {
-            'group': this.filterGroup,
-            'city': this.filterCity
-          }
+            group: this.filterGroup,
+            city: this.filterCity
         }
 
-        var reqURL = "api/members/filter/", config;
-         axios.get(reqURL).then(response => {
-           // this.API_results = response.data;
-           console.log(response.data);
+        var reqURL = "api/members/filter/";
+         axios.post(reqURL, config).then(response => {
+           this.API_results = response.data;
          });
 
       }
