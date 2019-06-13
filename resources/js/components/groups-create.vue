@@ -72,23 +72,10 @@
     methods: {
       //console.log('mounted');
 
-      groupMake: function(){
-        axios.post('api/groups/create', {
-          groupName: this.name,
-          leader: this.leader,
-          description: this.description,
-        }).then(response => {
-          if (response.data == 'OK')
-          {
-            console.log('SUCCESS');
-          }else{
-            console.log(response.data);
-          }
-        });
-      }
-    }
-  }
-</script>
+      groupMake: function(){ axios.post('/api/groups/create', { groupName:
+      this.name, leader: this.leader, description: this.description,
+    }).then(response => { if (response.data == 'OK') { console.log('SUCCESS'); this.$router.push('/groups');
+      }else{ console.log(response.data); } }); } } } </script>
 
 <style>
 </style>

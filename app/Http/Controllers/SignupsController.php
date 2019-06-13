@@ -96,8 +96,9 @@ class SignupsController extends Controller
      * @param  \App\Signups  $signups
      * @return \Illuminate\Http\Response
      */
-    public function show(Signups $signups)
+    public function show($id, Signups $signups)
     {
+        return response()->json(Signups::findOrFail($id));
         //
     }
 

@@ -59,7 +59,7 @@
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
-                                        <a href="#confirm" class="link" @click="showConfirmMemberModal = true">Patvirtinti</a>
+                                        <span href="" class="link" @click="showConfirmDialog(result.id)">Patvirtinti</span>
                                         <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
                                     </td>
                                 </tr>
@@ -100,6 +100,11 @@
       axios.get('/api/stats/signups/1').then(response => {
         this.newSignups = response.data;
       });
+    },
+    methods: {
+      showConfirmDialog(id){
+        this.$router.push('/signups/confirm/'+id);
+      },
     }
   }
 </script>

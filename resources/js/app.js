@@ -27,6 +27,7 @@ import axios from 'axios';
 import navigation from './components/navigation.vue';
 
 import signups from './components/signup-requests.vue';
+
 import home from './components/home.vue';
 import groups from './components/groups.vue';
 import members from './components/members.vue';
@@ -57,13 +58,16 @@ const routes = [
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd },
-  { path: '/members/:id/edit', component: memberEdit },
+  { path: '/members/edit/:id', component: memberEdit },
+  { path: '/signups/confirm/:id', component: membersAdd},
 ]
 
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
 const router = new VueRouter({
+  mode: 'history',
+  linkExactActiveClass: 'is-active',
   routes // short for `routes: routes`
 })
 
@@ -170,16 +174,3 @@ const app = new Vue({
 // 		});
 //     });
 // });
-
-
-$('.count').each(function () {
-    $(this).prop('Counter',0).animate({
-        Counter: $(this).text()
-    }, {
-        duration: 4000,
-        easing: 'swing',
-        step: function (now) {
-            $(this).text(Math.ceil(now));
-        }
-    });
-});

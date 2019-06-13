@@ -61,7 +61,6 @@
                     <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Vardas</th>
                                 <th>Pavarde</th>
                                 <th>Miestas</th>
@@ -73,7 +72,6 @@
                         </thead>
                         <tbody>
                                 <tr v-for="result in API_results">
-                                    <td> {{result.id}} </td>
                                     <td> {{result.firstName}} </td>
                                     <td> {{result.lastName}} </td>
                                     <td> {{result.city}} </td>
@@ -112,7 +110,7 @@
       2. Filters can't work together
       */
       showEditDialog(id){
-        this.$router.push('/members/'+id+'/edit');
+        this.$router.push('/members/edit/'+id);
       },
 
       filterTable(inputType, event){

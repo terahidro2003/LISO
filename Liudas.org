@@ -1,3 +1,4 @@
 #Liudas tasklist
-* [TODO] [#A] Add a tasklist __here__
-  SCHEDULED: <2019-06-09 23.59>
+* [TODO] Filters are working but not correctly. They can't work together and sometimes they crash. Need better algorithm or framework to filter data.
+* [TODO] Make confirm signup request vue component by the UI based in ./js/components/members.add.vue -> load signup data and let user complete the form
+* [TODO] Make delete signup request vue modal
