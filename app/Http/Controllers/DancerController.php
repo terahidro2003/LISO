@@ -92,6 +92,10 @@ class DancerController extends Controller
         return response()->json($members);
     }
 
+    public function filter(Request $req) {
+      return response()->json($req);
+    }
+
     /* Filtering members resources by current selected group
      *
      * @return \Illuminate\Http\Response

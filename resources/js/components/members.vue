@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col">
               <label class="label">Grupe</label>
-              <select class="form-control white" name="group" @change="filterTable('group', $event)">
+              <select v-model="filterGroup" class="form-control white" name="group" @change="filterTable('group', $event)">
                 <option value="0">Visa studija</option>
                 <optgroup v-for="group in groups">
                   <option :value="group.id">{{group.groupName}}</option>
@@ -42,7 +42,7 @@
 
              <div class="col">
               <label class="label">Miestas</label>
-              <select class="form-control white" name="group" @change="filterTable('city', $event)">
+              <select v-model="filterCity" class="form-control white" name="group" @change="filterTable('city', $event)">
                   <option value="1">Klaipeda</option>
                   <option value="2">Vilnius</option>
                   <option value="0">Visi</option>
@@ -108,6 +108,8 @@
         groups: [],
         membersCount: null,
         operationState: null,
+        filterCity: null,
+        filterGroup: null,
       }
     },
     methods: {
@@ -130,22 +132,36 @@
         });
       },
 
-      filterTable(inputType, event){
-        if(inputType === 'city'){
-          if(event.target.value != 0){
-            var reqURL = "api/members/filter/city/" + event.target.value;
-            axios.get(reqURL).then(response => {
-              this.API_results = response.data;
-            });
+      filterTable(){
+        // if(inputType === 'city'){
+        //   if(event.target.value != 0){
+        //     var reqURL = "api/members/filter/city/" + event.target.value;
+        //     axios.get(reqURL).then(response => {
+        //       this.API_results = response.data;
+        //     });
+        //   }
+        // }
+        //
+        // if(inputType === 'group'){
+        //   var reqURL = "api/members/filter/group/" + event.target.value;
+        //   axios.get(reqURL).then(response => {
+        //     this.API_results = response.data;
+        //   });
+        // }
+
+        var config = {
+          headers: {
+            'group': this.filterGroup,
+            'city': this.filterCity
           }
         }
 
-        if(inputType === 'group'){
-          var reqURL = "api/members/filter/group/" + event.target.value;
-          axios.get(reqURL).then(response => {
-            this.API_results = response.data;
-          });
-        }
+        var reqURL = "api/members/filter/", config;
+         axios.get(reqURL).then(response => {
+           // this.API_results = response.data;
+           console.log(response.data);
+         });
+
       }
     },
     mounted() {
