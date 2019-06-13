@@ -92,6 +92,10 @@ class DancerController extends Controller
         return response()->json($members);
     }
 
+    public function filter(Request $req) {
+      return response()->json($req);
+    }
+
     /* Filtering members resources by current selected group
      *
      * @return \Illuminate\Http\Response
@@ -202,9 +206,21 @@ class DancerController extends Controller
      * @param  \App\dancer  $dancer
      * @return \Illuminate\Http\Response
      */
-    public function show(dancer $dancer)
+    public function showAPI($dancerID)
     {
-        //
+      $errors = [];
+      //Check if user has warnings
+      if(MoreThanOneRFID($dancerID) == 1){
+          $errors[0] = 1;
+      }else{
+          $errors[0] = 0;
+      }
+      $groups = groups::all();
+      $dancer = dancer::where('id', $dancerID)->get();
+      $payments = payments::where('member', $dancerID)->get();
+      $fees = fees::where('owner', $dancerID)->get();
+      $balance = calculateBalance($payments, $fees);
+      return response()->json(['member' => $dancer, 'balance' => $balance]);
     }
 
     /**

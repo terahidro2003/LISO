@@ -73,8 +73,14 @@ class GroupsController extends Controller
      * @param  \App\groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function show(groups $groups)
+    public function show($id, groups $groups)
     {
+      return response()->json(
+        [
+          'group' => groups::findOrFail($id),
+          'members' => dancer::where('group', $id)->get(),
+        ]
+      );
         //
     }
 
@@ -98,14 +104,16 @@ class GroupsController extends Controller
      * @param  \App\groups  $groups
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $groupID)
+    public function update(Request $request, $id)
     {
-        $groups = groups::find($groupID);
+        $groups = groups::find($id);
         $groups->groupName = $request->input('groupName');
         $groups->leader = $request->input('leader');
         $groups->description = $request->input('description');
         $groups->save();
-        return back();
+        return response()->json(
+          ['status' => 'OK']
+        );
     }
 
     /**

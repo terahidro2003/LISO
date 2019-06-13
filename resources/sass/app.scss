@@ -94,17 +94,35 @@ p{
 .centeredH{ margin: 0 auto; } //center element horizontally
 .width-full{ width: 100% !important; } //full width element
 .vertical-align {vertical-align: middle;}
+
+
+//Login, signup, forgot password styles
+.login-card{
+		min-height: 40vh;
+}
+.login-card .card-body{
+	display: flex;
+	flex-direction: column !important;
+	justify-content: center !important;
+}
+.login-card .card-header{
+	border-bottom: none;
+}
+.login-card label{
+	font-weight: bolder;
+	font-size: .9rem;
+}
 //Form controls
 
 $input-border-focus: transparent;
 
 .form-control, .swal2-input, .swal2-select{
-	font-size: 1rem;
-    line-height: 1.5;
+	font-size: 1.25rem;
+    line-height: 2;
     display: block;
     width: 100%;
     height: calc(2.75rem + 2px);
-    padding: .625rem .75rem;
+    padding: .725rem .75rem;
     transition: all .15s cubic-bezier(.68,-.55,.265,1.55);
     color: #8898aa;
     border: none;
@@ -355,6 +373,7 @@ select{
 	flex-direction: column;
 	justify-content: center;
 }
+
 #sideNavigation .items a{
 	display: flex;
 	flex-direction: row;

@@ -22,6 +22,10 @@ class CreateDancersTable extends Migration
             $table->string('secondaryPhone')->nullable();
             $table->date('birthDate');
             $table->string('city');
+            $table->string('email')->nullable();
+            $table->string('facebook')->nullable();
+            $table->string('instagram')->nullable();
+            $table->string('description')->nullable();
             $table->integer('group');
             $table->integer('fee')->default(35);
             $table->string('VIP')->default('no');

@@ -27,14 +27,18 @@ import axios from 'axios';
 import navigation from './components/navigation.vue';
 
 import signups from './components/signup-requests.vue';
+
 import home from './components/home.vue';
 import groups from './components/groups.vue';
+import groupsUpdate from './components/groups-update.vue';
 import members from './components/members.vue';
 import payments from './components/payments.vue';
 import competition from './components/competition-show.vue';
 
 import groupsCreate from './components/groups-create.vue';
 import membersAdd from './components/members-add.vue';
+
+import memberEdit from './components/members-edit.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -52,15 +56,20 @@ const routes = [
   { path: '/members', component: members },
   { path: '/groups', component: groups },
   { path: '/groups/create', component: groupsCreate },
+  { path: '/groups/update/:id', component: groupsUpdate },
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd },
+  { path: '/members/edit/:id', component: memberEdit },
+  { path: '/signups/confirm/:id', component: membersAdd},
 ]
 
 // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
 const router = new VueRouter({
+  mode: 'history',
+  linkExactActiveClass: 'is-active',
   routes // short for `routes: routes`
 })
 
@@ -103,6 +112,7 @@ const app = new Vue({
   data: {
     showSearchModal: false,
     showConfirmMemberModal: false,
+    selectedMemberID: 0,
   },
   router
 }).$mount('#app')
@@ -166,5 +176,3 @@ const app = new Vue({
 // 		});
 //     });
 // });
-
-

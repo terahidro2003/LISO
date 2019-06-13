@@ -144,6 +144,20 @@
         description_required: false,
         city: null,
         city_required: false,
+        API_results: null,
+      }
+    },
+    mounted(){
+      if(this.$route.params.id != null){
+        axios.get('/api/signups/' + this.$route.params.id, {
+
+        }).then(response => {
+            this.API_results = response.data;
+            this.fullName = response.data.firstName + " " + response.data.lastName;
+            this.birthDate = response.data.birthDate;
+            this.primaryPhone = response.data.primaryPhone;
+            this.city = response.data.city;
+        });
       }
     },
     methods: {
@@ -155,7 +169,7 @@
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
 
         var fullFullName = this.fullName.split(" ");
-        axios.post('api/members/store', {
+        axios.post('/api/members/store', {
           firstName: fullFullName[0],
           lastName: fullFullName[1],
           primaryPhone: this.primaryPhone,

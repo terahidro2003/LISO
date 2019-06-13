@@ -4,9 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Statistics;
 use App\payments;
+use App\Signups;
 use App\paymentStatistics;
 use App\fees;
 use Illuminate\Http\Request;
+use DB;
+
 
 class StatisticsController extends Controller
 {
@@ -14,6 +17,53 @@ class StatisticsController extends Controller
     {
       $this->middleware('auth');
     }
+
+    /**
+     * Calculate signup requests change count per given range of time
+     *
+     * @param  \App\UserSessions  $userSessions
+     * @return \Illuminate\Http\Response
+     */
+    public function signupChangeCount($range)
+    {
+      $currentDate = date('y-m-d');
+      $date = date('Y-m-d',strtotime('-30 days',strtotime($currentDate)));
+      $signupsCount = null;
+      switch ($range) {
+        case 1: //time range: month
+          $signupsCount = Signups::where( DB::raw('MONTH(created_at)'), '=', date('n') )->count();
+          break;
+
+        default:
+          // code...
+          break;
+      }
+      return response(['count' => $signupsCount, 'date' => $date]);
+    }
+
+    /**
+     * Calculate signup requests change in % per given range of time
+     *
+     * @param  \App\UserSessions  $userSessions
+     * @return \Illuminate\Http\Response
+     */
+    public function signupChangeProcentage($range)
+    {
+      $currentDate = date('y-m-d');
+      $date = date('n');
+      $signupsCount = null;
+      switch ($range) {
+        case 1: //time range: month
+          $signupsCount = Signups::where( DB::raw('MONTH(created_at)'), '=', date('n') )->count();
+          break;
+
+        default:
+          // code...
+          break;
+      }
+      return response(['count' => $signupsCount, 'date' => $date]);
+    }
+
     /**
      * Display a listing of the resource.
      *

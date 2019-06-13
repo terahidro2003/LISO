@@ -8,19 +8,19 @@
       <div class="ml-5 stats">
         <div class="stat mr-5">
           <span class="mt-1 status status-ok"></span>
-          <h1 class="number mt-3 ml-2">143</h1>
+          <h1 class="number mt-3 ml-2">{{membersCount}}</h1>
           <div class="txt mt-2 ml-2">
-            <h2>Nauju registraciju</h2>
-            <h3>Nuo 2039-02-02</h3>
+            <h2>Iš viso narių</h2>
+            <h3>registruota sistemoje</h3>
           </div>
         </div>
 
         <div class="stat">
-          <span class="mt-1 status status-danger"></span>
-          <h1 class="number mt-3 ml-2">43%</h1>
-          <div class="txt mt-2 ml-2">
-            <h2>Maziau registraciju</h2>
-            <h3>Lyginant su 2039-02-02</h3>
+          <div class="actions" style="float: right;">
+            <router-link to="/members/add" class="btn btn-primary btn-small">
+              <span data-feather="x-circle" class="icon"></span>
+              <span>Prideti nauja nari</span>
+            </router-link>
           </div>
         </div>
       </div>
@@ -31,7 +31,7 @@
           <div class="row">
             <div class="col">
               <label class="label">Grupe</label>
-              <select class="form-control white" name="group" @change="filterTable('group', $event)">
+              <select v-model="filterGroup" class="form-control white" name="group" @change="filterTable('group', $event)">
                 <option value="0">Visa studija</option>
                 <optgroup v-for="group in groups">
                   <option :value="group.id">{{group.groupName}}</option>
@@ -42,7 +42,7 @@
 
              <div class="col">
               <label class="label">Miestas</label>
-              <select class="form-control white" name="group" @change="filterTable('city', $event)">
+              <select v-model="filterCity" class="form-control white" name="group" @change="filterTable('city', $event)">
                   <option value="1">Klaipeda</option>
                   <option value="2">Vilnius</option>
                   <option value="0">Visi</option>
@@ -55,19 +55,12 @@
             <div class="card big">
                 <div class="card-header flex-s">
                   <h2 class="vertical-align">Nariai</h2>
-                  <div class="actions" style="float: right;">
-                    <router-link to="/members/add" class="btn btn-primary btn-small">
-                      <span data-feather="x-circle" class="icon"></span>
-                      <span>Prideti nauja nari</span>
-                    </router-link>
-                    </div>
                 </div>
 
                 <div class="card-body">
                     <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Vardas</th>
                                 <th>Pavarde</th>
                                 <th>Miestas</th>
@@ -79,7 +72,6 @@
                         </thead>
                         <tbody>
                                 <tr v-for="result in API_results">
-                                    <td> {{result.id}} </td>
                                     <td> {{result.firstName}} </td>
                                     <td> {{result.lastName}} </td>
                                     <td> {{result.city}} </td>
@@ -87,11 +79,16 @@
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
                                       {{result.groupName}}
-                                      <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''">Nepriskirtas(-a)</label>
+                                      <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''" data-toggle="dropdown">Nepriskirtas(-a)</label>
+                                      <div class="dropdown-menu">
+                                        <div v-for="group in groups">
+                                          <a class="dropdown-item" href="#" @click="changeMembersGroup(group.id, result.id)">{{group.groupName}}</a>
+                                        </div>
+
+                                      </div>
                                     </td>
                                     <td>
-                                        <a href="#confirm" class="link" onclick="confirmMember(result.id);">Patvirtinti</a>
-                                        <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
+                                        <span href="" class="link" @click="showEditDialog(result.id)">Redaguoti</span>
                                     </td>
                                 </tr>
                         </tbody>
@@ -109,6 +106,10 @@
       return{
         API_results: [],
         groups: [],
+        membersCount: null,
+        operationState: null,
+        filterCity: null,
+        filterGroup: null,
       }
     },
     methods: {
@@ -117,27 +118,56 @@
       1. All studio option is not working correctly
       2. Filters can't work together
       */
-      filterTable(inputType, event){
-        if(inputType === 'city'){
-          if(event.target.value != 0){
-            var reqURL = "api/members/filter/city/" + event.target.value;
-            axios.get(reqURL).then(response => {
-              this.API_results = response.data;
-            });
+      showEditDialog(id){
+        this.$router.push('/members/edit/'+id);
+      },
+
+      changeMembersGroup(id, member){
+        axios.post('/api/members/changeMembersGroup/' + member, {
+          groupID: id,
+        }).then(response => {
+          if(response.status == 'OK'){
+            this.operationState = 1;
+          }
+        });
+      },
+
+      filterTable(){
+        // if(inputType === 'city'){
+        //   if(event.target.value != 0){
+        //     var reqURL = "api/members/filter/city/" + event.target.value;
+        //     axios.get(reqURL).then(response => {
+        //       this.API_results = response.data;
+        //     });
+        //   }
+        // }
+        //
+        // if(inputType === 'group'){
+        //   var reqURL = "api/members/filter/group/" + event.target.value;
+        //   axios.get(reqURL).then(response => {
+        //     this.API_results = response.data;
+        //   });
+        // }
+
+        var config = {
+          headers: {
+            'group': this.filterGroup,
+            'city': this.filterCity
           }
         }
 
-        if(inputType === 'group'){
-          var reqURL = "api/members/filter/group/" + event.target.value;
-          axios.get(reqURL).then(response => {
-            this.API_results = response.data;
-          });
-        }
+        var reqURL = "api/members/filter/", config;
+         axios.get(reqURL).then(response => {
+           // this.API_results = response.data;
+           console.log(response.data);
+         });
+
       }
     },
     mounted() {
       axios.get('/api/members').then(response => {
         this.API_results = response.data;
+        this.membersCount = response.data.length;
       });
       axios.get('/api/groups').then(response => {
         this.groups = response.data;

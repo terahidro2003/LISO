@@ -7,45 +7,21 @@
       </div>
       <div class="ml-5 stats">
         <div class="stat mr-5">
-          <span class="mt-1 status status-ok"></span>
-          <h1 class="number mt-3 ml-2">143</h1>
+
+          <span class="mt-1 status status-ok" v-if="newSignups.count > 0"></span>
+          <span class="mt-1 status status-danger" v-if="newSignups.count <= 0"></span>
+          <h1 class="number mt-3 ml-2"><span class="count">{{newSignups.count}}</span></h1>
           <div class="txt mt-2 ml-2">
             <h2>Nauju registraciju</h2>
-            <h3>Nuo 2039-02-02</h3>
-          </div>
-        </div>
-
-        <div class="stat">
-          <span class="mt-1 status status-danger"></span>
-          <h1 class="number mt-3 ml-2">43%</h1>
-          <div class="txt mt-2 ml-2">
-            <h2>Maziau registraciju</h2>
-            <h3>Lyginant su 2039-02-02</h3>
+            <h3>Nuo {{newSignups.date}}</h3>
           </div>
         </div>
       </div>
     </div>
 
     <div class="mt-5 mb-5 filter">
-        <div class="justify-content-center">
+        <div class="justify-content-center w-50">
           <div class="row">
-
-            <div class="col">
-              <label class="label">Menuo</label>
-              <select class="form-control white" name="group">
-                  <option value="0">Sausis</option>
-                  <option value="0">Vasaris</option>
-              </select>
-            </div>
-
-            <div class="col">
-              <label class="label">Metai</label>
-              <select class="form-control white" name="group">
-                  <option value="0">2019</option>
-                  <option value="0">2018</option>
-              </select>
-            </div>
-
              <div class="col">
               <label class="label">Miestas</label>
               <select class="form-control white" name="group" @change="filterTable('city', $event)">
@@ -69,7 +45,6 @@
                     <table v-if="API_results.length > 0" class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead>
                             <tr>
-                                <th>#ID</th>
                                 <th>Vardas</th>
                                 <th>Pavarde</th>
                                 <th>Gimimo data</th>
@@ -79,13 +54,12 @@
                         </thead>
                         <tbody>
                                 <tr v-for="result in API_results">
-                                    <td> {{result.id}} </td>
                                     <td> {{result.firstName}} </td>
                                     <td> {{result.lastName}} </td>
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
-                                        <a href="#confirm" class="link" @click="showConfirmMemberModal = true">Patvirtinti</a>
+                                        <span href="" class="link" @click="showConfirmDialog(result.id)">Patvirtinti</span>
                                         <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
                                     </td>
                                 </tr>
@@ -102,7 +76,8 @@
   export default {
   	data(){
   		return{
-  			API_results: []
+  			API_results: [],
+        newSignups: null,
   		}
   	},
   	methods: {
@@ -113,7 +88,10 @@
 	  				this.API_results = response.data;
 	  			});
   			}
-  		}
+  		},
+      showConfirmDialog(id){
+        this.$router.push('/signups/confirm/'+id);
+      },
   	},
     mounted() {
       console.log('mounted');
@@ -121,7 +99,11 @@
       axios.get('/api/signups').then(response => {
       	this.API_results = response.data
       });
-    }
+
+      axios.get('/api/stats/signups/1').then(response => {
+        this.newSignups = response.data;
+      });
+    },
   }
 </script>
 
