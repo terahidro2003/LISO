@@ -40,8 +40,7 @@
             </div>
 
             <div class="quick-actions">
-              <a href="#edit" @click="" class="link link-edit mr-3">Redaguoti</a>
-              <a href="#show" @click="" class="link link-show">Nariai</a>
+              <a href="#edit" @click="showUpdate(group.id)" class="link link-edit mr-3">Redaguoti</a>
             </div>
           </div>
         </div>
@@ -57,6 +56,11 @@
       return{
         API_results: []
       }
+    },
+    methods: {
+      showUpdate(id){
+        this.$router.push('/groups/update/'+id);
+      },
     },
     mounted() {
       console.log('mounted');

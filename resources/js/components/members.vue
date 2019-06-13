@@ -79,7 +79,13 @@
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
                                       {{result.groupName}}
-                                      <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''">Nepriskirtas(-a)</label>
+                                      <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''" data-toggle="dropdown">Nepriskirtas(-a)</label>
+                                      <div class="dropdown-menu">
+                                        <div v-for="group in groups">
+                                          <a class="dropdown-item" href="#" @click="changeMembersGroup(group.id, result.id)">{{group.groupName}}</a>
+                                        </div>
+
+                                      </div>
                                     </td>
                                     <td>
                                         <span href="" class="link" @click="showEditDialog(result.id)">Redaguoti</span>
@@ -101,6 +107,7 @@
         API_results: [],
         groups: [],
         membersCount: null,
+        operationState: null,
       }
     },
     methods: {
@@ -111,6 +118,16 @@
       */
       showEditDialog(id){
         this.$router.push('/members/edit/'+id);
+      },
+
+      changeMembersGroup(id, member){
+        axios.post('/api/members/changeMembersGroup/' + member, {
+          groupID: id,
+        }).then(response => {
+          if(response.status == 'OK'){
+            this.operationState = 1;
+          }
+        });
       },
 
       filterTable(inputType, event){

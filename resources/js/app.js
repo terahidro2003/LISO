@@ -30,6 +30,7 @@ import signups from './components/signup-requests.vue';
 
 import home from './components/home.vue';
 import groups from './components/groups.vue';
+import groupsUpdate from './components/groups-update.vue';
 import members from './components/members.vue';
 import payments from './components/payments.vue';
 import competition from './components/competition-show.vue';
@@ -55,6 +56,7 @@ const routes = [
   { path: '/members', component: members },
   { path: '/groups', component: groups },
   { path: '/groups/create', component: groupsCreate },
+  { path: '/groups/update/:id', component: groupsUpdate },
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd },

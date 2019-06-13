@@ -17,13 +17,10 @@
     <div class="page-content justify-content-center" v-for="member in API_results.member">
     <div class="row">
       <div class="col-md-12 card card-big">
-        <div class="card-header">
-          <h2>Greitieji veiksmai</h2>
-        </div>
         <div class="card-body">
           <div class="col-md-12">
                           <div class="form-row">
-                              <div class="form-group col-md-4">
+                              <div class="col-md-4">
                                   <button @click="" class="btn btn-primary">Naujas mokejimas</button>
                               </div>
                           </div>

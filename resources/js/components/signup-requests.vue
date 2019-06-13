@@ -88,7 +88,10 @@
 	  				this.API_results = response.data;
 	  			});
   			}
-  		}
+  		},
+      showConfirmDialog(id){
+        this.$router.push('/signups/confirm/'+id);
+      },
   	},
     mounted() {
       console.log('mounted');
@@ -101,11 +104,6 @@
         this.newSignups = response.data;
       });
     },
-    methods: {
-      showConfirmDialog(id){
-        this.$router.push('/signups/confirm/'+id);
-      },
-    }
   }
 </script>
 
