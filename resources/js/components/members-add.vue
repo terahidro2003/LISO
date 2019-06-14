@@ -157,6 +157,9 @@
             this.birthDate = response.data.birthDate;
             this.primaryPhone = response.data.primaryPhone;
             this.city = response.data.city;
+            this.description = response.data.description;
+            this.secondaryPhone = response.data.secondaryPhone;
+            this.email = response.data.email;
         });
       }
     },
@@ -167,7 +170,6 @@
         if(this.primaryPhone == '' || this.primaryPhone == null) { this.primaryPhone_required = true;verificationStatus = false }
         if(this.birthDate == '' || this.birthDate == null) { this.birthDate_required = true; verificationStatus = false }
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
-
         var fullFullName = this.fullName.split(" ");
         axios.post('/api/members/store', {
           firstName: fullFullName[0],
@@ -176,6 +178,11 @@
           birthDate: this.birthDate,
           description: this.description,
           city: this.city,
+          email: this.email,
+          secondaryPhone: this.secondaryPhone,
+          facebook: this.facebook,
+          instagram: this.instagram,
+          description: this.description,
         }).then(response => {
           if (response.data.status == 'OK')
           {

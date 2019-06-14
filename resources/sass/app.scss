@@ -570,16 +570,17 @@ select{
 .table
 {
 	th{
+		text-transform: none;
 		border-top: 0;
+		font-size: .765rem;
 		border-bottom-width: 1px;
 		padding-top: .5rem;
 		padding-bottom: .5rem;
 	}
 	thead
 	{
-		text-transform: uppercase;
 		border:none !important;
-    	background-color: #F5F6FA;
+    	background-color: transparent;
     	color: #A3A6B4;
 	}
 	td, th

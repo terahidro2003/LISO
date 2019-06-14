@@ -58,11 +58,10 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
+                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
                         <thead>
                             <tr>
-                                <th>Vardas</th>
-                                <th>Pavarde</th>
+                                <th>Vardas, pavarde</th>
                                 <th>Miestas</th>
                                 <th>Gimimo data</th>
                                 <th>Telefono numeris</th>
@@ -72,14 +71,16 @@
                         </thead>
                         <tbody>
                                 <tr v-for="result in API_results">
-                                    <td> {{result.firstName}} </td>
-                                    <td> {{result.lastName}} </td>
+                                    <td>
+                                      <div>{{result.firstName}} {{result.lastName}}</div>
+                                      <div class="small text-muted">Narys nuo {{result.created_at}}</div>
+                                    </td>
                                     <td> {{result.city}} </td>
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
-                                      {{result.groupName}}
                                       <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''" data-toggle="dropdown">Nepriskirtas(-a)</label>
+                                      <label class="bg-label bg-label-main" v-if="result.groupName != null || result.groupName != ''" data-toggle="dropdown">{{result.groupName}}</label>
                                       <div class="dropdown-menu">
                                         <div v-for="group in groups">
                                           <a class="dropdown-item" href="#" @click="changeMembersGroup(group.id, result.id)">{{group.groupName}}</a>
@@ -123,11 +124,15 @@
       },
 
       changeMembersGroup(id, member){
-        axios.post('/api/members/changeMembersGroup/' + member, {
+        axios.post('/api/members/changeGroup/' + member, {
           groupID: id,
         }).then(response => {
-          if(response.status == 'OK'){
+          if(response.data.status == 'OK'){
             this.operationState = 1;
+            axios.get('/api/members').then(response => {
+              this.API_results = response.data;
+              this.membersCount = response.data.length;
+            });
           }
         });
       },

@@ -250,6 +250,21 @@ class DancerController extends Controller
     }
 
     /**
+     * Change group of selected member
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\dancer  $dancer
+     * @return \Illuminate\Http\Response
+     */
+    public function changeGroup($id, Request $request, dancer $dancer)
+    {
+        $member = dancer::find($id);
+        $member->group = $request->input('groupID');
+        $member->save();
+        return response()->json(['status' => 'OK']);
+    }
+
+    /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

@@ -3,7 +3,7 @@
   <div class="page-header mb-4" v-for="member in API_results.member">
       <div class="description">
         <h3>Redaguoti nari</h3>
-        <h1>{{member.firstName}} {{member.lastName}}</h1>
+        <h1>{{fullName}}</h1>
       </div>
       <div class="ml-5 stats">
          <div class="actions">
@@ -61,15 +61,15 @@
                           <div class="form-row">
                             <div class="form-group col-md-6">
                               <label for="inputBname">Miestas</label>
-                              <select class="form-control form-control-select" v-model="member.city" v-bind:class="{form_control_danger: city_required}">
+                              <select class="form-control form-control-select" v-model="city" v-bind:class="{form_control_danger: city_required}">
                                 <option value="vilnius">Vilnius</option>
                                 <option value="Klaipeda">Klaipeda</option>
                               </select>
-                              <label class="text-danger" v-if="member.city == null || member.city == ''">Šis laukelis privalomas</label>
+                              <label class="text-danger" v-if="city == null || city == ''">Šis laukelis privalomas</label>
                             </div>
                             <div class="form-group col-md-6">
                               <label for="inputBname">Gimimo data</label>
-                              <input type="date" class="form-control" id="inputBname" placeholder="" v-model="member.birthDate" v-bind:class="{form_control_danger: birthDate_required}">
+                              <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}">
                               <label class="text-danger" v-if="birthDate == ''">Šis laukelis privalomas</label>
                             </div>
                           </div>
@@ -83,24 +83,24 @@
                           <div class="form-row">
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Telefono numeris</label>
-                                  <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="member.primaryPhone" v-bind:class="{form_control_danger: primaryPhone_required}">
+                                  <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="primaryPhone" v-bind:class="{form_control_danger: primaryPhone_required}">
                                   <label class="text-danger" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
                               </div>
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Antras telefono numeris</label>
-                                  <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="member.secondaryPhone" v-bind:class="{form_control_danger: secondaryPhone_required}">
+                                  <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="secondaryPhone" v-bind:class="{form_control_danger: secondaryPhone_required}">
                               </div>
                               <div class="form-group col-md-8">
                                   <label for="inputBname">El. pasto adresas</label>
-                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="member.email">
+                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="email">
                               </div>
                               <div class="form-group col-md-5">
                                   <label for="inputBname">Facebook vartotojas</label>
-                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="member.facebook">
+                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="facebook">
                               </div>
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Instagram vartotojas</label>
-                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="member.instagram">
+                                  <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="instagram">
                               </div>
                           </div>
                            <div class="form-row mt-5 mb-0">
@@ -113,7 +113,7 @@
                             <div class="form-row">
                               <div class="form-group col-md-8">
                                   <label for="inputBname">Pastabos, komentarai</label>
-                                  <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="member.description"></textarea>
+                                  <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                               </div>
                             </div>
 
@@ -132,7 +132,7 @@
                              <div class="form-row">
                                <div class="form-group col-md-6">
                                    <label for="inputBname">Menesinis mokestis</label>
-                                   <input class="form-control" placeholder="" v-model="member.fee"/>
+                                   <input class="form-control" placeholder="" v-model="fee"/>
                                </div>
                                <div class="form-group col-md-6">
                                    <label for="inputBname">Dabartinis balansas</label>
@@ -235,6 +235,7 @@
         city: null,
         city_required: false,
         balance: null,
+        fee: null,
         API_results: null,
       }
     },
@@ -242,6 +243,18 @@
       axios.get('/api/members/'+this.MemberID).then(response => {
         this.API_results = response.data;
         this.balance = response.data.balance;
+
+        this.fullName = this.API_results.member.firstName + " " + this.API_results.member.lastName;
+        this.birthDate = this.API_results.member.birthDate;
+        this.primaryPhone = this.API_results.member.primaryPhone;
+        this.secondaryPhone = this.API_results.member.secondaryPhone;
+        this.email = this.API_results.member.email;
+        this.instagram = this.API_results.member.instagram;
+        this.facebook = this.API_results.member.facebook;
+        this.description = this.API_results.member.description;
+        this.city = this.API_results.member.city;
+        this.balance = this.API_results.member.balance;
+        this.fee = this.API_results.member.fee;
       });
     },
     methods: {
@@ -253,10 +266,16 @@
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
 
         var fullFullName = this.fullName.split(" ");
-        axios.post('api/members/store', {
+        axios.post('api/members/update', {
           firstName: fullFullName[0],
           lastName: fullFullName[1],
           primaryPhone: this.primaryPhone,
+          secondaryPhone: this.secondaryPhone,
+          email: this.email,
+          instagram: this.instagram,
+          facebook: this.facebook,
+          fee: this.fee,
+
           birthDate: this.birthDate,
           description: this.description,
           city: this.city,
