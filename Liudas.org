@@ -1,5 +1,5 @@
 #Liudas tasklist
 + [DONE] [#A] Filters are working but not correctly. They can't work together and sometimes they crash. Need better algorithm or framework to filter data.
   SCHEDULED: <2019-06-13 Thu>
-* [TODO] [#A] Make confirm signup request vue component by the UI based in ./js/components/members.add.vue -> load signup data and let user complete the form
-* [TODO] [#B] Make delete signup request vue modal
+* [DONE] [#A] Make confirm signup request vue component by the UI based in ./js/components/members.add.vue -> load signup data and let user complete the form
+* [DONE] [#B] Make delete signup request vue modal

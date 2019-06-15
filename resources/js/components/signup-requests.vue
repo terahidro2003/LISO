@@ -8,13 +8,13 @@
       <div class="ml-5 stats">
         <div class="stat mr-5">
 
-          <span class="mt-1 status status-ok" v-if="newSignups.count > 0"></span>
+          <!-- <span class="mt-1 status status-ok" v-if="newSignups.count > 0"></span>
           <span class="mt-1 status status-danger" v-if="newSignups.count <= 0"></span>
           <h1 class="number mt-3 ml-2"><span class="count">{{newSignups.count}}</span></h1>
           <div class="txt mt-2 ml-2">
             <h2>Nauju registraciju</h2>
             <h3>Nuo {{newSignups.date}}</h3>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -60,7 +60,7 @@
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
                                         <span href="" class="link" @click="showConfirmDialog(result.id)">Patvirtinti</span>
-                                        <a href="#confirm" class="link" onclick="deleteMember(result.id);">Istrinti</a>
+                                        <span href="" class="link" @click="deleteMember(result.id)">Istrinti</span>
                                     </td>
                                 </tr>
                         </tbody>
@@ -92,6 +92,34 @@
       showConfirmDialog(id){
         this.$router.push('/signups/confirm/'+id);
       },
+      deleteMember(id) {
+        swal({
+          title: "Please confirm signup deletion",
+          text: "If You delete...",
+          icon: "warning",
+          buttons: true,
+          closeModal: true,
+          dangerMode: true
+        }).then(value => {
+          if(value)
+          axios.post('/signups/delete', {
+            'id': id
+          }).then(response => {
+            if(response.status == 200) {
+              axios.get('/api/signups').then(response => {
+              	this.API_results = response.data
+              });
+
+              axios.get('/api/stats/signups/1').then(response => {
+                this.newSignups = response.data;
+              });
+              swal({title: "Deleted", icon: "success"});
+              setTimeout(()=> {swal.close()}, 1000);
+            }
+            else swal("Error!","" ,"error");
+          });
+        });
+      }
   	},
     mounted() {
       console.log('mounted');
@@ -107,5 +135,8 @@
   }
 </script>
 
-<style>
+<style scoped>
+.link {
+  cursor: pointer;
+}
 </style>

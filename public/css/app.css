@@ -19351,7 +19351,9 @@ select {
 
 .table th,
 .text-wrap table th {
+  text-transform: none;
   border-top: 0;
+  font-size: 0.765rem;
   border-bottom-width: 1px;
   padding-top: 0.5rem;
   padding-bottom: 0.5rem;
@@ -19359,9 +19361,8 @@ select {
 
 .table thead,
 .text-wrap table thead {
-  text-transform: uppercase;
   border: none !important;
-  background-color: #F5F6FA;
+  background-color: transparent;
   color: #A3A6B4;
 }
 

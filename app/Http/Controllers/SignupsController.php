@@ -131,10 +131,11 @@ class SignupsController extends Controller
      * @param  \App\Signups  $signups
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Request $request)
+    public function destroy(Request $req)
     {
-        $delete = deleteSignup($request->input('id'));
-        //
+        $sig = Signups::findOrFail($req->id);
+        $sig->delete();
+        return response(200);
     }
 
 
