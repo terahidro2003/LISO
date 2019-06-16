@@ -18714,6 +18714,64 @@ body {
   font-family: "Poppins", sans-serif;
   font-size: 15px;
   background: #F0F0F7;
+  overflow-x: hidden;
+}
+
+.side {
+  color: white;
+  stroke: white;
+  background-color: #161819 !important;
+}
+
+.side p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+img {
+  color: white;
+  stroke: white;
+}
+
+.side div {
+  color: white;
+  stroke: white;
+  background-color: #161819 !important;
+}
+
+.change p,
+a,
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+i,
+img {
+  color: white;
+  stroke: white;
+}
+
+.change {
+  color: white;
+  stroke: white;
+  background-color: #232628;
+}
+
+.change div {
+  color: white;
+  stroke: white;
+  background-color: #232628;
+}
+
+.mport {
+  color: white !important;
+  stroke: white !important;
 }
 
 a {

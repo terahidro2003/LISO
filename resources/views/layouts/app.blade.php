@@ -243,7 +243,7 @@
       <search-modal v-if="showSearchModal" @close="showSearchModal = false">
         <h2 slot="header">Paieska</h2>
       </search-modal>
-      <header id="topNavigation">
+      <header id="topNavigation" :class="{side: dark}">
 
               <div class="firstSide">
                         <div class="logo">
@@ -251,14 +251,15 @@
                         </div>
                         <div class="ml-5 mt-4 description">
                           <div class="text">
-                            <h3>Šokių studija</h3>
-                            <h1>VŠĮ, SFINX</h1>
+                            <h3 :class="{mport: dark}">Šokių studija</h3>
+                            <h1 :class="{mport: dark}">VŠĮ, SFINX</h1>
                           </div>
                         </div>
               </div>
 
               <div class="secondSide">
                           <div class="items">
+                            <input type="checkbox" v-model="dark" @change="cdark()"> DARK MODE {alpha}</input>
                             <a href="#" class="item" @click="showSearchModal = true">
                                 <span data-feather="search" class="icon"></span>
                             </a>
@@ -268,7 +269,7 @@
                           </div>
               </div>
       </header>
-      <div id="sideNavigation">
+      <div id="sideNavigation" :class="{side: dark}">
                 <div class="items">
                    <router-link to="/home" class="item" data-toggle="tooltip" title="Main">
                      <span class="icon" data-feather="home"></span>
@@ -300,7 +301,7 @@
       </div>
 
 
-      <main class="content">
+      <main class="content" :class="{change: dark }">
         <router-view></router-view>
       </main>
 

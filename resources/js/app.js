@@ -17,8 +17,9 @@ Vue.js components defined here
 window.Vue = require('vue');
 
 import VueRouter from 'vue-router';
+import VueCookies from  'vue-cookies'
 Vue.use(VueRouter);
-
+Vue.use(VueCookies);
 import axios from 'axios';
 
 
@@ -113,6 +114,24 @@ const app = new Vue({
     showSearchModal: false,
     showConfirmMemberModal: false,
     selectedMemberID: 0,
+    dark: false,
+
+  },
+  methods: {
+    cook() {
+        if($cookies.isKey("dark")) this.dark = ($cookies.get("dark") == "true" ? true : false);
+        else $cookies.set("dark", false);
+
+        if(this.dark) document.body.classList.add("change");
+    },
+    cdark() {
+      $cookies.set("dark", this.dark);
+      if(this.dark) document.body.classList.add("change");
+      else document.body.classList.remove("change");
+    }
+  },
+  mounted() {
+    this.cook();
   },
   router
 }).$mount('#app')

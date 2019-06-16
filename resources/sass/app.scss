@@ -12,11 +12,59 @@
 @import "tabler/tabler";
 
 // Reset styles
+
+$dark-mode-main-color: #232628;
+$dark-mode-side-color: #161819;
+
 body{
 	font-family: 'Poppins', sans-serif;
 	font-size: 15px;
 	background: #F0F0F7;
+	overflow-x: hidden;
+	// overflow-y: hidden;
 }
+.side {
+	color: white;
+	stroke: white;
+	background-color: $dark-mode-side-color!important;
+}
+
+.side p, a, h1, h2, h3, h4, h5, h6, i, img {
+	color: white;
+	stroke: white;
+	// background-color: $dark-mode-side-color !important;
+}
+
+.side div{
+	color: white;
+	stroke: white;
+	background-color: $dark-mode-side-color!important;
+}
+
+.change p, a, h1, h2, h3, h4, h5, h6, i, img {
+	color: white;
+	stroke: white;
+	// background-color: $dark-mode-main-color !important;
+}
+
+.change{
+	color: white;
+	stroke: white;
+	background-color: $dark-mode-main-color;
+}
+
+.change div{
+	color: white;
+	stroke: white;
+	background-color: $dark-mode-main-color;
+}
+
+.mport {
+	color: white!important;
+	stroke: white!important;
+}
+
+
 a{
 	text-decoration: none;
 	color: black;

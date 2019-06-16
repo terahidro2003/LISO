@@ -7647,7 +7647,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.link[data-v-31914644] {\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\n.link[data-v-31914644] {\n  cursor: pointer;\n}\n.mport[data-v-31914644] {\n\tcolor: white;\n\tstroke: white;\n}\n.mport th[data-v-31914644], tr[data-v-31914644]{\n  color: white;\n  stroke: white;\n}\nth[data-v-31914644], tr[data-v-31914644] {\n  color: inherit;\n}\n\n", ""]);
 
 // exports
 
@@ -52647,6 +52647,132 @@ exports.clearImmediate = (typeof self !== "undefined" && self.clearImmediate) ||
 
 /***/ }),
 
+/***/ "./node_modules/vue-cookies/vue-cookies.js":
+/*!*************************************************!*\
+  !*** ./node_modules/vue-cookies/vue-cookies.js ***!
+  \*************************************************/
+/*! no static exports found */
+/***/ (function(module, exports, __webpack_require__) {
+
+    /**
+ * Vue Cookies v1.5.13
+ * https://github.com/cmp-cc/vue-cookies
+ *
+ * Copyright 2016, cmp-cc
+ * Released under the MIT license
+ */
+
+(function() {
+
+    var defaultConfig = {
+        expires : '1d',
+        path : '; path=/'
+    }
+
+    var VueCookies = {
+        // install of Vue
+        install: function(Vue) {
+            Vue.prototype.$cookies = this
+            Vue.cookies = this
+        },
+        config : function(expireTimes,path) {
+            if(expireTimes) {
+                defaultConfig.expires = expireTimes;
+            }
+            if(path) {
+                defaultConfig.path = '; path=' + path;
+            }
+        },
+        get: function(key) {
+            var value = decodeURIComponent(document.cookie.replace(new RegExp("(?:(?:^|.*;)\\s*" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=\\s*([^;]*).*$)|^.*$"), "$1")) || null
+
+            if(value && value.substring(0,1) === "{" && value.substring(value.length-1,value.length) === "}") {
+                try {
+                    value = JSON.parse(value)
+                }catch (e) {
+                    return value;
+                }
+            }
+            return value;
+        },
+        set: function(key, value, expireTimes, path, domain, secure) {
+            if (!key) {
+                throw new Error("cookie name is not find in first argument")
+            }else if(/^(?:expires|max\-age|path|domain|secure)$/i.test(key)){
+                throw new Error("cookie key name illegality ,Cannot be set to ['expires','max-age','path','domain','secure']\t","current key name: "+key);
+            }
+            // support json object
+            if(value && value.constructor === Object) {
+                value = JSON.stringify(value);
+            }
+            var _expires = "";
+            expireTimes = expireTimes === undefined ? defaultConfig.expires : expireTimes;
+            if (expireTimes && expireTimes != 0) {
+                switch (expireTimes.constructor) {
+                    case Number:
+                        if(expireTimes === Infinity || expireTimes === -1) _expires = "; expires=Fri, 31 Dec 9999 23:59:59 GMT";
+                        else _expires = "; max-age=" + expireTimes;
+                        break;
+                    case String:
+                        if (/^(?:\d{1,}(y|m|d|h|min|s))$/i.test(expireTimes)) {
+                            // get capture number group
+                            var _expireTime = expireTimes.replace(/^(\d{1,})(?:y|m|d|h|min|s)$/i, "$1");
+                            // get capture type group , to lower case
+                            switch (expireTimes.replace(/^(?:\d{1,})(y|m|d|h|min|s)$/i, "$1").toLowerCase()) {
+                                // Frequency sorting
+                                case 'm':  _expires = "; max-age=" + +_expireTime * 2592000; break; // 60 * 60 * 24 * 30
+                                case 'd':  _expires = "; max-age=" + +_expireTime * 86400; break; // 60 * 60 * 24
+                                case 'h': _expires = "; max-age=" + +_expireTime * 3600; break; // 60 * 60
+                                case 'min':  _expires = "; max-age=" + +_expireTime * 60; break; // 60
+                                case 's': _expires = "; max-age=" + _expireTime; break;
+                                case 'y': _expires = "; max-age=" + +_expireTime * 31104000; break; // 60 * 60 * 24 * 30 * 12
+                                default: new Error("unknown exception of 'set operation'");
+                            }
+                        } else {
+                            _expires = "; expires=" + expireTimes;
+                        }
+                        break;
+                    case Date:
+                        _expires = "; expires=" + expireTimes.toUTCString();
+                        break;
+                }
+            }
+            document.cookie = encodeURIComponent(key) + "=" + encodeURIComponent(value) + _expires + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path) + (secure ? "; secure" : "");
+            return this;
+        },
+        remove: function(key, path, domain) {
+            if (!key || !this.isKey(key)) {
+                return false;
+            }
+            document.cookie = encodeURIComponent(key) + "=; expires=Thu, 01 Jan 1970 00:00:00 GMT" + (domain ? "; domain=" + domain : "") + (path ? "; path=" + path : defaultConfig.path);
+            return this;
+        },
+        isKey: function(key) {
+            return (new RegExp("(?:^|;\\s*)" + encodeURIComponent(key).replace(/[\-\.\+\*]/g, "\\$&") + "\\s*\\=")).test(document.cookie);
+        },
+        keys:  function() {
+            if(!document.cookie) return [];
+            var _keys = document.cookie.replace(/((?:^|\s*;)[^\=]+)(?=;|$)|^\s*|\s*(?:\=[^;]*)?(?:\1|$)/g, "").split(/\s*(?:\=[^;]*)?;\s*/);
+            for (var _index = 0; _index < _keys.length; _index++) {
+                _keys[_index] = decodeURIComponent(_keys[_index]);
+            }
+            return _keys;
+        }
+    }
+
+    if (true) {
+        module.exports = VueCookies;
+    } else {}
+    // vue-cookies can exist independently,no dependencies library
+    if(typeof window!=="undefined"){
+        window.$cookies = VueCookies;
+    }
+
+})()
+
+
+/***/ }),
+
 /***/ "./node_modules/vue-loader/lib/loaders/templateLoader.js?!./node_modules/vue-loader/lib/index.js?!./resources/js/components/competition-show.vue?vue&type=template&id=09edeb16&":
 /*!*******************************************************************************************************************************************************************************************************************!*\
   !*** ./node_modules/vue-loader/lib/loaders/templateLoader.js??vue-loader-options!./node_modules/vue-loader/lib??vue-loader-options!./resources/js/components/competition-show.vue?vue&type=template&id=09edeb16& ***!
@@ -55442,7 +55568,19 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _vm._m(0),
+    _c("div", { staticClass: "page-header mb-4" }, [
+      _c("div", { staticClass: "description" }, [
+        _c("h3", { class: { mport: _vm.$root.dark } }, [
+          _vm._v("Registracijos")
+        ]),
+        _vm._v(" "),
+        _c("h1", { class: { mport: _vm.$root.dark } }, [
+          _vm._v("Nepatvirtintos registracijos")
+        ])
+      ]),
+      _vm._v(" "),
+      _vm._m(0)
+    ]),
     _vm._v(" "),
     _c("div", { staticClass: "mt-5 mb-5 filter" }, [
       _c("div", { staticClass: "justify-content-center w-50" }, [
@@ -55474,7 +55612,13 @@ var render = function() {
     _vm._v(" "),
     _c("div", { staticClass: "page-content justify-content-center" }, [
       _c("div", { staticClass: "card big" }, [
-        _vm._m(1),
+        _c("div", { staticClass: "card-header flex-s" }, [
+          _c(
+            "h2",
+            { staticClass: "vertical-align", class: { mport: _vm.$root.dark } },
+            [_vm._v("Nepatvirtintos registracijos")]
+          )
+        ]),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
           _vm.API_results.length === 0
@@ -55491,10 +55635,13 @@ var render = function() {
                     "table card-table table-vcenter text-nowrap datatable dataTable no-footer"
                 },
                 [
-                  _vm._m(2),
+                  _c("thead", { class: { mport: _vm.$root.dark } }, [
+                    _vm._m(1)
+                  ]),
                   _vm._v(" "),
                   _c(
                     "tbody",
+                    { class: { mport: _vm.$root.dark } },
                     _vm._l(_vm.API_results, function(result) {
                       return _c("tr", [
                         _c("td", [
@@ -55557,44 +55704,24 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "page-header mb-4" }, [
-      _c("div", { staticClass: "description" }, [
-        _c("h3", [_vm._v("Registracijos")]),
-        _vm._v(" "),
-        _c("h1", [_vm._v("Nepatvirtintos registracijos")])
-      ]),
+    return _c("div", { staticClass: "ml-5 stats" }, [
+      _c("div", { staticClass: "stat mr-5" })
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("tr", [
+      _c("th", [_vm._v("Vardas")]),
       _vm._v(" "),
-      _c("div", { staticClass: "ml-5 stats" }, [
-        _c("div", { staticClass: "stat mr-5" })
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "card-header flex-s" }, [
-      _c("h2", { staticClass: "vertical-align" }, [
-        _vm._v("Nepatvirtintos registracijos")
-      ])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Vardas")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Pavarde")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Gimimo data")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Telefono numeris")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Veiksmai")])
-      ])
+      _c("th", [_vm._v("Pavarde")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Gimimo data")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Telefono numeris")]),
+      _vm._v(" "),
+      _c("th", [_vm._v("Veiksmai")])
     ])
   }
 ]
@@ -70436,19 +70563,21 @@ __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! sweetalert */ "./node_modules/sweetalert/dist/sweetalert.min.js");
 /* harmony import */ var sweetalert__WEBPACK_IMPORTED_MODULE_0___default = /*#__PURE__*/__webpack_require__.n(sweetalert__WEBPACK_IMPORTED_MODULE_0__);
 /* harmony import */ var vue_router__WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! vue-router */ "./node_modules/vue-router/dist/vue-router.esm.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_2__);
-/* harmony import */ var _components_navigation_vue__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! ./components/navigation.vue */ "./resources/js/components/navigation.vue");
-/* harmony import */ var _components_signup_requests_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/signup-requests.vue */ "./resources/js/components/signup-requests.vue");
-/* harmony import */ var _components_home_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/home.vue */ "./resources/js/components/home.vue");
-/* harmony import */ var _components_groups_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/groups.vue */ "./resources/js/components/groups.vue");
-/* harmony import */ var _components_groups_update_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/groups-update.vue */ "./resources/js/components/groups-update.vue");
-/* harmony import */ var _components_members_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/members.vue */ "./resources/js/components/members.vue");
-/* harmony import */ var _components_payments_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/payments.vue */ "./resources/js/components/payments.vue");
-/* harmony import */ var _components_competition_show_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/competition-show.vue */ "./resources/js/components/competition-show.vue");
-/* harmony import */ var _components_groups_create_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/groups-create.vue */ "./resources/js/components/groups-create.vue");
-/* harmony import */ var _components_members_add_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/members-add.vue */ "./resources/js/components/members-add.vue");
-/* harmony import */ var _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/members-edit.vue */ "./resources/js/components/members-edit.vue");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! vue-cookies */ "./node_modules/vue-cookies/vue-cookies.js");
+/* harmony import */ var vue_cookies__WEBPACK_IMPORTED_MODULE_2___default = /*#__PURE__*/__webpack_require__.n(vue_cookies__WEBPACK_IMPORTED_MODULE_2__);
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3__ = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
+/* harmony import */ var axios__WEBPACK_IMPORTED_MODULE_3___default = /*#__PURE__*/__webpack_require__.n(axios__WEBPACK_IMPORTED_MODULE_3__);
+/* harmony import */ var _components_navigation_vue__WEBPACK_IMPORTED_MODULE_4__ = __webpack_require__(/*! ./components/navigation.vue */ "./resources/js/components/navigation.vue");
+/* harmony import */ var _components_signup_requests_vue__WEBPACK_IMPORTED_MODULE_5__ = __webpack_require__(/*! ./components/signup-requests.vue */ "./resources/js/components/signup-requests.vue");
+/* harmony import */ var _components_home_vue__WEBPACK_IMPORTED_MODULE_6__ = __webpack_require__(/*! ./components/home.vue */ "./resources/js/components/home.vue");
+/* harmony import */ var _components_groups_vue__WEBPACK_IMPORTED_MODULE_7__ = __webpack_require__(/*! ./components/groups.vue */ "./resources/js/components/groups.vue");
+/* harmony import */ var _components_groups_update_vue__WEBPACK_IMPORTED_MODULE_8__ = __webpack_require__(/*! ./components/groups-update.vue */ "./resources/js/components/groups-update.vue");
+/* harmony import */ var _components_members_vue__WEBPACK_IMPORTED_MODULE_9__ = __webpack_require__(/*! ./components/members.vue */ "./resources/js/components/members.vue");
+/* harmony import */ var _components_payments_vue__WEBPACK_IMPORTED_MODULE_10__ = __webpack_require__(/*! ./components/payments.vue */ "./resources/js/components/payments.vue");
+/* harmony import */ var _components_competition_show_vue__WEBPACK_IMPORTED_MODULE_11__ = __webpack_require__(/*! ./components/competition-show.vue */ "./resources/js/components/competition-show.vue");
+/* harmony import */ var _components_groups_create_vue__WEBPACK_IMPORTED_MODULE_12__ = __webpack_require__(/*! ./components/groups-create.vue */ "./resources/js/components/groups-create.vue");
+/* harmony import */ var _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__ = __webpack_require__(/*! ./components/members-add.vue */ "./resources/js/components/members-add.vue");
+/* harmony import */ var _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_14__ = __webpack_require__(/*! ./components/members-edit.vue */ "./resources/js/components/members-edit.vue");
 function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
 
 /**
@@ -70469,7 +70598,9 @@ Vue.js components defined here
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
 
+
 Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
+Vue.use(vue_cookies__WEBPACK_IMPORTED_MODULE_2___default.a);
  // 1. Define route components.
 // These can be imported from other files
 
@@ -70493,40 +70624,40 @@ Vue.use(vue_router__WEBPACK_IMPORTED_MODULE_1__["default"]);
 
 var routes = [{
   path: '/home',
-  component: _components_home_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
+  component: _components_home_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
 }, {
   path: '/signups',
-  component: _components_signup_requests_vue__WEBPACK_IMPORTED_MODULE_4__["default"]
+  component: _components_signup_requests_vue__WEBPACK_IMPORTED_MODULE_5__["default"]
 }, {
   path: '/groups',
-  component: _components_groups_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_groups_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/members',
-  component: _components_members_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
+  component: _components_members_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
 }, {
   path: '/groups',
-  component: _components_groups_vue__WEBPACK_IMPORTED_MODULE_6__["default"]
+  component: _components_groups_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
 }, {
   path: '/groups/create',
-  component: _components_groups_create_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
+  component: _components_groups_create_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
 }, {
   path: '/groups/update/:id',
-  component: _components_groups_update_vue__WEBPACK_IMPORTED_MODULE_7__["default"]
+  component: _components_groups_update_vue__WEBPACK_IMPORTED_MODULE_8__["default"]
 }, {
   path: '/payments',
-  component: _components_payments_vue__WEBPACK_IMPORTED_MODULE_9__["default"]
+  component: _components_payments_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
 }, {
   path: '/competition',
-  component: _components_competition_show_vue__WEBPACK_IMPORTED_MODULE_10__["default"]
+  component: _components_competition_show_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/members/add',
-  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   path: '/members/edit/:id',
-  component: _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
 }, {
   path: '/signups/confirm/:id',
-  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_12__["default"]
+  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 }]; // 3. Create the router instance and pass the `routes` option
 // You can pass in additional options here, but let's
 // keep it simple for now.
@@ -70560,7 +70691,7 @@ Vue.component('search-modal', _defineProperty({
       if (this.q == '') {
         this.search_results = null;
       } else {
-        axios__WEBPACK_IMPORTED_MODULE_2___default.a.post('/api/search', {
+        axios__WEBPACK_IMPORTED_MODULE_3___default.a.post('/api/search', {
           searchQ: this.q
         }).then(function (response) {
           _this.search_results = response.data;
@@ -70574,7 +70705,21 @@ var app = new Vue({
   data: {
     showSearchModal: false,
     showConfirmMemberModal: false,
-    selectedMemberID: 0
+    selectedMemberID: 0,
+    dark: false
+  },
+  methods: {
+    cook: function cook() {
+      if ($cookies.isKey("dark")) this.dark = $cookies.get("dark") == "true" ? true : false;else $cookies.set("dark", false);
+      if (this.dark) document.body.classList.add("change");
+    },
+    cdark: function cdark() {
+      $cookies.set("dark", this.dark);
+      if (this.dark) document.body.classList.add("change");else document.body.classList.remove("change");
+    }
+  },
+  mounted: function mounted() {
+    this.cook();
   },
   router: router
 }).$mount('#app'); // Now the app has started!

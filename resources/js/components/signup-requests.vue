@@ -2,8 +2,8 @@
   <div>
 	<div class="page-header mb-4">
       <div class="description">
-        <h3>Registracijos</h3>
-        <h1>Nepatvirtintos registracijos</h1>
+        <h3 :class="{mport: $root.dark}">Registracijos</h3>
+        <h1 :class="{mport: $root.dark}">Nepatvirtintos registracijos</h1>
       </div>
       <div class="ml-5 stats">
         <div class="stat mr-5">
@@ -35,7 +35,7 @@
     <div class="page-content justify-content-center">
             <div class="card big">
                 <div class="card-header flex-s">
-                  <h2 class="vertical-align">Nepatvirtintos registracijos</h2>
+                  <h2 class="vertical-align" :class="{mport: $root.dark}">Nepatvirtintos registracijos</h2>
                 </div>
 
                 <div class="card-body">
@@ -43,7 +43,7 @@
 						Nerasta
                 	</div>
                     <table v-if="API_results.length > 0" class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
-                        <thead>
+                        <thead :class="{mport: $root.dark}" >
                             <tr>
                                 <th>Vardas</th>
                                 <th>Pavarde</th>
@@ -52,7 +52,7 @@
                                 <th>Veiksmai</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody :class="{mport: $root.dark}" >
                                 <tr v-for="result in API_results">
                                     <td> {{result.firstName}} </td>
                                     <td> {{result.lastName}} </td>
@@ -139,4 +139,18 @@
 .link {
   cursor: pointer;
 }
+.mport {
+	color: white;
+	stroke: white;
+}
+
+.mport th, tr{
+  color: white;
+  stroke: white;
+}
+
+th, tr {
+  color: inherit;
+}
+
 </style>
