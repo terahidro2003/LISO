@@ -1,6 +1,6 @@
 <template>
 <div>
-  <div class="page-header mb-4" v-for="member in API_results.member">
+  <div class="page-header mb-4">
       <div class="description">
         <h3>Redaguoti nari</h3>
         <h1>{{fullName}}</h1>
@@ -14,7 +14,7 @@
       </div>
     </div>
 
-    <div class="page-content justify-content-center" v-for="member in API_results.member">
+    <div class="page-content justify-content-center" >
     <div class="row">
       <div class="col-md-12 card card-big">
         <div class="card-body">
@@ -241,20 +241,19 @@
     },
     mounted() {
       axios.get('/api/members/'+this.MemberID).then(response => {
-        this.API_results = response.data;
-        this.balance = response.data.balance;
-
-        this.fullName = this.API_results.member.firstName + " " + this.API_results.member.lastName;
-        this.birthDate = this.API_results.member.birthDate;
-        this.primaryPhone = this.API_results.member.primaryPhone;
-        this.secondaryPhone = this.API_results.member.secondaryPhone;
-        this.email = this.API_results.member.email;
-        this.instagram = this.API_results.member.instagram;
-        this.facebook = this.API_results.member.facebook;
-        this.description = this.API_results.member.description;
-        this.city = this.API_results.member.city;
-        this.balance = this.API_results.member.balance;
-        this.fee = this.API_results.member.fee;
+        this.API_results = response.data.member[0];
+        this.balance = this.API_results.balance;
+        this.fullName = this.API_results.firstName + " " + this.API_results.lastName;
+        this.birthDate = this.API_results.birthDate;
+        this.primaryPhone = this.API_results.primaryPhone;
+        this.secondaryPhone = this.API_results.secondaryPhone;
+        this.email = this.API_results.email;
+        this.instagram = this.API_results.instagram;
+        this.facebook = this.API_results.facebook;
+        this.description = this.API_results.description;
+        this.city = this.API_results.city;
+        this.balance = this.API_results.balance;
+        this.fee = this.API_results.fee;
       });
     },
     methods: {

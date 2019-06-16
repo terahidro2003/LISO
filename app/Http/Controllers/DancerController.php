@@ -213,17 +213,18 @@ class DancerController extends Controller
     {
       $errors = [];
       //Check if user has warnings
-      if(MoreThanOneRFID($dancerID) == 1){
-          $errors[0] = 1;
-      }else{
-          $errors[0] = 0;
-      }
+
+      // if(MoreThanOneRFID($dancerID) == 1){
+      //   $errors[0] = 1;
+      // }else{
+      //   $errors[0] = 0;
+      // }
       $groups = groups::all();
       $dancer = dancer::where('id', $dancerID)->get();
       $payments = payments::where('member', $dancerID)->get();
-      $fees = fees::where('owner', $dancerID)->get();
-      $balance = calculateBalance($payments, $fees);
-      return response()->json(['member' => $dancer, 'balance' => $balance]);
+      // $fees = fees::where('owner', $dancerID)->get();
+      // $balance = calculateBalance($payments, $fees);
+      return response()->json(['member' => $dancer]);
     }
 
     /**
@@ -289,12 +290,12 @@ class DancerController extends Controller
      * @param  \App\dancer  $dancer
      * @return \Illuminate\Http\Response
      */
-    public function destroy($dancer)
+    public function destroy(Request $req)
     {
         try{
-            dancer::where('id', $dancer)->delete();
+            dancer::where('id', $req->id)->delete();
         }catch(exception $e){
-            return response(['status' => 'FAILED']);
+            return response(['status' => 'FAILED', 'error' => $e]);
         }
         return response(['status' => 'OK']);
     }

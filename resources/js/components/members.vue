@@ -43,8 +43,8 @@
              <div class="col">
               <label class="label">Miestas</label>
               <select v-model="filterCity" class="form-control white" name="group" @change="filterTable('city', $event)">
-                  <option value="1">Klaipeda</option>
-                  <option value="2">Vilnius</option>
+                  <option value="klaipeda">Klaipeda</option>
+                  <option value="vilnius">Vilnius</option>
                   <option value="0">Visi</option>
               </select>
             </div>
@@ -90,6 +90,7 @@
                                     </td>
                                     <td>
                                         <span href="" class="link" @click="showEditDialog(result.id)">Redaguoti</span>
+                                        <span href="" class="link" @click="deleteMember(result.id)">Istrinti</span>
                                     </td>
                                 </tr>
                         </tbody>
@@ -148,19 +149,48 @@
            this.API_results = response.data;
          });
 
+      },
+      deleteMember(id) {
+        swal({
+          title: "Please confirm DANCER deletion",
+          text: "You want to delete a dancer!",
+          icon: "warning",
+          buttons: true,
+          closeModal: true,
+          dangerMode: true
+        }).then(value => {
+          if(value)
+          axios.post('/members/delete', {
+            'id': id
+          }).then(response => {
+            if(response.status == 200) {
+              this.filterTable();
+              this.updater();
+              swal({title: "Deleted", icon: "success"});
+              setTimeout(()=> {swal.close()}, 1000);
+            }
+            else swal("Error!","" ,"error");
+          });
+        });
+      },
+      updater() {
+        axios.get('/api/members').then(response => {
+          this.API_results = response.data;
+          this.membersCount = response.data.length;
+        });
+        axios.get('/api/groups').then(response => {
+          this.groups = response.data;
+        });
       }
     },
     mounted() {
-      axios.get('/api/members').then(response => {
-        this.API_results = response.data;
-        this.membersCount = response.data.length;
-      });
-      axios.get('/api/groups').then(response => {
-        this.groups = response.data;
-      });
+      this.updater();
     }
   }
 </script>
 
-<style>
+<style scoped>
+span {
+  cursor: pointer;
+}
 </style>

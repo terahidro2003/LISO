@@ -187,7 +187,13 @@
           if (response.data.status == 'OK')
           {
             this.operationStatus = true;
-            setTimeout(this.$router.push('/members'), 3000);
+            axios.post('/signups/delete', {
+              id: this.$route.params.id
+            }).then(response => {
+              if(response.status != 200) swal("SgN-del Klaida", "Ivyko SgN-del klaida. Praneskite techniniam personalui!", "error");
+              else setTimeout(this.$router.push('/signups'), 3000);
+            });
+
           }else{
             if(response.data.cause == 1){
               this.validationFailed = true;

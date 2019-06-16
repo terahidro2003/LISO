@@ -10,7 +10,7 @@
 | contains the "web" middleware group. Now create something great!
 |
 */
-
+//
 Route::get('/new', 'SignupsController@create')->name('SignupFormPublic');
 Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
@@ -20,7 +20,8 @@ Route::get('members', 'DancerController@index')->name('members.index');
 Route::any('members/{dancerID}/edit', 'DancerController@edit')->name('members.edit');
 Route::any('members/{dancerID}/update', 'DancerController@update')->name('members.update');
 Route::any('members/{dancerID}/payments/change', 'PaymentsController@changePaymentSettings')->name('members.changePaymentSettings');
-Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('members.delete');
+// Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('members.delete');
+Route::post('members/delete', 'DancerController@destroy')->name('members.delete');
 Route::get('groups', 'GroupsController@index')->name('groups.index');
 Route::get('groups/{groupID}/edit', 'GroupsController@edit')->name('groups.edit');
 Route::post('groups/{groupID}/update', 'GroupsController@update')->name('groups.update');
