@@ -203,8 +203,15 @@ class DancerController extends Controller
                 'group' => 0,
                 ]);
                 $rf = new RFID(['RFID' => $request->rfid_id]);
-                $dancer->rfid()->save($rf);
+                try {
+                  $dancer->rfid()->save($rf);
+                } catch (\Exception $e) {
+                  return response(['error' => $e]);
+                }
+
                 return response(['status' => 'OK']);
+
+                //FIX UNIQUE RFIDS!!!!!!!!!
             }
     }
 

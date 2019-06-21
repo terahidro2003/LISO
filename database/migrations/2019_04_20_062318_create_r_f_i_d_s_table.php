@@ -15,7 +15,7 @@ class CreateRFIDSTable extends Migration
     {
         Schema::create('r_f_i_d_s', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->bigInteger('RFID');
+            $table->bigInteger('RFID')->unique();
             $table->integer('Owner')->nullable();
             $table->string('Type')->default('card');
             $table->bigInteger('timesChecked')->nullable();
