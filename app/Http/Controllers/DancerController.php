@@ -291,6 +291,12 @@ class DancerController extends Controller
     // }
 
     public function updateAPI(Request $req) {
+
+      //ATTTENTION!!!!!!!!!!!!!!!!!!!!!
+      // VALIDATOR REQUIRED!!!!!!!!!
+
+
+
       $member = dancer::find($req->id);
       $member->firstName = $req->firstName;
       $member->lastName = $req->lastName;
