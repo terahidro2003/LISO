@@ -10,8 +10,8 @@ class RFID extends Model
 		'RFID', 'Owner'
 	];
 
-	public function owner()
+	public function dancer()
 	{
-		return $this->belongsTo(dancer::class, 'Owner');
+		return $this->belongsTo(dancer::class, "Owner", "id");
 	}
 }

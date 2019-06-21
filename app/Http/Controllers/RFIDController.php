@@ -38,25 +38,28 @@ class RFIDController extends Controller
         if($checker->fails()){
         	return response()->json(['status' => 'FAILED', 'cause' => 1]);
         }
-        $owner = RFID::where('RFID', $Req->input('RFID'))->first();
+        $owner = RFID::where('RFID', $Req->RFID)->first();
 
         if(empty($owner))
         {
         	return response()->json(['status' => 'FAILED', 'cause' => 3]);
         }
-        $ownerData = dancer::where('id', $owner->id)->first();
+        $ownerData = $owner->dancer;
 
-        $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
+        // $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
 
 
-        if(!empty($todaysEntrie)){
-        	return response()->json(['status' => 'FAILED', 'cause' => 2]);
-        }
-        $entrie = new Entrie;
-        $entrie->RFID = $Req->input('RFID');
-        $entrie->Owner = $owner->Owner;
-        $entrie->save();
-        return response()->json(['status' => 'OK', 'firstName' => $ownerData->firstName, 'lastName' => $ownerData->lastName]);
+        // if(!empty($todaysEntrie)){
+        // 	return response()->json(['status' => 'FAILED', 'cause' => 2]);
+        // }
+        // $entrie = new Entrie;
+        // $entrie->RFID = $Req->input('RFID');
+        // $entrie->Owner = $owner->Owner;
+        // $entrie->save();
+
+
+
+        return response()->json(['status' => 'OK', 'owner' => $ownerData]);
     }
 
     /**

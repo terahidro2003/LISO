@@ -8,6 +8,7 @@ use App\Signups;
 use App\payments;
 use App\fees;
 use App\groups;
+use App\RFID;
 use Illuminate\Http\Request;
 
 class DancerController extends Controller
@@ -181,6 +182,8 @@ class DancerController extends Controller
             'lastName' => 'required',
             'birthDate' => 'required',
             'primaryPhone' => 'required',
+            'city' => 'required',
+            'rfid_id' => 'required',
         ]);
         if ($validator->fails())
         {
@@ -199,6 +202,8 @@ class DancerController extends Controller
                 'city' => $request->input('city'),
                 'group' => 0,
                 ]);
+                $rf = new RFID(['RFID' => $request->rfid_id]);
+                $dancer->rfid()->save($rf);
                 return response(['status' => 'OK']);
             }
     }
@@ -220,8 +225,9 @@ class DancerController extends Controller
       //   $errors[0] = 0;
       // }
       $groups = groups::all();
-      $dancer = dancer::where('id', $dancerID)->get();
-      $payments = payments::where('member', $dancerID)->get();
+      $dancer = dancer::where('id', $dancerID)->first();
+      $dancer->rfid_id = $dancer->rfid->RFID;
+      // $payments = payments::where('member', $dancerID)->get();
       // $fees = fees::where('owner', $dancerID)->get();
       // $balance = calculateBalance($payments, $fees);
       return response()->json(['member' => $dancer]);
@@ -272,16 +278,42 @@ class DancerController extends Controller
      * @param  \App\dancer  $dancer
      * @return \Illuminate\Http\Response
      */
-    public function update($dancerID, Request $request, dancer $dancer)
-    {
-        $member = dancer::find($dancerID);
-        $member->firstName = $request->input('firstName');
-        $member->lastName = $request->input('lastName');
-        $member->birthDate = $request->input('birthDate');
-        $member->primaryPhone = $request->input('primaryPhone');
-        $member->group = $request->input('group');
-        $member->save();
-        return back();
+    // public function update($dancerID, Request $request, dancer $dancer)
+    // {
+    //     $member = dancer::find($dancerID);
+    //     $member->firstName = $request->input('firstName');
+    //     $member->lastName = $request->input('lastName');
+    //     $member->birthDate = $request->input('birthDate');
+    //     $member->primaryPhone = $request->input('primaryPhone');
+    //     $member->group = $request->input('group');
+    //     $member->save();
+    //     return back();
+    // }
+
+    public function updateAPI(Request $req) {
+      $member = dancer::find($req->id);
+      $member->firstName = $req->firstName;
+      $member->lastName = $req->lastName;
+      $member->primaryPhone = $req->primaryPhone;
+      $member->secondaryPhone = $req->secondaryPhone;
+      $member->email = $req->email;
+      $member->instagram = $req->instagram;
+      $member->facebook = $req->facebook;
+      $member->fee = $req->fee;
+      $member->birthDate = $req->birthDate;
+      $member->description = $req->description;
+      $member->city = $req->city;
+      $member->save();
+      //
+      if($member->rfid == null) {
+        $rf = new RFID(['RFID' => $req->rfid_id]);
+        $member->rfid()->save($rf);
+      }
+      else {
+        $member->rfid->RFID = $req->rfid_id;
+        $member->push();
+      }
+      return response()->json(["status" => "OK"]);
     }
 
     /**

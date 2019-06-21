@@ -20,7 +20,7 @@ class dancer extends Model
 	}
 	public function rfid()
 	{
-		return $this->belongsTo(RFID::class, 'id', 'Owner');
+		return $this->hasOne(RFID::class, 'Owner', 'id');
 	}
 	public function entries()
 	{

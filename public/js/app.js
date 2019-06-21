@@ -2351,6 +2351,16 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2377,7 +2387,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       description_required: false,
       city: null,
       city_required: false,
-      API_results: null
+      API_results: null,
+      rfid_id: null
     };
   },
   mounted: function mounted() {
@@ -2398,7 +2409,8 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
   },
   methods: {
     memberCreate: function memberCreate() {
-      var _this2 = this;
+      var _axios$post,
+          _this2 = this;
 
       var verificationStatus = false;
 
@@ -2423,7 +2435,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
       }
 
       var fullFullName = this.fullName.split(" ");
-      axios.post('/api/members/store', _defineProperty({
+      axios.post('/api/members/store', (_axios$post = {
         firstName: fullFullName[0],
         lastName: fullFullName[1],
         primaryPhone: this.primaryPhone,
@@ -2434,7 +2446,7 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         secondaryPhone: this.secondaryPhone,
         facebook: this.facebook,
         instagram: this.instagram
-      }, "description", this.description)).then(function (response) {
+      }, _defineProperty(_axios$post, "description", this.description), _defineProperty(_axios$post, "rfid_id", this.rfid_id), _axios$post)).then(function (response) {
         if (response.data.status == 'OK') {
           _this2.operationStatus = true;
           axios.post('/signups/delete', {
@@ -2679,6 +2691,14 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2708,14 +2728,15 @@ __webpack_require__.r(__webpack_exports__);
       city_required: false,
       balance: null,
       fee: null,
-      API_results: null
+      API_results: null,
+      rfid_id: null
     };
   },
   mounted: function mounted() {
     var _this = this;
 
     axios.get('/api/members/' + this.MemberID).then(function (response) {
-      _this.API_results = response.data.member[0];
+      _this.API_results = response.data.member;
       _this.balance = _this.API_results.balance;
       _this.fullName = _this.API_results.firstName + " " + _this.API_results.lastName;
       _this.birthDate = _this.API_results.birthDate;
@@ -2728,6 +2749,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.city = _this.API_results.city;
       _this.balance = _this.API_results.balance;
       _this.fee = _this.API_results.fee;
+      _this.rfid_id = _this.API_results.rfid_id;
     });
   },
   methods: {
@@ -2757,7 +2779,8 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       var fullFullName = this.fullName.split(" ");
-      axios.post('api/members/update', {
+      axios.post('/api/members/update', {
+        id: this.$route.params.id,
         firstName: fullFullName[0],
         lastName: fullFullName[1],
         primaryPhone: this.primaryPhone,
@@ -2768,7 +2791,8 @@ __webpack_require__.r(__webpack_exports__);
         fee: this.fee,
         birthDate: this.birthDate,
         description: this.description,
-        city: this.city
+        city: this.city,
+        rfid_id: this.rfid_id
       }).then(function (response) {
         if (response.data.status == 'OK') {
           _this2.operationStatus = true;
@@ -2783,9 +2807,8 @@ __webpack_require__.r(__webpack_exports__);
 
           if (response.data.cause == 3) {
             _this2.alreadyExcists = true;
-          }
+          } // console.log(response.data);
 
-          console.log(response.data);
         }
       });
     }
@@ -54287,7 +54310,36 @@ var render = function() {
               ])
             ]),
             _vm._v(" "),
-            _vm._m(3),
+            _c("div", { staticClass: "form-row mt-5 mb-0" }, [
+              _vm._m(3),
+              _vm._v(" "),
+              _vm._m(4),
+              _vm._v(" "),
+              _c("div", { staticClass: "form-row" }, [
+                _c("div", { staticClass: "form-group col-md-8" }, [
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.rfid_id,
+                        expression: "rfid_id"
+                      }
+                    ],
+                    attrs: { type: "number", placeholder: "Nuskaitykite RFID" },
+                    domProps: { value: _vm.rfid_id },
+                    on: {
+                      input: function($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.rfid_id = $event.target.value
+                      }
+                    }
+                  })
+                ])
+              ])
+            ]),
             _vm._v(" "),
             _c("div", { staticClass: "form-row" }, [
               _c("div", { staticClass: "form-group col-md-8" }, [
@@ -54377,11 +54429,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row mt-5 mb-0" }, [
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c("div", { staticClass: "description" }, [
-          _c("h3", [_vm._v("Asmenine informacija")])
-        ])
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("div", { staticClass: "description" }, [
+        _c("h3", [_vm._v("Asmenine informacija")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("div", { staticClass: "description" }, [
+        _c("h3", [_vm._v("RFID nustatymai")])
       ])
     ])
   }
@@ -54810,39 +54870,71 @@ var render = function() {
                 ])
               ]),
               _vm._v(" "),
-              _vm._m(3),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-row" }, [
-                _c("div", { staticClass: "form-group col-md-8" }, [
-                  _c("label", { attrs: { for: "inputBname" } }, [
-                    _vm._v("Pastabos, komentarai")
+              _c("div", { staticClass: "form-row mt-5 mb-0" }, [
+                _vm._m(3),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-row" }, [
+                  _c("div", { staticClass: "form-group col-md-8" }, [
+                    _c("label", { attrs: { for: "inputBname" } }, [
+                      _vm._v("Pastabos, komentarai")
+                    ]),
+                    _vm._v(" "),
+                    _c("textarea", {
+                      directives: [
+                        {
+                          name: "model",
+                          rawName: "v-model",
+                          value: _vm.description,
+                          expression: "description"
+                        }
+                      ],
+                      staticClass: "form-control",
+                      attrs: {
+                        type: "text",
+                        id: "inputBname",
+                        placeholder: "----APRASYMA RASYKITE CIA----"
+                      },
+                      domProps: { value: _vm.description },
+                      on: {
+                        input: function($event) {
+                          if ($event.target.composing) {
+                            return
+                          }
+                          _vm.description = $event.target.value
+                        }
+                      }
+                    })
                   ]),
                   _vm._v(" "),
-                  _c("textarea", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.description,
-                        expression: "description"
-                      }
-                    ],
-                    staticClass: "form-control",
-                    attrs: {
-                      type: "text",
-                      id: "inputBname",
-                      placeholder: "----APRASYMA RASYKITE CIA----"
-                    },
-                    domProps: { value: _vm.description },
-                    on: {
-                      input: function($event) {
-                        if ($event.target.composing) {
-                          return
+                  _vm._m(4),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "form-row" }, [
+                    _c("div", { staticClass: "form-group col-md-8" }, [
+                      _c("textarea", {
+                        directives: [
+                          {
+                            name: "model",
+                            rawName: "v-model",
+                            value: _vm.rfid_id,
+                            expression: "rfid_id"
+                          }
+                        ],
+                        attrs: {
+                          type: "number",
+                          placeholder: "Nuskaitykite RFID"
+                        },
+                        domProps: { value: _vm.rfid_id },
+                        on: {
+                          input: function($event) {
+                            if ($event.target.composing) {
+                              return
+                            }
+                            _vm.rfid_id = $event.target.value
+                          }
                         }
-                        _vm.description = $event.target.value
-                      }
-                    }
-                  })
+                      })
+                    ])
+                  ])
                 ])
               ]),
               _vm._v(" "),
@@ -55041,7 +55133,7 @@ var render = function() {
               ])
             : _vm._e(),
           _vm._v(" "),
-          _vm._m(4),
+          _vm._m(5),
           _vm._v(" "),
           _c("div", { staticClass: "card-body" }, [
             _c("div", { staticClass: "col-md-12" }, [
@@ -55054,7 +55146,7 @@ var render = function() {
                         "table card-table table-vcenter text-nowrap datatable dataTable no-footer"
                     },
                     [
-                      _vm._m(5),
+                      _vm._m(6),
                       _vm._v(" "),
                       _c("tbody", [
                         _c("tr", [
@@ -55133,11 +55225,19 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "form-row mt-5 mb-0" }, [
-      _c("div", { staticClass: "form-group col-md-6" }, [
-        _c("div", { staticClass: "description" }, [
-          _c("h3", [_vm._v("Asmenine informacija")])
-        ])
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("div", { staticClass: "description" }, [
+        _c("h3", [_vm._v("Asmenine informacija")])
+      ])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group col-md-6" }, [
+      _c("div", { staticClass: "description" }, [
+        _c("h3", [_vm._v("RFID nustatymai")])
       ])
     ])
   },
@@ -70719,7 +70819,8 @@ var routes = [{
   component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
 }, {
   path: '/members/edit/:id',
-  component: _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_14__["default"]
+  component: _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],
+  name: 'edit'
 }, {
   path: '/signups/confirm/:id',
   component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
@@ -70781,6 +70882,39 @@ var app = new Vue({
     cdark: function cdark() {
       $cookies.set("dark", this.dark);
       if (this.dark) document.body.classList.add("change");else document.body.classList.remove("change");
+    },
+    scanRFID: function scanRFID() {
+      var _this2 = this;
+
+      sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+        title: 'Nuskenuokite RFID irengini',
+        content: {
+          element: "input",
+          placeholder: "RFID korteles duomenys"
+        },
+        button: {
+          cancel: true,
+          confirm: true
+        }
+      }).then(function (value) {
+        if (value != null) {
+          axios__WEBPACK_IMPORTED_MODULE_3___default.a.post("/rfid/scan", {
+            RFID: value
+          }).then(function (response) {
+            if (response.data.status == "OK") {
+              // console.log(response.data.owner.id);
+              _this2.$router.push({
+                name: 'edit',
+                params: {
+                  id: response.data.owner.id
+                }
+              });
+            } else {
+              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Error!", "An error has occured", "error"); // console.log(response.data);
+            }
+          });
+        }
+      });
     }
   },
   mounted: function mounted() {

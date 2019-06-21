@@ -176,66 +176,66 @@
       });
     }
 
-    async function scanRFID(){
-      const {value: group} = await Swal.fire({
-        title: 'Nuskenuokite RFID irengini',
-        input: 'text',
-        inputPlaceholder: 'RFID korteles duomenys',
-        showCancelButton: true,
-        confirmButtonText: 'Patvirtinti',
-        showLoaderOnConfirm: true,
-        preConfirm: (value) => {
-          $.ajax({
-              url: '/rfid/scan',
-              type: 'POST',
-              headers:{
-                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-              },
-              data: {
-                RFID: value,
-              },
-              dataType: 'JSON',
-              success: function(data) {
-                if (data.status != 'OK'){
-                  if (data.cause == 1){
-                    Swal.fire({
-                      type: 'error',
-                      title: 'Klaida!',
-                      text: 'Procedūra neįvyko veikiausiai dėl sistemos klaidos.',
-                      footer: '<a href>Susisiekti su techniniu personalu</a>'
-                    });
-                  }
-                  if (data.cause == 2){
-                    Swal.fire({
-                      type: 'warning',
-                      title: 'Kortele siandien jau buvo nuskaityta!',
-                      text: 'Prašome patikrinti duomenis.',
-                      footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
-                    });
-                  }
-                  if(data.cause == 3){
-                    Swal.fire({
-                      type: 'error',
-                      title: 'Klaida!',
-                      text: 'Nuskenuotas neatpazintas RFID irenginys',
-                      footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
-                    });
-                  }
-
-                  console.log('FAILED');
-                }else{
-                  Swal.fire({
-                    type: 'success',
-                    title: data.firstName + " " + data.lastName,
-                    text: 'Kortele nuskenuota sekmingai',
-                  });
-                }
-              }
-            });
-        }
-
-      });
-    }
+    // async function scanRFID(){
+    //   const {value: group} = await Swal.fire({
+    //     title: 'Nuskenuokite RFID irengini',
+    //     input: 'text',
+    //     inputPlaceholder: 'RFID korteles duomenys',
+    //     showCancelButton: true,
+    //     confirmButtonText: 'Patvirtinti',
+    //     showLoaderOnConfirm: true,
+    //     preConfirm: (value) => {
+    //       $.ajax({
+    //           url: '/rfid/scan',
+    //           type: 'POST',
+    //           headers:{
+    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+    //           },
+    //           data: {
+    //             RFID: value,
+    //           },
+    //           dataType: 'JSON',
+    //           success: function(data) {
+    //             if (data.status != 'OK'){
+    //               if (data.cause == 1){
+    //                 Swal.fire({
+    //                   type: 'error',
+    //                   title: 'Klaida!',
+    //                   text: 'Procedūra neįvyko veikiausiai dėl sistemos klaidos.',
+    //                   footer: '<a href>Susisiekti su techniniu personalu</a>'
+    //                 });
+    //               }
+    //               if (data.cause == 2){
+    //                 Swal.fire({
+    //                   type: 'warning',
+    //                   title: 'Kortele siandien jau buvo nuskaityta!',
+    //                   text: 'Prašome patikrinti duomenis.',
+    //                   footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
+    //                 });
+    //               }
+    //               if(data.cause == 3){
+    //                 Swal.fire({
+    //                   type: 'error',
+    //                   title: 'Klaida!',
+    //                   text: 'Nuskenuotas neatpazintas RFID irenginys',
+    //                   footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
+    //                 });
+    //               }
+    //
+    //               console.log('FAILED');
+    //             }else{
+    //               Swal.fire({
+    //                 type: 'success',
+    //                 title: data.firstName + " " + data.lastName,
+    //                 text: 'Kortele nuskenuota sekmingai',
+    //               });
+    //             }
+    //           }
+    //         });
+    //     }
+    //
+    //   });
+    // }
    </script>
 </head>
 <body>
@@ -305,7 +305,7 @@
         <router-view></router-view>
       </main>
 
-        <button class="btn btn-primary btn-rounded bottomAction" onclick="scanRFID();">
+        <button v-if="this.$route.name != 'edit'" class="btn btn-primary btn-rounded bottomAction" @click="scanRFID()">
         	<span style="display: none;">-</span> <span class="icon-white" data-feather="credit-card"></span> <span style="display: none;">-</span>
         </button>
     </div>

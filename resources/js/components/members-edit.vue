@@ -109,15 +109,23 @@
                                         <h3>Asmenine informacija</h3>
                                       </div>
                                 </div>
-                            </div>
                             <div class="form-row">
                               <div class="form-group col-md-8">
                                   <label for="inputBname">Pastabos, komentarai</label>
                                   <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                               </div>
+                              <div class="form-group col-md-6">
+                                    <div class="description">
+                                      <h3>RFID nustatymai</h3>
+                                    </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <textarea type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id"></textarea>
+                                </div>
                             </div>
-
-
+                          </div>
+                        </div>
                             <div class="form-row mt-5 mb-0">
                                  <div class="form-group col-md-6">
                                        <div class="description">
@@ -237,11 +245,12 @@
         balance: null,
         fee: null,
         API_results: null,
+        rfid_id: null
       }
     },
     mounted() {
       axios.get('/api/members/'+this.MemberID).then(response => {
-        this.API_results = response.data.member[0];
+        this.API_results = response.data.member;
         this.balance = this.API_results.balance;
         this.fullName = this.API_results.firstName + " " + this.API_results.lastName;
         this.birthDate = this.API_results.birthDate;
@@ -254,6 +263,7 @@
         this.city = this.API_results.city;
         this.balance = this.API_results.balance;
         this.fee = this.API_results.fee;
+        this.rfid_id = this.API_results.rfid_id;
       });
     },
     methods: {
@@ -265,7 +275,8 @@
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
 
         var fullFullName = this.fullName.split(" ");
-        axios.post('api/members/update', {
+        axios.post('/api/members/update', {
+          id: this.$route.params.id,
           firstName: fullFullName[0],
           lastName: fullFullName[1],
           primaryPhone: this.primaryPhone,
@@ -278,6 +289,7 @@
           birthDate: this.birthDate,
           description: this.description,
           city: this.city,
+          rfid_id: this.rfid_id
         }).then(response => {
           if (response.data.status == 'OK')
           {
@@ -292,7 +304,7 @@
             }
 
             if(response.data.cause == 3){this.alreadyExcists = true}
-            console.log(response.data);
+            // console.log(response.data);
           }
         });
       }

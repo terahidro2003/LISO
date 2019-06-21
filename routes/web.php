@@ -18,7 +18,7 @@ Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
 Route::get('members', 'DancerController@index')->name('members.index');
 Route::any('members/{dancerID}/edit', 'DancerController@edit')->name('members.edit');
-Route::any('members/{dancerID}/update', 'DancerController@update')->name('members.update');
+// Route::any('members/{dancerID}/update', 'DancerController@update')->name('members.update');
 Route::any('members/{dancerID}/payments/change', 'PaymentsController@changePaymentSettings')->name('members.changePaymentSettings');
 // Route::get('members/{dancerID}/delete', 'DancerController@destroy')->name('members.delete');
 Route::post('members/delete', 'DancerController@destroy')->name('members.delete');
@@ -54,6 +54,7 @@ Route::any('api/groups/create', 'GroupsController@store');
 Route::any('api/groups/update/{id}', 'GroupsController@update');
 Route::any('api/members/changeGroup/{id}', 'DancerController@changeGroup');
 Route::any('api/members/store', 'DancerController@storeAPI')->name('api.member.store');
+Route::post('api/members/update', 'DancerController@updateAPI')->name('api.members.update');
 // Route::get('api/members/filter/city/{cityID}', 'DancerController@showCurrentCity')->name('api.members.filter.city');
 // Route::get('api/members/filter/group/{groupID}', 'DancerController@showCurrentGroup')->name('api.members.filter.group');
 Route::post('api/members/filter/', 'DancerController@filter')->name('api.members.filter');

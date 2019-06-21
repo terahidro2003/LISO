@@ -61,7 +61,7 @@ const routes = [
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd },
-  { path: '/members/edit/:id', component: memberEdit },
+  { path: '/members/edit/:id', component: memberEdit, name: 'edit' },
   { path: '/signups/confirm/:id', component: membersAdd},
 ]
 
@@ -128,6 +128,34 @@ const app = new Vue({
       $cookies.set("dark", this.dark);
       if(this.dark) document.body.classList.add("change");
       else document.body.classList.remove("change");
+    },
+    scanRFID() {
+      swal({
+        title: 'Nuskenuokite RFID irengini',
+        content: {
+          element: "input",
+          placeholder: "RFID korteles duomenys"
+        },
+        button: {
+          cancel: true,
+          confirm: true,
+        }
+      }).then(value => {
+        if(value != null) {
+          axios.post("/rfid/scan", {
+            RFID: value
+          }).then(response => {
+            if(response.data.status == "OK") {
+              // console.log(response.data.owner.id);
+              this.$router.push({name: 'edit', params: {id: response.data.owner.id} });
+            }
+            else {
+              swal("Error!", "An error has occured", "error");
+              // console.log(response.data);
+            }
+          });
+        }
+      });
     }
   },
   mounted() {

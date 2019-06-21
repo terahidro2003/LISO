@@ -100,6 +100,16 @@
                                       <h3>Asmenine informacija</h3>
                                     </div>
                               </div>
+                              <div class="form-group col-md-6">
+                                    <div class="description">
+                                      <h3>RFID nustatymai</h3>
+                                    </div>
+                              </div>
+                              <div class="form-row">
+                                <div class="form-group col-md-8">
+                                    <textarea type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id"></textarea>
+                                </div>
+                            </div>
                           </div>
                           <div class="form-row">
                             <div class="form-group col-md-8">
@@ -145,6 +155,7 @@
         city: null,
         city_required: false,
         API_results: null,
+        rfid_id: null,
       }
     },
     mounted(){
@@ -183,6 +194,7 @@
           facebook: this.facebook,
           instagram: this.instagram,
           description: this.description,
+          rfid_id: this.rfid_id
         }).then(response => {
           if (response.data.status == 'OK')
           {
