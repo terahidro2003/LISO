@@ -2050,7 +2050,8 @@ __webpack_require__.r(__webpack_exports__);
       name: null,
       leader: null,
       description: null,
-      API_results: null
+      API_results: null,
+      members: null
     };
   },
   mounted: function mounted() {
@@ -2058,9 +2059,10 @@ __webpack_require__.r(__webpack_exports__);
 
     axios.get('/api/groups/' + this.$route.params.id, {}).then(function (response) {
       _this.API_results = response.data;
+      _this.members = response.data.members;
       _this.name = response.data.group.groupName;
       _this.leader = response.data.group.leader;
-      _this.description = response.data.group.description;
+      _this.description = response.data.group.description; // console.log(response.data.members);
     });
   },
   methods: {
@@ -2448,6 +2450,14 @@ function _defineProperty(obj, key, value) { if (key in obj) { Object.definePrope
         instagram: this.instagram
       }, _defineProperty(_axios$post, "description", this.description), _defineProperty(_axios$post, "rfid_id", this.rfid_id), _axios$post)).then(function (response) {
         if (response.data.status == 'OK') {
+          if (_this2.$route.name == "add") {
+            alert("YES");
+
+            _this2.$router.push("/members");
+
+            return;
+          }
+
           _this2.operationStatus = true;
           axios.post('/signups/delete', {
             id: _this2.$route.params.id
@@ -2926,9 +2936,6 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
-//
-//
-//
 /* harmony default export */ __webpack_exports__["default"] = ({
   data: function data() {
     return {
@@ -2971,7 +2978,7 @@ __webpack_require__.r(__webpack_exports__);
         group: this.filterGroup,
         city: this.filterCity
       };
-      var reqURL = "api/members/filter/";
+      var reqURL = "api/members/filter";
       axios.post(reqURL, config).then(function (response) {
         _this2.API_results = response.data;
       });
@@ -2991,9 +2998,9 @@ __webpack_require__.r(__webpack_exports__);
           'id': id
         }).then(function (response) {
           if (response.status == 200) {
-            _this3.filterTable();
-
             _this3.updater();
+
+            _this3.filterTable();
 
             swal({
               title: "Deleted",
@@ -7708,7 +7715,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nspan[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n", ""]);
+exports.push([module.i, "\nspan[data-v-70c3d3c4], select[data-v-70c3d3c4], label[data-v-70c3d3c4], option[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n.dropdown-item[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -53520,9 +53527,13 @@ var render = function() {
         _vm._m(1),
         _vm._v(" "),
         _c("div", { staticClass: "card-body" }, [
-          _vm._m(2),
+          _vm.members == null || _vm.members.length == 0
+            ? _c("div", { staticClass: "alert alert-warning" }, [
+                _c("h4", [_vm._v("Siai grupei siuo metu nera priskirta nariu")])
+              ])
+            : _vm._e(),
           _vm._v(" "),
-          _vm.API_results.members != null || _vm.API_results.members != ""
+          _vm.members != null || _vm.members != ""
             ? _c(
                 "table",
                 {
@@ -53530,11 +53541,11 @@ var render = function() {
                     "table card-table table-vcenter text-nowrap datatable dataTable no-footer"
                 },
                 [
-                  _vm._m(3),
+                  _vm._m(2),
                   _vm._v(" "),
                   _c(
                     "tbody",
-                    _vm._l(_vm.API_results.members, function(result) {
+                    _vm._l(_vm.members, function(result) {
                       return _c("tr", [
                         _c("td", [
                           _vm._v(" " + _vm._s(result.firstName) + " ")
@@ -53558,30 +53569,35 @@ var render = function() {
                               _vm._s(result.groupName) +
                               "\n                              "
                           ),
-                          result.groupName == null || result.groupName == ""
-                            ? _c(
-                                "label",
-                                { staticClass: "bg-label bg-label-warning" },
-                                [_vm._v("Nepriskirtas(-a)")]
-                              )
-                            : _vm._e()
+                          _c(
+                            "label",
+                            { staticClass: "bg-label bg-label-main" },
+                            [_vm._v(_vm._s(_vm.name))]
+                          )
                         ]),
                         _vm._v(" "),
-                        _c("td", [
-                          _c(
-                            "span",
-                            {
-                              staticClass: "link",
-                              attrs: { href: "" },
-                              on: {
-                                click: function($event) {
-                                  return _vm.showEditDialog(result.id)
+                        _c(
+                          "td",
+                          [
+                            _c(
+                              "router-link",
+                              {
+                                attrs: {
+                                  to: {
+                                    name: "edit",
+                                    params: { id: result.id }
+                                  }
                                 }
-                              }
-                            },
-                            [_vm._v("Redaguoti")]
-                          )
-                        ])
+                              },
+                              [
+                                _c("span", { staticClass: "link" }, [
+                                  _vm._v("Redaguoti")
+                                ])
+                              ]
+                            )
+                          ],
+                          1
+                        )
                       ])
                     }),
                     0
@@ -53644,14 +53660,6 @@ var staticRenderFns = [
     var _c = _vm._self._c || _h
     return _c("div", { staticClass: "card-header flex-s" }, [
       _c("h2", { staticClass: "vertical-align" }, [_vm._v("Nariai")])
-    ])
-  },
-  function() {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "alert alert-warning" }, [
-      _c("h4", [_vm._v("Siai grupei siuo metu nera priskirta nariu")])
     ])
   },
   function() {
@@ -53742,7 +53750,7 @@ var render = function() {
                 _c("div", { staticClass: "col q-data" }, [
                   _c("h3", { staticClass: "bolded" }, [_vm._v("Nariai")]),
                   _vm._v(" "),
-                  _c("h3", [_vm._v(_vm._s(group.memberCount))])
+                  _c("h3", [_vm._v(_vm._s(group.members_count))])
                 ]),
                 _vm._v(" "),
                 _vm._m(1, true),
@@ -55368,7 +55376,7 @@ var render = function() {
                         : $$selectedVal[0]
                     },
                     function($event) {
-                      return _vm.filterTable("group", $event)
+                      return _vm.filterTable()
                     }
                   ]
                 }
@@ -55379,10 +55387,8 @@ var render = function() {
                 ]),
                 _vm._v(" "),
                 _vm._l(_vm.groups, function(group) {
-                  return _c("optgroup", [
-                    _c("option", { domProps: { value: group.id } }, [
-                      _vm._v(_vm._s(group.groupName))
-                    ])
+                  return _c("option", { domProps: { value: group.id } }, [
+                    _vm._v(_vm._s(group.groupName))
                   ])
                 })
               ],
@@ -55422,21 +55428,21 @@ var render = function() {
                         : $$selectedVal[0]
                     },
                     function($event) {
-                      return _vm.filterTable("city", $event)
+                      return _vm.filterTable()
                     }
                   ]
                 }
               },
               [
+                _c("option", { attrs: { value: "0" } }, [_vm._v("Visi")]),
+                _vm._v(" "),
                 _c("option", { attrs: { value: "klaipeda" } }, [
                   _vm._v("Klaipeda")
                 ]),
                 _vm._v(" "),
                 _c("option", { attrs: { value: "vilnius" } }, [
                   _vm._v("Vilnius")
-                ]),
-                _vm._v(" "),
-                _c("option", { attrs: { value: "0" } }, [_vm._v("Visi")])
+                ])
               ]
             )
           ])
@@ -55494,7 +55500,7 @@ var render = function() {
                           )
                         : _vm._e(),
                       _vm._v(" "),
-                      result.groupName != null || result.groupName != ""
+                      result.groupName != null
                         ? _c(
                             "label",
                             {
@@ -55514,7 +55520,6 @@ var render = function() {
                               "a",
                               {
                                 staticClass: "dropdown-item",
-                                attrs: { href: "#" },
                                 on: {
                                   click: function($event) {
                                     return _vm.changeMembersGroup(
@@ -70816,7 +70821,8 @@ var routes = [{
   component: _components_competition_show_vue__WEBPACK_IMPORTED_MODULE_11__["default"]
 }, {
   path: '/members/add',
-  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"]
+  component: _components_members_add_vue__WEBPACK_IMPORTED_MODULE_13__["default"],
+  name: 'add'
 }, {
   path: '/members/edit/:id',
   component: _components_members_edit_vue__WEBPACK_IMPORTED_MODULE_14__["default"],

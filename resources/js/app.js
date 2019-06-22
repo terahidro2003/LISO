@@ -60,7 +60,7 @@ const routes = [
   { path: '/groups/update/:id', component: groupsUpdate },
   { path: '/payments', component: payments },
   { path: '/competition', component: competition },
-  { path: '/members/add', component: membersAdd },
+  { path: '/members/add', component: membersAdd, name: 'add' },
   { path: '/members/edit/:id', component: memberEdit, name: 'edit' },
   { path: '/signups/confirm/:id', component: membersAdd},
 ]

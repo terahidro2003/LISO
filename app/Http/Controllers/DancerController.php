@@ -94,10 +94,15 @@ class DancerController extends Controller
     }
 
     public function filter(Request $req) {
-        if($req->group == 0 && $req->city == "0") return response()->json(dancer::all());
-        else if($req->group == 0) return response()->json(dancer::where('city', $req->city)->get());
-        else if($req->city == "0") return response()->json(dancer::where('group', $req->group)->get());
-        else return response()->json(dancer::where('group', $req->group)->where('city', $req->city)->get());
+        if($req->group == 0 && $req->city == "0") $dancers = dancer::all();
+        else if($req->group == 0) $dancers = dancer::where('city', $req->city)->get();
+        else if($req->city == "0") $dancers = dancer::where('group', $req->group)->get();
+        else $dancers = dancer::where('group', $req->group)->where('city', $req->city)->get();
+
+        foreach ($dancers as $dancer)
+          $dancer->groupName = $dancer->currentGroup->groupName;
+
+        return response()->json($dancers);
     }
 
     /* Filtering members resources by current selected group

@@ -27,7 +27,7 @@
             <div class="quick-data row">
               <div class="col q-data">
                 <h3 class="bolded">Nariai</h3>
-                <h3>{{ group.memberCount }}</h3>
+                <h3>{{ group.members_count }}</h3>
               </div>
               <div class="col q-data">
                 <h3 class="bolded">Mokumas</h3>
@@ -54,7 +54,7 @@
   export default {
     data(){
       return{
-        API_results: []
+        API_results: [],
       }
     },
     methods: {

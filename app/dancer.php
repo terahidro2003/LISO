@@ -16,7 +16,7 @@ class dancer extends Model
 	];
 	public function currentGroup()
 	{
-		return $this->belongsTo(groups::class, 'group');
+		return $this->belongsTo(groups::class, 'group', 'id');
 	}
 	public function rfid()
 	{

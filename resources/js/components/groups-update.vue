@@ -62,10 +62,10 @@
         </div>
 
         <div class="card-body">
-            <div class="alert alert-warning">
+            <div class="alert alert-warning" v-if="members == null || members.length == 0">
               <h4>Siai grupei siuo metu nera priskirta nariu</h4>
             </div>
-            <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer" v-if="API_results.members != null || API_results.members != ''">
+            <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer" v-if="members != null || members != ''">
                 <thead>
                     <tr>
                         <th>Vardas</th>
@@ -78,7 +78,7 @@
                     </tr>
                 </thead>
                 <tbody>
-                        <tr v-for="result in API_results.members">
+                        <tr v-for="result in members">
                             <td> {{result.firstName}} </td>
                             <td> {{result.lastName}} </td>
                             <td> {{result.city}} </td>
@@ -86,10 +86,10 @@
                             <td> {{result.primaryPhone}} </td>
                             <td>
                               {{result.groupName}}
-                              <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''">Nepriskirtas(-a)</label>
+                              <label class="bg-label bg-label-main">{{name}}</label>
                             </td>
                             <td>
-                                <span href="" class="link" @click="showEditDialog(result.id)">Redaguoti</span>
+                                <router-link :to="{ name: 'edit', params: { id: result.id}}"><span class="link">Redaguoti</span></router-link>
                             </td>
                         </tr>
                 </tbody>
@@ -109,6 +109,7 @@
         leader: null,
         description: null,
         API_results: null,
+        members: null,
       }
     },
     mounted(){
@@ -116,9 +117,11 @@
 
       }).then(response => {
         this.API_results = response.data;
+        this.members = response.data.members;
         this.name = response.data.group.groupName;
         this.leader = response.data.group.leader;
         this.description = response.data.group.description;
+        // console.log(response.data.members);
       });
     },
     methods: {

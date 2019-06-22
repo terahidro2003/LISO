@@ -9,7 +9,7 @@ class groups extends Model
 
 	public function members()
 	{
-	     return $this->hasMany(dancer::class, 'group');
+	     return $this->hasMany(dancer::class, 'group', 'id');
 	}
     //
 }

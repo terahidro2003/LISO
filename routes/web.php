@@ -57,6 +57,6 @@ Route::any('api/members/store', 'DancerController@storeAPI')->name('api.member.s
 Route::post('api/members/update', 'DancerController@updateAPI')->name('api.members.update');
 // Route::get('api/members/filter/city/{cityID}', 'DancerController@showCurrentCity')->name('api.members.filter.city');
 // Route::get('api/members/filter/group/{groupID}', 'DancerController@showCurrentGroup')->name('api.members.filter.group');
-Route::post('api/members/filter/', 'DancerController@filter')->name('api.members.filter');
+Route::post('api/members/filter', 'DancerController@filter')->name('api.members.filter');
 Route::get('api/members', 'DancerController@indexAPI')->name('api.members');
 Route::get('api/members/{id}', 'DancerController@showAPI')->name('api.members.show');

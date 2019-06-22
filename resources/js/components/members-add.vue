@@ -198,6 +198,11 @@
         }).then(response => {
           if (response.data.status == 'OK')
           {
+            if(this.$route.name == "add") {
+              alert("YES");
+              this.$router.push("/members");
+              return;
+            }
             this.operationStatus = true;
             axios.post('/signups/delete', {
               id: this.$route.params.id

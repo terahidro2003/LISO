@@ -31,21 +31,18 @@
           <div class="row">
             <div class="col">
               <label class="label">Grupe</label>
-              <select v-model="filterGroup" class="form-control white" name="group" @change="filterTable('group', $event)">
+              <select v-model="filterGroup" class="form-control white" name="group" @change="filterTable()">
                 <option value="0">Visa studija</option>
-                <optgroup v-for="group in groups">
-                  <option :value="group.id">{{group.groupName}}</option>
-                </optgroup>
-
+                  <option v-for="group in groups" :value="group.id">{{group.groupName}}</option>
               </select>
             </div>
 
              <div class="col">
               <label class="label">Miestas</label>
-              <select v-model="filterCity" class="form-control white" name="group" @change="filterTable('city', $event)">
+              <select v-model="filterCity" class="form-control white" name="group" @change="filterTable()">
+                  <option value="0">Visi</option>
                   <option value="klaipeda">Klaipeda</option>
                   <option value="vilnius">Vilnius</option>
-                  <option value="0">Visi</option>
               </select>
             </div>
           </div>
@@ -80,10 +77,10 @@
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
                                       <label class="bg-label bg-label-warning" v-if="result.groupName == null || result.groupName == ''" data-toggle="dropdown">Nepriskirtas(-a)</label>
-                                      <label class="bg-label bg-label-main" v-if="result.groupName != null || result.groupName != ''" data-toggle="dropdown">{{result.groupName}}</label>
+                                      <label class="bg-label bg-label-main" v-if="result.groupName != null" data-toggle="dropdown">{{result.groupName}}</label>
                                       <div class="dropdown-menu">
                                         <div v-for="group in groups">
-                                          <a class="dropdown-item" href="#" @click="changeMembersGroup(group.id, result.id)">{{group.groupName}}</a>
+                                          <a class="dropdown-item" @click="changeMembersGroup(group.id, result.id)">{{group.groupName}}</a>
                                         </div>
 
                                       </div>
@@ -144,7 +141,7 @@
             city: this.filterCity
         }
 
-        var reqURL = "api/members/filter/";
+        var reqURL = "api/members/filter";
          axios.post(reqURL, config).then(response => {
            this.API_results = response.data;
          });
@@ -164,8 +161,8 @@
             'id': id
           }).then(response => {
             if(response.status == 200) {
-              this.filterTable();
               this.updater();
+              this.filterTable();
               swal({title: "Deleted", icon: "success"});
               setTimeout(()=> {swal.close()}, 1000);
             }
@@ -190,7 +187,12 @@
 </script>
 
 <style scoped>
-span {
+span, select, label, option {
   cursor: pointer;
 }
+
+.dropdown-item {
+  cursor: pointer;
+}
+
 </style>
