@@ -40,13 +40,17 @@
           <div class="modal-body">
             <a href='#' class='icon' style='font-size: 2em;float: right;' @click="$emit('close')">&times;</a>
             <slot name="body">
-              <input type="text" name="q" class="form-control input-search" style="font-size: 2em; border: none;" placeholder="Iveskite ieskoma fraze cia..." v-on:keyup="makeSearch()" v-model="q">
+              <input type="text" name="q" class="form-control input-search" style="font-size: 2em; border: none;" placeholder="Iveskite ieškoma frazę čia..." v-on:keyup="makeSearch()" v-model="q">
             </slot>
           </div>
 
           <div class="modal-footer">
+            <div class="alert alert-danger w-100" v-if="search_status == false">
+                Atsiprašome, bet, deja, pagal Jūsų užklausa nieko neradome :(
+              </div>
             <slot name="footer">
-              <div class="search-result" v-for="result in search_results">
+
+              <div class="search-result" v-for="result in search_results" v-if="search_status == true">
                 <div>
                   <h2>@{{result.firstName}} @{{result.lastName}}</h2>
                   <h5 class="mt-2"></h5>
@@ -55,33 +59,6 @@
                   <label class="bg-label bg-label-search bg-label-search-success">Narys</label>
                 </div>
               </div>
-            </slot>
-          </div>
-        </div>
-      </div>
-    </div>
-  </transition>
-</script>
-
-<script type="text/x-template" id="modal-confirm-member">
-  <transition name="modal">
-    <div class="modal-mask">
-      <div class="modal-wrapper">
-        <div class="modal-container">
-          <div class="modal-header">
-            <h1>Patvirtinti naryste</h1>
-          </div>
-          <div class="modal-body">
-            <a href='#' class='icon' style='font-size: 2em;float: right;' @click="$emit('close')">&times;</a>
-            <slot name="body">
-              <h2>@{{sign.firstName}} @{{sign.lastName}}</h2>
-            </slot>
-          </div>
-
-          <div class="modal-footer">
-            <slot name="footer">
-             <button class="btn btn-success" @click="">Patvirtinti</button>
-             <button class="btn btn-danger" @click="">Atsaukti</button>
             </slot>
           </div>
         </div>
@@ -175,67 +152,6 @@
 
       });
     }
-
-    // async function scanRFID(){
-    //   const {value: group} = await Swal.fire({
-    //     title: 'Nuskenuokite RFID irengini',
-    //     input: 'text',
-    //     inputPlaceholder: 'RFID korteles duomenys',
-    //     showCancelButton: true,
-    //     confirmButtonText: 'Patvirtinti',
-    //     showLoaderOnConfirm: true,
-    //     preConfirm: (value) => {
-    //       $.ajax({
-    //           url: '/rfid/scan',
-    //           type: 'POST',
-    //           headers:{
-    //             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    //           },
-    //           data: {
-    //             RFID: value,
-    //           },
-    //           dataType: 'JSON',
-    //           success: function(data) {
-    //             if (data.status != 'OK'){
-    //               if (data.cause == 1){
-    //                 Swal.fire({
-    //                   type: 'error',
-    //                   title: 'Klaida!',
-    //                   text: 'Procedūra neįvyko veikiausiai dėl sistemos klaidos.',
-    //                   footer: '<a href>Susisiekti su techniniu personalu</a>'
-    //                 });
-    //               }
-    //               if (data.cause == 2){
-    //                 Swal.fire({
-    //                   type: 'warning',
-    //                   title: 'Kortele siandien jau buvo nuskaityta!',
-    //                   text: 'Prašome patikrinti duomenis.',
-    //                   footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
-    //                 });
-    //               }
-    //               if(data.cause == 3){
-    //                 Swal.fire({
-    //                   type: 'error',
-    //                   title: 'Klaida!',
-    //                   text: 'Nuskenuotas neatpazintas RFID irenginys',
-    //                   footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
-    //                 });
-    //               }
-    //
-    //               console.log('FAILED');
-    //             }else{
-    //               Swal.fire({
-    //                 type: 'success',
-    //                 title: data.firstName + " " + data.lastName,
-    //                 text: 'Kortele nuskenuota sekmingai',
-    //               });
-    //             }
-    //           }
-    //         });
-    //     }
-    //
-    //   });
-    // }
    </script>
 </head>
 <body>
@@ -251,7 +167,7 @@
                         </div>
                         <div class="ml-5 mt-4 description">
                           <div class="text">
-                            <h3 :class="{mport: dark}">Šokių studija</h3>
+                            <h3 :class="{mport: dark}">DSMS</h3>
                             <h1 :class="{mport: dark}">VŠĮ, SFINX</h1>
                           </div>
                         </div>
@@ -259,12 +175,13 @@
 
               <div class="secondSide">
                           <div class="items">
-                            <input type="checkbox" v-model="dark" @change="cdark()"> DARK MODE {alpha}</input>
+                            {{-- <input class="form-control" type="checkbox" v-model="dark" @change="cdark()"> DARK MODE</input> --}}
                             <a href="#" class="item" @click="showSearchModal = true">
                                 <span data-feather="search" class="icon"></span>
                             </a>
                             <a class="item">
                                 <span data-feather="user" class="icon"></span>
+                                {{Auth::user()->name}}
                             </a>
                           </div>
               </div>
@@ -274,9 +191,9 @@
                    <router-link to="/home" class="item" data-toggle="tooltip" title="Main">
                      <span class="icon" data-feather="home"></span>
                    </router-link>
-                    <router-link to="/stats" class="item">
+                {{--     <router-link to="/stats" class="item">
                       <span class="icon" data-feather="bar-chart"></span>
-                    </router-link>
+                    </router-link> --}}
                     <router-link to="/signups" class="item">
                       <span class="icon" data-feather="layers"></span>
                     </router-link>
@@ -284,15 +201,18 @@
                     <router-link to="/members" class="item">
                       <span class="icon" data-feather="user"></span>
                     </router-link>
-                    <router-link to="/settings" class="item">
+                    {{-- <router-link to="/settings" class="item">
                       <span class="icon" data-feather="hard-drive"></span>
-                    </router-link>
+                    </router-link> --}}
                     <router-link to="/payments" class="item">
                       <span class="icon" data-feather="dollar-sign"></span>
                     </router-link>
-                    <router-link to="/competition" class="item">
-                      <span class="icon" data-feather="user"></span>
+                    <router-link to="/entries" class="item">
+                      <span class="icon" data-feather="key"></span>
                     </router-link>
+                    {{-- <router-link to="/competition" class="item">
+                      <span class="icon" data-feather="user"></span>
+                    </router-link> --}}
 
                 </div>
                 <div class="footer">

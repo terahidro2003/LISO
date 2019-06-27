@@ -11,6 +11,9 @@ import swal from 'sweetalert';
 const feather = require('feather-icons')
 feather.replace();
 
+
+
+
 /*
 Vue.js components defined here
 */
@@ -20,7 +23,15 @@ import VueRouter from 'vue-router';
 import VueCookies from  'vue-cookies'
 Vue.use(VueRouter);
 Vue.use(VueCookies);
+
+//import DateTimePicker & it's settings
+import datePicker from 'vue-bootstrap-datetimepicker';
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+Vue.use(datePicker);
+
+
 import axios from 'axios';
+
 
 
 // 1. Define route components.
@@ -33,6 +44,7 @@ import home from './components/home.vue';
 import groups from './components/groups.vue';
 import groupsUpdate from './components/groups-update.vue';
 import members from './components/members.vue';
+import entries from './components/entries.vue';
 import payments from './components/payments.vue';
 import competition from './components/competition-show.vue';
 
@@ -59,6 +71,7 @@ const routes = [
   { path: '/groups/create', component: groupsCreate },
   { path: '/groups/update/:id', component: groupsUpdate },
   { path: '/payments', component: payments },
+  { path: '/entries', component: entries },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd, name: 'add' },
   { path: '/members/edit/:id', component: memberEdit, name: 'edit' },
@@ -84,6 +97,8 @@ Vue.component('search-modal', {
     return {
       q: null,
       search_results: [],
+      search_status: null,
+      authenticatedUser: null,
     }
   },
   watch: {
@@ -99,14 +114,18 @@ Vue.component('search-modal', {
         axios.post('/api/search', {
           searchQ: this.q,
         }).then(response => {
-          this.search_results = response.data
+          this.search_results = response.data;
+          if(this.search_results.status == "error"){
+            this.search_status = false;
+          }else{
+            this.search_status = true;
+          }
         });
       }
 
     }
   },
   template: '#modal-search',
-  template: '#modal-confirm-member',
 });
 
 const app = new Vue({
@@ -131,10 +150,10 @@ const app = new Vue({
     },
     scanRFID() {
       swal({
-        title: 'Nuskenuokite RFID irengini',
+        title: 'Nuskenuokite RFID įrenginį',
         content: {
           element: "input",
-          placeholder: "RFID korteles duomenys"
+          placeholder: "RFID kortelės duomenys"
         },
         button: {
           cancel: true,
@@ -150,7 +169,7 @@ const app = new Vue({
               this.$router.push({name: 'edit', params: {id: response.data.owner.id} });
             }
             else {
-              swal("Error!", "An error has occured", "error");
+              swal("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error");
               // console.log(response.data);
             }
           });

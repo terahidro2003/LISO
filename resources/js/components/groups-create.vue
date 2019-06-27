@@ -2,14 +2,14 @@
 <div>
   <div class="page-header mb-4">
       <div class="description">
-        <h3>Sukurti nauja grupe</h3>
-        <h1>Grupes</h1>
+        <h3>Sukurti naują grupę</h3>
+        <h1>Grupės</h1>
       </div>
       <div class="ml-5 stats">
          <div class="actions">
           <router-link to="/groups" class="btn btn-danger">
             <span data-feather="x-circle" class="icon"></span>
-            <span>Atsaukti</span>
+            <span>Atšaukti</span>
           </router-link>
         </div>
       </div>
@@ -33,25 +33,25 @@
                                 <label for="inputBname">Lygis</label>
                                 <div class="selectgroup w-100">
                                     <label class="selectgroup-item">
-                                      <input type="radio"  value="100" class="selectgroup-input">
+                                      <input type="radio"  value="1" class="selectgroup-input" v-model="level">
                                       <span class="selectgroup-button">Pradinis</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                      <input type="radio"  value="100" class="selectgroup-input">
+                                      <input type="radio"  value="2" class="selectgroup-input" v-model="level">
                                       <span class="selectgroup-button">Vidutinis</span>
                                     </label>
                                     <label class="selectgroup-item">
-                                      <input type="radio" value="100" class="selectgroup-input">
-                                      <span class="selectgroup-button">Pazengusiuju</span>
+                                      <input type="radio" value="3" class="selectgroup-input" v-model="level">
+                                      <span class="selectgroup-button">Pažengusiųjų</span>
                                     </label>
                                 </div>
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="inputBname">Aprasymas</label>
+                                <label for="inputBname">Aprašymas</label>
                                 <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                             </div>
                         </div>
-                        <a href="#" class="btn btn-primary" v-on:click="groupMake">Sukurti nauja grupe</a>
+                        <a href="#" class="btn btn-primary" v-on:click="groupMake">Sukurti naują grupę</a>
         </div>
       </div>
     </div>
@@ -66,6 +66,7 @@
       return{
         name: null,
         leader: null,
+        level: null,
         description: null,
       }
     },
@@ -73,7 +74,7 @@
       //console.log('mounted');
 
       groupMake: function(){ axios.post('/api/groups/create', { groupName:
-      this.name, leader: this.leader, description: this.description,
+      this.name, leader: this.leader, description: this.description, level: this.level,
     }).then(response => { if (response.data == 'OK') { console.log('SUCCESS'); this.$router.push('/groups');
       }else{ console.log(response.data); } }); } } } </script>
 

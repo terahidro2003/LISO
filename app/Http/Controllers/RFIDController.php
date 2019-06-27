@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\RFID;
 use App\Entrie;
 use App\dancer;
+use App\groups;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -46,16 +47,16 @@ class RFIDController extends Controller
         }
         $ownerData = $owner->dancer;
 
-        // $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
+        $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
 
 
-        // if(!empty($todaysEntrie)){
-        // 	return response()->json(['status' => 'FAILED', 'cause' => 2]);
-        // }
-        // $entrie = new Entrie;
-        // $entrie->RFID = $Req->input('RFID');
-        // $entrie->Owner = $owner->Owner;
-        // $entrie->save();
+        if(!empty($todaysEntrie)){
+        	return response()->json(['status' => 'FAILED', 'cause' => 2]);
+        }
+        $entrie = new Entrie;
+        $entrie->RFID = $Req->input('RFID');
+        $entrie->Owner = $owner->Owner;
+        $entrie->save();
 
 
 
@@ -135,5 +136,38 @@ class RFIDController extends Controller
     public function destroy(RFID $rFID)
     {
         //
+    }
+
+    /**
+     * Return all entries
+     *
+     * @param  \App\RFID  $rFID
+     * @return \Illuminate\Http\Response
+     */
+    public function entries()
+    {
+        $entries = Entrie::all();
+        $members = dancer::all();
+        $groups = groups::all();
+        foreach ($entries as $entrie)
+        {
+            foreach ($members as $member)
+            {
+                if($entrie->Owner == $member->id)
+                {
+                    $entrie->firstName = $member->firstName;
+                    $entrie->lastName = $member->lastName;
+                    $entrie->status = 'OK';
+                    foreach ($groups as $group) {
+                        if($member->group == $group->id)
+                        {
+                            $entrie->group = $group->groupName;
+                        }
+                    }
+                }
+            }
+
+        }
+        return response()->json(['entries' => $entries]);
     }
 }

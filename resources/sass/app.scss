@@ -23,6 +23,20 @@ body{
 	overflow-x: hidden;
 	// overflow-y: hidden;
 }
+
+.mr-6
+{
+	margin-right: 2rem !important;
+}
+.mr-7
+{
+	margin-right: 2.5rem !important;
+}
+.mr-8
+{
+	margin-right: 3rem !important;
+}
+
 .side {
 	color: white;
 	stroke: white;
@@ -255,6 +269,10 @@ select{
 	padding: 1.5px;
 	//transform: rotate(90deg);
 }
+.page-header .number
+{
+	font-size: 1.65em;
+}
 .status-ok {background-color: #7FB285;}
 .status-danger {background-color: $DangerColor;}
 .stat h2
@@ -387,7 +405,20 @@ select{
 	stroke-linejoin: round;
 	fill: none;
 }
-
+.icon-table
+{
+	color: rgba(0,0,0,.8) !important;
+	stroke: currentColor;
+	stroke-width: 2;
+	stroke-linecap: round;
+	stroke-linejoin: round;
+	fill: none;
+}
+.icon-table i
+{
+	color: rgba(0,0,0,.8) !important;
+	stroke: rgba(0,0,0,.8) !important;
+}
 .icon-white{
 	color: #fff !important;
 	// width: 15px;
@@ -567,6 +598,18 @@ select{
 	border-radius: 25px;
 	width: 135px;
 	padding: 2.5px;
+
+}
+.level-color-first
+{
+	background-color: $SuccessColor;
+}
+.level-color-second
+{
+	background-color: $DangerColor;
+}
+.level-color-third
+{
 	background-color: $PrimaryColor;
 }
 .devider

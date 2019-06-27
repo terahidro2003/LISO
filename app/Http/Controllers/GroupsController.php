@@ -63,6 +63,7 @@ class GroupsController extends Controller
             'groupName' => $request->input('groupName'),
             'description' => $request->input('description'),
             'leader' => $request->input('leader'),
+            'level' => $request->input('level'),
         ]);
         return response(['status' => 'OK']);
     }
@@ -110,6 +111,7 @@ class GroupsController extends Controller
         $groups->groupName = $request->input('groupName');
         $groups->leader = $request->input('leader');
         $groups->description = $request->input('description');
+        $groups->level = $request->input('level');
         $groups->save();
         return response()->json(
           ['status' => 'OK']

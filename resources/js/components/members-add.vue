@@ -8,7 +8,7 @@
       <div class="ml-5 stats">
          <div class="actions">
           <router-link to="/members" class="btn btn-danger">
-            <span>Atsaukti</span>
+            <span>Atšaukti</span>
           </router-link>
         </div>
       </div>
@@ -18,21 +18,21 @@
     <div class="card card-big">
        <div class="alert alert-success" v-if="operationStatus">
         <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Operacija sekmingai atlikta!</h2>
-        <h4>Dziaugemes us Jus!</h4>
+        <h4>Džiaugiamės us Jus!</h4>
       </div>
       <div class="alert alert-danger" v-if="serverError">
         <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Serverio klaida</h2>
-        <h4>Pabandykite atlikti si veiksma po keletos minuciu ir jei tai nepadeda susisiekite su techninio aptarnavimo personalu</h4>
+        <h4>Pabandykite atlikti šį veiksmą po keletos minučių ir jei tai nepadeda susisiekite su techninio aptarnavimo komanda</h4>
         <h5 style="color: #fff;">Klaidos tekstas: {{serverErrorMessage}} </h5>
       </div>
       <div class="alert alert-danger" v-if="alreadyExcists">
         <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Toks narys jau egzistuoja</h2>
-        <h4>Pasinaudokite paieska ir suraskite ji</h4>
+        <h4>Pasinaudokite paieška ir suraskite jį</h4>
         <h5 style="color: #fff;">Klaidos tekstas: {{serverErrorMessage}} </h5>
       </div>
        <div class="alert alert-warning" v-if="validationFailed">
-        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Neuzpildyti visi butini laukeliai</h2>
-        <h4>Dar karta perziurekite raudonai pazymetus laukelius</h4>
+        <h2 style="text-transform: uppercase;color: #fff;font-weight: bolder;">Neužpildyti visi būtini laukeliai</h2>
+        <h4>Dar karta peržiūrėkite raudonai pažymėtus laukelius</h4>
       </div>
       <div class="card-body">
         <div class="col-md-12">
@@ -45,7 +45,7 @@
                         <div class="form-row">
                           <div class="form-group col-md-6">
                                 <div class="description">
-                                  <h3>Asmenine informacija</h3>
+                                  <h3>Asmeninė informacija</h3>
                                 </div>
                           </div>
                         </div>
@@ -60,14 +60,14 @@
                           </div>
                           <div class="form-group col-md-6">
                             <label for="inputBname">Gimimo data</label>
-                            <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}">
+                            <date-picker v-model="birthDate" :config="options"></date-picker>
                             <label class="text-danger" v-if="birthDate == ''">Šis laukelis privalomas</label>
                           </div>
                         </div>
                         <div class="form-row">
                           <div class="form-group col-md-6">
                                 <div class="description">
-                                  <h3>Kontaktine informacija</h3>
+                                  <h3>Kontaktinė informacija</h3>
                                 </div>
                           </div>
                         </div>
@@ -82,7 +82,7 @@
                                 <input type="text" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="secondaryPhone" v-bind:class="{form_control_danger: secondaryPhone_required}">
                             </div>
                             <div class="form-group col-md-8">
-                                <label for="inputBname">El. pasto adresas</label>
+                                <label for="inputBname">El. pašto adresas</label>
                                 <input type="text" class="form-control" id="inputBname" placeholder="hello@sfinx.lt" v-model="email">
                             </div>
                             <div class="form-group col-md-5">
@@ -97,20 +97,13 @@
                          <div class="form-row mt-5 mb-0">
                               <div class="form-group col-md-6">
                                     <div class="description">
-                                      <h3>Asmenine informacija</h3>
+                                      <h3>Papildoma informacija</h3>
                                     </div>
                               </div>
-                              <div class="form-group col-md-6">
-                                    <div class="description">
-                                      <h3>RFID nustatymai</h3>
-                                    </div>
-                              </div>
-                              <div class="form-row">
                                 <div class="form-group col-md-8">
-                                    <textarea type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id"></textarea>
+                                    <input type="number" class="form-control" placeholder="Nuskaitykite RFID" v-model="rfid_id"/>
                                 </div>
                             </div>
-                          </div>
                           <div class="form-row">
                             <div class="form-group col-md-8">
                                 <label for="inputBname">Pastabos, komentarai</label>
@@ -118,7 +111,7 @@
                             </div>
                           </div>
 
-                        <a href="#" class="btn btn-primary" v-on:click="memberCreate">Prideti nari</a>
+                        <a href="#" class="btn btn-primary" v-on:click="memberCreate">Pridėti nari</a>
         </div>
       </div>
     </div>
@@ -156,6 +149,10 @@
         city_required: false,
         API_results: null,
         rfid_id: null,
+        options: {
+          format: 'YYYY-MM-DD',
+          useCurrent: true,
+        },
       }
     },
     mounted(){

@@ -18,6 +18,7 @@ class CreateGroupsTable extends Migration
             $table->string('groupName')->unique();
             $table->string('description')->nullable();
             $table->string('leader')->nullable();
+            $table->integer('level')->nullable();
             $table->timestamps();
         });
     }

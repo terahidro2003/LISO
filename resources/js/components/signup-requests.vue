@@ -46,7 +46,7 @@
                         <thead :class="{mport: $root.dark}" >
                             <tr>
                                 <th>Vardas</th>
-                                <th>Pavarde</th>
+                                <th>Pavardė</th>
                                 <th>Gimimo data</th>
                                 <th>Telefono numeris</th>
                                 <th>Veiksmai</th>
@@ -60,7 +60,7 @@
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
                                         <span href="" class="link" @click="showConfirmDialog(result.id)">Patvirtinti</span>
-                                        <span href="" class="link" @click="deleteMember(result.id)">Istrinti</span>
+                                        <span href="" class="link" @click="deleteMember(result.id)">Ištrinti</span>
                                     </td>
                                 </tr>
                         </tbody>
