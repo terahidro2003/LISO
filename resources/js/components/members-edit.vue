@@ -19,7 +19,7 @@
                                       </router-link>
                                 </div>
                               <div class="col-md-4">
-                                  <button @click="" class="btn btn-primary">Naujas mokėjimas</button>
+                                  <button @click="$parent.newPayment(MemberID, API_results)" class="btn btn-primary">Naujas mokėjimas</button>
                               </div>
                           </div>
           </div>

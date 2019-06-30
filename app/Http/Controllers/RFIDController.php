@@ -50,13 +50,13 @@ class RFIDController extends Controller
         $todaysEntrie = Entrie::where('Owner', $owner->Owner)->where('created_at', 'LIKE', '%'.date('Y-m').'%')->first();
 
 
-        if(!empty($todaysEntrie)){
-        	return response()->json(['status' => 'FAILED', 'cause' => 2]);
+        if(empty($todaysEntrie)){
+        	// return response()->json(['status' => 'FAILED', 'cause' => 2]);
+          $entrie = new Entrie;
+          $entrie->RFID = $Req->input('RFID');
+          $entrie->Owner = $owner->Owner;
+          $entrie->save();
         }
-        $entrie = new Entrie;
-        $entrie->RFID = $Req->input('RFID');
-        $entrie->Owner = $owner->Owner;
-        $entrie->save();
 
 
 

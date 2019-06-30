@@ -3189,47 +3189,20 @@ __webpack_require__.r(__webpack_exports__);
         });
       });
     },
-    newPayment: function newPayment(id, member) {
+    updater: function updater() {
       var _this4 = this;
 
-      swal({
-        title: "Naujas mokėjimas",
-        text: "Nustatytas nario mokestis pasirinktam nariui: " + member.fee + " euru",
-        input: 'number',
-        inputValue: member.fee,
-        icon: "info",
-        buttons: true,
-        closeModal: true,
-        dangerMode: false
-      }).then(function (value) {
-        if (value) axios.post('payments/new', {
-          'member': id,
-          'price': member.fee
-        }).then(function (response) {
-          if (response.data.status == 'OK') {
-            _this4.updater();
-
-            swal({
-              title: "Mokejimas padarytas sekmingai",
-              icon: "success"
-            });
-            setTimeout(function () {
-              swal.close();
-            }, 1000);
-          } else swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!", "", "error");
-        });
-      });
-    },
-    updater: function updater() {
-      var _this5 = this;
-
       axios.get('/api/members').then(function (response) {
-        _this5.API_results = response.data;
-        _this5.membersCount = response.data.length;
+        _this4.API_results = response.data;
+        _this4.membersCount = response.data.length;
       });
       axios.get('/api/groups').then(function (response) {
-        _this5.groups = response.data;
+        _this4.groups = response.data;
       });
+    },
+    pay: function pay(id, member) {
+      this.$parent.newPayment(id, member);
+      this.updater();
     }
   },
   mounted: function mounted() {
@@ -7999,7 +7972,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nspan[data-v-70c3d3c4], select[data-v-70c3d3c4], label[data-v-70c3d3c4], option[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n.dropdown-item[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n\n", ""]);
+exports.push([module.i, "\nspan[data-v-70c3d3c4], select[data-v-70c3d3c4], label[data-v-70c3d3c4], option[data-v-70c3d3c4] {\r\n  cursor: pointer;\n}\n.dropdown-item[data-v-70c3d3c4] {\r\n  cursor: pointer;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -8018,7 +7991,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.link[data-v-31914644] {\n  cursor: pointer;\n}\n.mport[data-v-31914644] {\n\tcolor: white;\n\tstroke: white;\n}\n.mport th[data-v-31914644], tr[data-v-31914644]{\n  color: white;\n  stroke: white;\n}\nth[data-v-31914644], tr[data-v-31914644] {\n  color: inherit;\n}\n\n", ""]);
+exports.push([module.i, "\n.link[data-v-31914644] {\r\n  cursor: pointer;\n}\n.mport[data-v-31914644] {\r\n\tcolor: white;\r\n\tstroke: white;\n}\n.mport th[data-v-31914644], tr[data-v-31914644]{\r\n  color: white;\r\n  stroke: white;\n}\nth[data-v-31914644], tr[data-v-31914644] {\r\n  color: inherit;\n}\r\n\r\n", ""]);
 
 // exports
 
@@ -74877,9 +74850,9 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(
-                            "\n                              " +
+                            "\r\n                              " +
                               _vm._s(result.groupName) +
-                              "\n                              "
+                              "\r\n                              "
                           ),
                           _c(
                             "label",
@@ -75840,7 +75813,14 @@ var render = function() {
                     "button",
                     {
                       staticClass: "btn btn-primary",
-                      on: { click: function($event) {} }
+                      on: {
+                        click: function($event) {
+                          return _vm.$parent.newPayment(
+                            _vm.MemberID,
+                            _vm.API_results
+                          )
+                        }
+                      }
                     },
                     [_vm._v("Naujas mokėjimas")]
                   )
@@ -76923,7 +76903,7 @@ var render = function() {
                                     attrs: { href: "javascript:void(0)" },
                                     on: {
                                       click: function($event) {
-                                        return _vm.newPayment(result.id, result)
+                                        return _vm.pay(result.id, result)
                                       }
                                     }
                                   },
@@ -92419,6 +92399,33 @@ var app = new Vue({
           });
         }
       });
+    },
+    newPayment: function newPayment(id, member) {
+      sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+        title: "Naujas mokėjimas",
+        text: "Nustatytas nario mokestis pasirinktam nariui: " + member.fee + " euru",
+        input: 'number',
+        inputValue: member.fee,
+        icon: "info",
+        buttons: true,
+        closeModal: true,
+        dangerMode: false
+      }).then(function (value) {
+        if (value) axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('payments/new', {
+          'member': id,
+          'price': member.fee
+        }).then(function (response) {
+          if (response.data.status == 'OK') {
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()({
+              title: "Mokejimas padarytas sekmingai",
+              icon: "success"
+            });
+            setTimeout(function () {
+              sweetalert__WEBPACK_IMPORTED_MODULE_0___default.a.close();
+            }, 1000);
+          } else sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!", "", "error");
+        });
+      });
     }
   },
   mounted: function mounted() {
@@ -93427,8 +93434,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! /Users/sprucebird/Documents/Projects/sfinx/resources/js/app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! /Users/sprucebird/Documents/Projects/sfinx/resources/sass/app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! C:\Users\Liudas\Documents\sfinxai\resources\js\app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! C:\Users\Liudas\Documents\sfinxai\resources\sass\app.scss */"./resources/sass/app.scss");
 
 
 /***/ })
