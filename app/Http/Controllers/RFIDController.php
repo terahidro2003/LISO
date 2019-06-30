@@ -40,7 +40,6 @@ class RFIDController extends Controller
         	return response()->json(['status' => 'FAILED', 'cause' => 1]);
         }
         $owner = RFID::where('RFID', $Req->RFID)->first();
-
         if(empty($owner))
         {
         	return response()->json(['status' => 'FAILED', 'cause' => 3]);

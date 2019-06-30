@@ -2922,6 +2922,7 @@ __webpack_require__.r(__webpack_exports__);
       _this.fee = _this.API_results.fee;
       _this.balance = response.data.balance + " eurai";
       _this.rfid_id = _this.API_results.rfid_id;
+      console.log(_this.API_results);
     });
   },
   methods: {
@@ -2983,6 +2984,9 @@ __webpack_require__.r(__webpack_exports__);
 
         }
       });
+    },
+    pay: function pay() {
+      this.$parent.newPayment(this.MemberID, this.API_results);
     }
   }
 });
@@ -7972,7 +7976,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\nspan[data-v-70c3d3c4], select[data-v-70c3d3c4], label[data-v-70c3d3c4], option[data-v-70c3d3c4] {\r\n  cursor: pointer;\n}\n.dropdown-item[data-v-70c3d3c4] {\r\n  cursor: pointer;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\nspan[data-v-70c3d3c4], select[data-v-70c3d3c4], label[data-v-70c3d3c4], option[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n.dropdown-item[data-v-70c3d3c4] {\n  cursor: pointer;\n}\n\n", ""]);
 
 // exports
 
@@ -7991,7 +7995,7 @@ exports = module.exports = __webpack_require__(/*! ../../../node_modules/css-loa
 
 
 // module
-exports.push([module.i, "\n.link[data-v-31914644] {\r\n  cursor: pointer;\n}\n.mport[data-v-31914644] {\r\n\tcolor: white;\r\n\tstroke: white;\n}\n.mport th[data-v-31914644], tr[data-v-31914644]{\r\n  color: white;\r\n  stroke: white;\n}\nth[data-v-31914644], tr[data-v-31914644] {\r\n  color: inherit;\n}\r\n\r\n", ""]);
+exports.push([module.i, "\n.link[data-v-31914644] {\n  cursor: pointer;\n}\n.mport[data-v-31914644] {\n\tcolor: white;\n\tstroke: white;\n}\n.mport th[data-v-31914644], tr[data-v-31914644]{\n  color: white;\n  stroke: white;\n}\nth[data-v-31914644], tr[data-v-31914644] {\n  color: inherit;\n}\n\n", ""]);
 
 // exports
 
@@ -74850,9 +74854,9 @@ var render = function() {
                         _vm._v(" "),
                         _c("td", [
                           _vm._v(
-                            "\r\n                              " +
+                            "\n                              " +
                               _vm._s(result.groupName) +
-                              "\r\n                              "
+                              "\n                              "
                           ),
                           _c(
                             "label",
@@ -75815,10 +75819,7 @@ var render = function() {
                       staticClass: "btn btn-primary",
                       on: {
                         click: function($event) {
-                          return _vm.$parent.newPayment(
-                            _vm.MemberID,
-                            _vm.API_results
-                          )
+                          return _vm.pay()
                         }
                       }
                     },
@@ -92394,7 +92395,7 @@ var app = new Vue({
                 }
               });
             } else {
-              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error"); // console.log(response.data);
+              sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error"); // console.log(response.data.status);
             }
           });
         }
@@ -92411,7 +92412,7 @@ var app = new Vue({
         closeModal: true,
         dangerMode: false
       }).then(function (value) {
-        if (value) axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('payments/new', {
+        if (value) axios__WEBPACK_IMPORTED_MODULE_5___default.a.post('/payments/new', {
           'member': id,
           'price': member.fee
         }).then(function (response) {
@@ -92423,7 +92424,10 @@ var app = new Vue({
             setTimeout(function () {
               sweetalert__WEBPACK_IMPORTED_MODULE_0___default.a.close();
             }, 1000);
-          } else sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!", "", "error");
+          } else {
+            sweetalert__WEBPACK_IMPORTED_MODULE_0___default()("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!", "", "error");
+            console.log(response.data);
+          }
         });
       });
     }
@@ -93434,8 +93438,8 @@ __webpack_require__.r(__webpack_exports__);
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-__webpack_require__(/*! C:\Users\Liudas\Documents\sfinxai\resources\js\app.js */"./resources/js/app.js");
-module.exports = __webpack_require__(/*! C:\Users\Liudas\Documents\sfinxai\resources\sass\app.scss */"./resources/sass/app.scss");
+__webpack_require__(/*! /home/idev/Documents/sfinx/resources/js/app.js */"./resources/js/app.js");
+module.exports = __webpack_require__(/*! /home/idev/Documents/sfinx/resources/sass/app.scss */"./resources/sass/app.scss");
 
 
 /***/ })

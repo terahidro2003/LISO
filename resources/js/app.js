@@ -170,7 +170,7 @@ const app = new Vue({
             }
             else {
               swal("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error");
-              // console.log(response.data);
+              // console.log(response.data.status);
             }
           });
         }
@@ -188,7 +188,7 @@ const app = new Vue({
         dangerMode: false,
       }).then(value => {
         if(value)
-        axios.post('payments/new', {
+        axios.post('/payments/new', {
           'member': id,
           'price': member.fee,
         }).then(response => {
@@ -196,7 +196,10 @@ const app = new Vue({
             swal({title: "Mokejimas padarytas sekmingai", icon: "success"});
             setTimeout(()=> {swal.close()}, 1000);
           }
-          else swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
+          else {
+            swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
+            console.log(response.data);
+          }
         });
       });
     }
