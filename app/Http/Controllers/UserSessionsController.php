@@ -3,6 +3,9 @@
 namespace App\Http\Controllers;
 
 use App\UserSessions;
+use App\User;
+use Illuminate\Support\Facades\Auth;
+use App\AuthenticationCodes;
 use DB;
 
 use Illuminate\Http\Request;
@@ -18,6 +21,33 @@ class UserSessionsController extends Controller
     public function index()
     {
         //
+    }
+
+    /**
+     * Get users list
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function usersList()
+    {
+        $users = User::all();
+        return response()->json($users);
+    }
+
+    /**
+     * Get users list
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function generateNewUserUrl(Request $req)
+    {
+        $code = rand(10000, 99999);
+        $newCode = new AuthenticationCodes;
+        $newCode->code = $code;
+        $newCode->purpose = 1;
+        $newCode->created_by_user = Auth::user()->id;
+        $newCode->save();
+        return response()->json(['status' => 'OK', 'code' => $code]);
     }
 
     /**

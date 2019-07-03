@@ -219,27 +219,27 @@ textarea:-ms-input-placeholder { color: #999999;}
     display: block;
     margin-bottom: 30px;
     padding: 0 20px 0 23px;
-    font-size: 16px;
+    font-size: 14px;
     font-weight: bolder;
     font-family: 'Quicksand', sans-serif;
-    line-height: 1.2;
+    line-height: 1.3;
     /* background: #fff; */
     /* color: rgba(181, 30, 186, 100%); */
     border: 1px solid #ddd;
-    border-radius: 5px;
-    /* box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15); */
-    -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
-    /* -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15); */
-    -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
-    -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
+    border-radius: 3px;
+    // /* box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15); */
+    // -moz-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
+    // /* -webkit-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15); */
+    // -o-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
+    // -ms-box-shadow: 0 5px 20px 0px rgba(0, 0, 0, 0.15);
     transition-duration: 0.45s;
    }
    .sfinx-input:focus{
-    box-shadow: 0 5px 20px 0px rgb(111,28,151);
-  -moz-box-shadow: 0 5px 20px 0px rgb(111,28,151);
-  -webkit-box-shadow: 0 5px 20px 0px rgb(111,28,151);
-  -o-box-shadow: 0 5px 20px 0px rgb(111,28,151);
-  -ms-box-shadow: 0 5px 20px 0px rgb(111,28,151);
+  //   box-shadow: 0 5px 20px 0px rgb(111,28,151);
+  // -moz-box-shadow: 0 5px 20px 0px rgb(111,28,151);
+  // -webkit-box-shadow: 0 5px 20px 0px rgb(111,28,151);
+  // -o-box-shadow: 0 5px 20px 0px rgb(111,28,151);
+  // -ms-box-shadow: 0 5px 20px 0px rgb(111,28,151);
    }
 
 .btn-submit{

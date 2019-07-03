@@ -45,8 +45,7 @@
                     <table v-if="API_results.length > 0" class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                         <thead :class="{mport: $root.dark}" >
                             <tr>
-                                <th>Vardas</th>
-                                <th>Pavardė</th>
+                                <th>Vardas, pavardė</th>
                                 <th>Gimimo data</th>
                                 <th>Telefono numeris</th>
                                 <th>Veiksmai</th>
@@ -54,13 +53,15 @@
                         </thead>
                         <tbody :class="{mport: $root.dark}" >
                                 <tr v-for="result in API_results">
-                                    <td> {{result.firstName}} </td>
-                                    <td> {{result.lastName}} </td>
+                                    <td>
+                                      {{result.firstName}} {{result.lastName}}
+                                      <div class="small text-muted">Registracija pateikta {{result.created_at}}</div>
+                                    </td>
                                     <td> {{result.birthDate}} </td>
                                     <td> {{result.primaryPhone}} </td>
                                     <td>
-                                        <span href="" class="link" @click="showConfirmDialog(result.id)">Patvirtinti</span>
-                                        <span href="" class="link" @click="deleteMember(result.id)">Ištrinti</span>
+                                        <a href="javascript:void(0)" @click="showConfirmDialog(result.id)"><i class="dropdown-icon fe fe-check"></i></a>
+                                        <a href="javascript:void(0)" class="ml-5" @click="deleteMember(result.id)"><i class="dropdown-icon fe fe-trash"></i></a>
                                     </td>
                                 </tr>
                         </tbody>
@@ -94,8 +95,8 @@
       },
       deleteMember(id) {
         swal({
-          title: "Please confirm signup deletion",
-          text: "If You delete...",
+          title: "Registracijos užklausos pašalinimas iš sistemos",
+          text: "Jeigu ištrinsite šią registraciją, jos atkurti bus neįmanoma. Tokiu atveju, narys turėtų prisiregistruoti iš naujo arba atvykti į Jūsų būstinę.",
           icon: "warning",
           buttons: true,
           closeModal: true,

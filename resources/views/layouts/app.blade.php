@@ -53,6 +53,7 @@
               <div class="search-result" v-for="result in search_results" v-if="search_status == true">
                 <div>
                   <h2>@{{result.firstName}} @{{result.lastName}}</h2>
+                  <router-link to="{path: 'member/edit/:id', params: {id: result.id}" class="tag tag-red"></router-link>
                   <h5 class="mt-2"></h5>
                 </div>
                 <div>
@@ -188,7 +189,7 @@
       </header>
       <div id="sideNavigation" :class="{side: dark}">
                 <div class="items">
-                   <router-link to="/home" class="item" data-toggle="tooltip" title="Main">
+                   <router-link to="/" class="item" data-toggle="tooltip" title="Main">
                      <span class="icon" data-feather="home"></span>
                    </router-link>
                 {{--     <router-link to="/stats" class="item">
@@ -209,6 +210,9 @@
                     </router-link>
                     <router-link to="/entries" class="item">
                       <span class="icon" data-feather="key"></span>
+                    </router-link>
+                    <router-link to="/settings/users" class="item">
+                      <span class="icon" data-feather="server"></span>
                     </router-link>
                     {{-- <router-link to="/competition" class="item">
                       <span class="icon" data-feather="user"></span>

@@ -52,6 +52,8 @@ import groupsCreate from './components/groups-create.vue';
 import membersAdd from './components/members-add.vue';
 
 import memberEdit from './components/members-edit.vue';
+import userAdd from './components/user-add.vue';
+import users from './components/users.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -63,7 +65,7 @@ import memberEdit from './components/members-edit.vue';
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  { path: '/home', component: home },
+  { path: '/', component: home },
   { path: '/signups', component: signups },
   { path: '/groups', component: groups },
   { path: '/members', component: members },
@@ -76,6 +78,8 @@ const routes = [
   { path: '/members/add', component: membersAdd, name: 'add' },
   { path: '/members/edit/:id', component: memberEdit, name: 'edit' },
   { path: '/signups/confirm/:id', component: membersAdd},
+  { path: '/settings/users', component: users},
+  { path: '/settings/users/create', component: userAdd},
 ]
 
 // 3. Create the router instance and pass the `routes` option

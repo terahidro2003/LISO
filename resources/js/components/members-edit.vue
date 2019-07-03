@@ -63,13 +63,13 @@
                                 <option value="vilnius">Vilnius</option>
                                 <option value="Klaipeda">Klaipeda</option>
                               </select>
-                              <label class="text-danger" v-if="city == null || city == ''">Šis laukelis privalomas</label>
+                              <label class="tag tag-red" v-if="city == null || city == ''">Šis laukelis privalomas</label>
                             </div>
                             <div class="form-group col-md-6">
                               <label for="inputBname">Gimimo data</label>
                              <!--  <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}"> -->
                               <date-picker v-model="birthDate" :config="options"></date-picker>
-                              <label class="text-danger" v-if="birthDate == ''">Šis laukelis privalomas</label>
+                              <label class="tag tag-red" v-if="birthDate == ''">Šis laukelis privalomas</label>
                             </div>
                           </div>
                           <div class="form-row">
@@ -83,7 +83,7 @@
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Telefono numeris</label>
                                   <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="primaryPhone" v-bind:class="{form_control_danger: primaryPhone_required}">
-                                  <label class="text-danger" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
+                                  <label class="tag tag-red" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
                               </div>
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Antras telefono numeris</label>
@@ -110,7 +110,8 @@
                                 </div>
                                  <div class="form-group col-md-8">
                                     <label>RFID kortelė/apyrankė</label>
-                                    <input class="form-control form-control-warning" type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id"/>
+                                    <input class="form-control form-control-warning" type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id" v-bind:class="{form_control_danger: rfid_id_required}"/>
+                                    <label class="tag tag-red" v-if="rfid_id == ''">Šis laukelis privalomas</label>
                                 </div>
                               <div class="form-group col-md-8">
                                   <label for="inputBname">Pastabos, komentarai</label>
@@ -239,7 +240,8 @@
         balance: null,
         fee: null,
         API_results: null,
-        rfid_id: null
+        rfid_id: null,
+        rfid_id_required: null
       }
     },
     mounted() {
@@ -269,6 +271,7 @@
         if(this.primaryPhone == '' || this.primaryPhone == null) { this.primaryPhone_required = true;verificationStatus = false }
         if(this.birthDate == '' || this.birthDate == null) { this.birthDate_required = true; verificationStatus = false }
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
+        if(this.rfid_id == '' || this.rfid_id == null) { this.rfid_id_required = true; verificationStatus = false }
 
         var fullFullName = this.fullName.split(" ");
         axios.post('/api/members/update', {

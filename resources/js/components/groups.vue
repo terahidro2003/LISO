@@ -29,25 +29,18 @@
               <h2 class="title">{{ group.groupName }}</h2>
             </div>
 
-            <hr class="devider">
+            <!-- <hr class="devider"> -->
 
             <div class="quick-data row">
               <div class="col q-data">
-                <h3 class="bolded">Nariai</h3>
-                <h3>{{ group.members_count }}</h3>
-              </div>
-              <div class="col q-data">
-                <h3 class="bolded">Mokumas</h3>
-                <h3>XX</h3>
-              </div>
-              <div class="col q-data">
-                <h3 class="bolded">Vid. pajamos</h3>
-                <h3>XX</h3>
+                <span class="tag">{{ group.members_count }} nariai</span>
               </div>
             </div>
 
-            <div class="quick-actions">
-              <a href="#edit" @click="showUpdate(group.id)" class="link link-edit mr-3">Redaguoti</a>
+            <div class="quick-actions mt-4">
+              <a href="#edit" @click="showUpdate(group.id)" class="btn btn-primary btn-small mr-3">
+                <i class="icon-white fe fe-edit-2"></i> Redaguoti
+              </a>
             </div>
           </div>
         </div>

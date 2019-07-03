@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\groups;
 use App\dancer;
+use App\payments;
+use App\Fees;
+
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -32,6 +35,26 @@ class GroupsController extends Controller
     public function indexAPI()
     {
         $groups = groups::withCount('members')->get();
+        // $members = dancer::all();
+        // $fees = Fees::all();
+        // $payments = payments::all();
+        // foreach ($groups as $group) {
+        //     foreach ($members as $member) {
+        //         if($member->group === $group->id){
+        //             foreach ($fees as $fee) {
+        //                 if($fee->Owner == $member->id){
+        //                     $group->feeSUM += $fee->price;
+        //                 }
+        //             }
+        //             foreach ($payments as $payment) {
+        //                 if($member->id == $payment->Owner){
+        //                     $group->paymentSUM += $payment->price;
+        //                 }
+        //             }
+        //         }
+        //     }
+        //     $group->paymentRate = $group->paymentSUM / $group->feeSUM;
+        // }
         return response()->json($groups);
     }
 
