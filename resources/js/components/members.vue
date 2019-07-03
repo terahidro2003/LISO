@@ -97,7 +97,7 @@
                                             <a href="javascript:void(0)" @click="showEditDialog(result.id)" class="dropdown-item"><i class="dropdown-icon fe fe-edit-2"></i> Redaguoti narį </a>
                                             <a href="javascript:void(0)" @click="deleteMember(result.id)" class="dropdown-item"><i class="dropdown-icon fe fe-trash"></i> Pašalinti iš sistemos</a>
                                             <div class="dropdown-divider"></div>
-                                            <a href="javascript:void(0)" @click="newPayment(result.id, result)" class="dropdown-item"><i class="dropdown-icon fe fe-credit-card"></i> Naujas mokėjimas</a>
+                                            <a href="javascript:void(0)" @click="pay(result.id, result)" class="dropdown-item"><i class="dropdown-icon fe fe-credit-card"></i> Naujas mokėjimas</a>
                                           </div>
                                         </div>
                                     </td>
@@ -184,31 +184,6 @@
           });
         });
       },
-      newPayment(id, member) {
-        swal({
-          title: "Naujas mokėjimas",
-          text: "Nustatytas nario mokestis pasirinktam nariui: " + member.fee + " euru",
-          input: 'number',
-          inputValue: member.fee,
-          icon: "info",
-          buttons: true,
-          closeModal: true,
-          dangerMode: false,
-        }).then(value => {
-          if(value)
-          axios.post('payments/new', {
-            'member': id,
-            'price': member.fee,
-          }).then(response => {
-            if(response.data.status == 'OK') {
-              this.updater();
-              swal({title: "Mokejimas padarytas sekmingai", icon: "success"});
-              setTimeout(()=> {swal.close()}, 1000);
-            }
-            else swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
-          });
-        });
-      },
       updater() {
         axios.get('/api/members').then(response => {
           this.API_results = response.data;
@@ -217,6 +192,10 @@
         axios.get('/api/groups').then(response => {
           this.groups = response.data;
         });
+      },
+      pay(id, member) {
+        this.$parent.newPayment(id, member);
+        this.updater();
       }
     },
     mounted() {

@@ -174,10 +174,37 @@ const app = new Vue({
             }
             else {
               swal("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error");
-              // console.log(response.data);
+              // console.log(response.data.status);
             }
           });
         }
+      });
+    },
+    newPayment(id, member) {
+      swal({
+        title: "Naujas mokėjimas",
+        text: "Nustatytas nario mokestis pasirinktam nariui: " + member.fee + " euru",
+        input: 'number',
+        inputValue: member.fee,
+        icon: "info",
+        buttons: true,
+        closeModal: true,
+        dangerMode: false,
+      }).then(value => {
+        if(value)
+        axios.post('/payments/new', {
+          'member': id,
+          'price': member.fee,
+        }).then(response => {
+          if(response.data.status == 'OK') {
+            swal({title: "Mokejimas padarytas sekmingai", icon: "success"});
+            setTimeout(()=> {swal.close()}, 1000);
+          }
+          else {
+            swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
+            console.log(response.data);
+          }
+        });
       });
     }
   },

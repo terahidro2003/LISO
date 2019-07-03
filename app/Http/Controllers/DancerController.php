@@ -6,7 +6,7 @@ use App\dancer;
 use Illuminate\Support\Facades\Validator;
 use App\Signups;
 use App\payments;
-use App\fees;
+use App\Fees;
 use App\groups;
 use App\RFID;
 use Illuminate\Http\Request;

@@ -19,7 +19,7 @@
                                       </router-link>
                                 </div>
                               <div class="col-md-4">
-                                  <button @click="" class="btn btn-primary">Naujas mokėjimas</button>
+                                  <button @click="pay()" class="btn btn-primary">Naujas mokėjimas</button>
                               </div>
                           </div>
           </div>
@@ -262,6 +262,7 @@
         this.fee = this.API_results.fee;
         this.balance = response.data.balance + " eurai";
         this.rfid_id = this.API_results.rfid_id;
+        console.log(this.API_results);
       });
     },
     methods: {
@@ -306,6 +307,9 @@
             // console.log(response.data);
           }
         });
+      },
+      pay() {
+        this.$parent.newPayment(this.MemberID, this.API_results);
       }
     }
   }
