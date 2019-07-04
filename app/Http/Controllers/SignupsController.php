@@ -64,7 +64,7 @@ class SignupsController extends Controller
      */
     public function create()
     {
-        return view('public.signup');
+        return view('public.signup', ['operation' => 0]);
     }
 
     /**
@@ -82,12 +82,17 @@ class SignupsController extends Controller
             'city' => 'required|max:9',
             'primaryPhone' => 'required',
         ]);
+        $signups = signups::where('firstName', $request->input('firstName'))->where('lastName', $request->input('lastName'))->get()->count();
+        if($signups != 0 || $signups != null)
+        {
+            return view('public.signup', ['operation' => 3]);
+        }
         if ($validator->fails())
         {
-            return redirect()->route('SignupFormPublic')->withErrors('operation', '0');
+            return view('public.signup', ['operation' => 2]);
         }
         $signup = Signups::create($request->all());
-        return redirect()->route('SignupFormPublic')->withErrors('operation', '1');
+        return view('public.signup', ['operation' => 1]);
     }
 
     /**

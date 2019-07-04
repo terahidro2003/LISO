@@ -19,7 +19,7 @@
           <div class="actions" style="float: right;">
             <router-link to="/members/add" class="btn btn-primary btn-small">
               <span data-feather="x-circle" class="icon"></span>
-              <span>Prideti nauja nari</span>
+              <span>Pridėti naują narį</span>
             </router-link>
           </div>
         </div>
@@ -30,7 +30,7 @@
         <div class="justify-content-center">
           <div class="row">
             <div class="col">
-              <label class="label">Grupe</label>
+              <label class="label">Grupė</label>
               <select v-model="filterGroup" class="form-control white" name="group" @change="filterTable()">
                 <option value="0">Visa studija</option>
                   <option v-for="group in groups" :value="group.id">{{group.groupName}}</option>
@@ -55,15 +55,20 @@
                 </div>
 
                 <div class="card-body">
-                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table">
+                  <div class="alert alert-warning" v-if="API_results.length == null || API_results == '' || API_results.length == 0">
+                    <span>Nerasta</span>
+                  </div>
+
+
+                    <table class="table table-hover table-outline table-vcenter text-nowrap card-table" v-if="API_results.length != 0">
                         <thead>
                             <tr>
-                                <th>Vardas, pavarde</th>
+                                <th>Vardas, pavardė</th>
                                 <th>Miestas</th>
                                 <th>Gimimo data</th>
                                 <th>Telefono numeris</th>
-                                <th>Grupe</th>
-                                <th>Veiksmai</th>
+                                <th>Grupė</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -86,12 +91,21 @@
                                       </div>
                                     </td>
                                     <td>
-                                        <span href="" class="link" @click="showEditDialog(result.id)">Redaguoti</span>
-                                        <span href="" class="link" @click="deleteMember(result.id)">Istrinti</span>
+                                        <div class="item-action dropdown">
+                                          <a href="javascript:void(0)" data-toggle="dropdown" class="icon icon-table" aria-expanded="false"><i class="fe fe-more-vertical"></i></a>
+                                          <div class="dropdown-menu dropdown-menu-right" x-placement="bottom-end" style="position: absolute; transform: translate3d(15px, 20px, 0px); top: 0px; left: 0px; will-change: transform;">
+                                            <a href="javascript:void(0)" @click="showEditDialog(result.id)" class="dropdown-item"><i class="dropdown-icon fe fe-edit-2"></i> Redaguoti narį </a>
+                                            <a href="javascript:void(0)" @click="deleteMember(result.id)" class="dropdown-item"><i class="dropdown-icon fe fe-trash"></i> Pašalinti iš sistemos</a>
+                                            <div class="dropdown-divider"></div>
+                                            <a href="javascript:void(0)" @click="pay(result.id, result)" class="dropdown-item"><i class="dropdown-icon fe fe-credit-card"></i> Naujas mokėjimas</a>
+                                          </div>
+                                        </div>
                                     </td>
                                 </tr>
                         </tbody>
                     </table>
+                    <div class="alert alert-warning" v-if="API_results == null">
+                    </div>
                 </div>
             </div>
     </div>
@@ -178,6 +192,10 @@
         axios.get('/api/groups').then(response => {
           this.groups = response.data;
         });
+      },
+      pay(id, member) {
+        this.$parent.newPayment(id, member);
+        this.updater();
       }
     },
     mounted() {

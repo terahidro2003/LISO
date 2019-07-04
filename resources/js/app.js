@@ -11,6 +11,9 @@ import swal from 'sweetalert';
 const feather = require('feather-icons')
 feather.replace();
 
+
+
+
 /*
 Vue.js components defined here
 */
@@ -20,7 +23,15 @@ import VueRouter from 'vue-router';
 import VueCookies from  'vue-cookies'
 Vue.use(VueRouter);
 Vue.use(VueCookies);
+
+//import DateTimePicker & it's settings
+import datePicker from 'vue-bootstrap-datetimepicker';
+import 'pc-bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker.css';
+Vue.use(datePicker);
+
+
 import axios from 'axios';
+
 
 
 // 1. Define route components.
@@ -33,6 +44,7 @@ import home from './components/home.vue';
 import groups from './components/groups.vue';
 import groupsUpdate from './components/groups-update.vue';
 import members from './components/members.vue';
+import entries from './components/entries.vue';
 import payments from './components/payments.vue';
 import competition from './components/competition-show.vue';
 
@@ -40,6 +52,8 @@ import groupsCreate from './components/groups-create.vue';
 import membersAdd from './components/members-add.vue';
 
 import memberEdit from './components/members-edit.vue';
+import userAdd from './components/user-add.vue';
+import users from './components/users.vue';
 // 0. If using a module system (e.g. via vue-cli), import Vue and VueRouter
 // and then call `Vue.use(VueRouter)`.
 
@@ -51,7 +65,7 @@ import memberEdit from './components/members-edit.vue';
 // `Vue.extend()`, or just a component options object.
 // We'll talk about nested routes later.
 const routes = [
-  { path: '/home', component: home },
+  { path: '/', component: home },
   { path: '/signups', component: signups },
   { path: '/groups', component: groups },
   { path: '/members', component: members },
@@ -59,10 +73,13 @@ const routes = [
   { path: '/groups/create', component: groupsCreate },
   { path: '/groups/update/:id', component: groupsUpdate },
   { path: '/payments', component: payments },
+  { path: '/entries', component: entries },
   { path: '/competition', component: competition },
   { path: '/members/add', component: membersAdd, name: 'add' },
   { path: '/members/edit/:id', component: memberEdit, name: 'edit' },
   { path: '/signups/confirm/:id', component: membersAdd},
+  { path: '/settings/users', component: users},
+  { path: '/settings/users/create', component: userAdd},
 ]
 
 // 3. Create the router instance and pass the `routes` option
@@ -84,6 +101,8 @@ Vue.component('search-modal', {
     return {
       q: null,
       search_results: [],
+      search_status: null,
+      authenticatedUser: null,
     }
   },
   watch: {
@@ -99,14 +118,18 @@ Vue.component('search-modal', {
         axios.post('/api/search', {
           searchQ: this.q,
         }).then(response => {
-          this.search_results = response.data
+          this.search_results = response.data;
+          if(this.search_results.status == "error"){
+            this.search_status = false;
+          }else{
+            this.search_status = true;
+          }
         });
       }
 
     }
   },
   template: '#modal-search',
-  template: '#modal-confirm-member',
 });
 
 const app = new Vue({
@@ -131,10 +154,10 @@ const app = new Vue({
     },
     scanRFID() {
       swal({
-        title: 'Nuskenuokite RFID irengini',
+        title: 'Nuskenuokite RFID įrenginį',
         content: {
           element: "input",
-          placeholder: "RFID korteles duomenys"
+          placeholder: "RFID kortelės duomenys"
         },
         button: {
           cancel: true,
@@ -150,11 +173,38 @@ const app = new Vue({
               this.$router.push({name: 'edit', params: {id: response.data.owner.id} });
             }
             else {
-              swal("Error!", "An error has occured", "error");
-              // console.log(response.data);
+              swal("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error");
+              // console.log(response.data.status);
             }
           });
         }
+      });
+    },
+    newPayment(id, member) {
+      swal({
+        title: "Naujas mokėjimas",
+        text: "Nustatytas nario mokestis pasirinktam nariui: " + member.fee + " euru",
+        input: 'number',
+        inputValue: member.fee,
+        icon: "info",
+        buttons: true,
+        closeModal: true,
+        dangerMode: false,
+      }).then(value => {
+        if(value)
+        axios.post('/payments/new', {
+          'member': id,
+          'price': member.fee,
+        }).then(response => {
+          if(response.data.status == 'OK') {
+            swal({title: "Mokejimas padarytas sekmingai", icon: "success"});
+            setTimeout(()=> {swal.close()}, 1000);
+          }
+          else {
+            swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
+            console.log(response.data);
+          }
+        });
       });
     }
   },

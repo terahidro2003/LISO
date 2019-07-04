@@ -7,6 +7,7 @@ use App\payments;
 use App\Signups;
 use App\paymentStatistics;
 use App\fees;
+use App\dancer;
 use Illuminate\Http\Request;
 use DB;
 
@@ -156,6 +157,56 @@ class StatisticsController extends Controller
                 array_push($JSONed, $PaymentsSum / $FeeSum);
             }
             return response()->json(['months' => $months, 'k' => $JSONed]);
+    }
+
+    /**
+     * Return members count
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function membersCount()
+    {
+        return response()->json(['count' => dancer::count()]);
+    }
+
+
+    /**
+     * Income history
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function income_history($range)
+    {
+        //1 - income in current month (30 days from request)
+        //2 - ?
+        $income = 0;
+        $date = null;
+        $currentDate = date('y-m-d');
+        switch ($range) {
+            case 1:
+                $date = date('Y-m-d',strtotime('-30 days',strtotime($currentDate)));
+                $payments = payments::where( DB::raw('MONTH(created_at)'), '=', date('n') )->get();
+                foreach ($payments as $data) {
+                    $income+= $data->price;
+                }
+                break;
+            case 2:
+                # code...
+                break;
+            case 3:
+                # code...
+                break;
+            case 4:
+                # code...
+                break;
+            case 5:
+                # code...
+                break;
+            default:
+                # code...
+                break;
+        }
+        return response()->json(['income' => $income, 'date' => $date]);
     }
 
     /**

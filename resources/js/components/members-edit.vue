@@ -5,13 +5,6 @@
         <h3>Redaguoti nari</h3>
         <h1>{{fullName}}</h1>
       </div>
-      <div class="ml-5 stats">
-         <div class="actions">
-          <router-link to="/members" class="btn btn-muted">
-            <span>Atgal</span>
-          </router-link>
-        </div>
-      </div>
     </div>
 
     <div class="page-content justify-content-center" >
@@ -21,7 +14,12 @@
           <div class="col-md-12">
                           <div class="form-row">
                               <div class="col-md-4">
-                                  <button @click="" class="btn btn-primary">Naujas mokejimas</button>
+                                     <router-link to="/members" class="btn btn-danger">
+                                        <span>Atgal</span>
+                                      </router-link>
+                                </div>
+                              <div class="col-md-4">
+                                  <button @click="pay()" class="btn btn-primary">Naujas mokėjimas</button>
                               </div>
                           </div>
           </div>
@@ -47,14 +45,14 @@
           <h4>Dar karta perziurekite raudonai pazymetus laukelius</h4>
         </div>
         <div class="card-header">
-          <h2>Pagrindine informacija</h2>
+          <h2>Pagrindinė informacija</h2>
         </div>
         <div class="card-body">
           <div class="col-md-12">
                           <div class="form-row">
                             <div class="form-group col-md-6">
                                   <div class="description">
-                                    <h3>Asmenine informacija</h3>
+                                    <h3>Asmeninė informacija</h3>
                                   </div>
                             </div>
                           </div>
@@ -65,18 +63,19 @@
                                 <option value="vilnius">Vilnius</option>
                                 <option value="Klaipeda">Klaipeda</option>
                               </select>
-                              <label class="text-danger" v-if="city == null || city == ''">Šis laukelis privalomas</label>
+                              <label class="tag tag-red" v-if="city == null || city == ''">Šis laukelis privalomas</label>
                             </div>
                             <div class="form-group col-md-6">
                               <label for="inputBname">Gimimo data</label>
-                              <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}">
-                              <label class="text-danger" v-if="birthDate == ''">Šis laukelis privalomas</label>
+                             <!--  <input type="date" class="form-control" id="inputBname" placeholder="" v-model="birthDate" v-bind:class="{form_control_danger: birthDate_required}"> -->
+                              <date-picker v-model="birthDate" :config="options"></date-picker>
+                              <label class="tag tag-red" v-if="birthDate == ''">Šis laukelis privalomas</label>
                             </div>
                           </div>
                           <div class="form-row">
                             <div class="form-group col-md-6">
                                   <div class="description">
-                                    <h3>Kontaktine informacija</h3>
+                                    <h3>Kontaktinė informacija</h3>
                                   </div>
                             </div>
                           </div>
@@ -84,7 +83,7 @@
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Telefono numeris</label>
                                   <input type="tel" class="form-control" id="inputBname" placeholder="+3706xxxxx" v-model="primaryPhone" v-bind:class="{form_control_danger: primaryPhone_required}">
-                                  <label class="text-danger" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
+                                  <label class="tag tag-red" v-if="primaryPhone == ''">Šis laukelis privalomas</label>
                               </div>
                               <div class="form-group col-md-4">
                                   <label for="inputBname">Antras telefono numeris</label>
@@ -106,30 +105,23 @@
                            <div class="form-row mt-5 mb-0">
                                 <div class="form-group col-md-6">
                                       <div class="description">
-                                        <h3>Asmenine informacija</h3>
+                                        <h3>Asmeninė informacija</h3>
                                       </div>
                                 </div>
-                            <div class="form-row">
+                                 <div class="form-group col-md-8">
+                                    <label>RFID kortelė/apyrankė</label>
+                                    <input class="form-control form-control-warning" type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id" v-bind:class="{form_control_danger: rfid_id_required}"/>
+                                    <label class="tag tag-red" v-if="rfid_id == ''">Šis laukelis privalomas</label>
+                                </div>
                               <div class="form-group col-md-8">
                                   <label for="inputBname">Pastabos, komentarai</label>
                                   <textarea type="text" class="form-control" id="inputBname" placeholder="----APRASYMA RASYKITE CIA----" v-model="description"></textarea>
                               </div>
-                              <div class="form-group col-md-6">
-                                    <div class="description">
-                                      <h3>RFID nustatymai</h3>
-                                    </div>
-                              </div>
-                              <div class="form-row">
-                                <div class="form-group col-md-8">
-                                    <textarea type="number" placeholder="Nuskaitykite RFID" v-model="rfid_id"></textarea>
-                                </div>
-                            </div>
-                          </div>
                         </div>
                             <div class="form-row mt-5 mb-0">
                                  <div class="form-group col-md-6">
                                        <div class="description">
-                                         <h3>Mokejimu informacija</h3>
+                                         <h3>Mokejimų informacija</h3>
                                          <label class="bg-label bg-label-success" v-if="balance == 0">Geras mokumas</label>
                                          <label class="bg-label bg-label-warning" v-if="balance > 0">Permoka</label>
                                          <label class="bg-label bg-label-danger" v-if="balance < 0">Blogas mokumas</label>
@@ -139,7 +131,7 @@
 
                              <div class="form-row">
                                <div class="form-group col-md-6">
-                                   <label for="inputBname">Menesinis mokestis</label>
+                                   <label for="inputBname">Mėnesinis mokęstis</label>
                                    <input class="form-control" placeholder="" v-model="fee"/>
                                </div>
                                <div class="form-group col-md-6">
@@ -148,7 +140,7 @@
                                </div>
                              </div>
 
-                          <a href="#" class="btn btn-primary" v-on:click="memberCreate">Atnaujinti informacija</a>
+                          <a href="#" class="btn btn-primary" v-on:click="memberCreate">Atnaujinti informaciją</a>
           </div>
         </div>
       </div>
@@ -182,11 +174,11 @@
                               <table class="table card-table table-vcenter text-nowrap datatable dataTable no-footer">
                                   <thead>
                                       <tr>
-                                          <th>Mokejimo nr.</th>
+                                          <th>Mokėjimo nr.</th>
                                           <th>Vadybininkas/Treneris</th>
-                                          <th>Uz nurodyta men.</th>
+                                          <th>Už nurodytą men.</th>
                                           <th>Ankstesnes skolos</th>
-                                          <th>Galutine suma</th>
+                                          <th>Galutinė suma</th>
                                           <th>Veiksmai</th>
                                       </tr>
                                   </thead>
@@ -214,7 +206,6 @@
 </template>
 
 <script>
-
   export default {
     data(){
       return{
@@ -228,6 +219,10 @@
         fullName_required: false,
         birthDate: null,
         birthDate_required: false,
+        options: {
+          format: 'YYYY-MM-DD',
+          useCurrent: true,
+        },
         primaryPhone: null,
         primaryPhone_required: false,
         secondaryPhone: null,
@@ -245,13 +240,15 @@
         balance: null,
         fee: null,
         API_results: null,
-        rfid_id: null
+        rfid_id: null,
+        rfid_id_required: null
       }
     },
     mounted() {
       axios.get('/api/members/'+this.MemberID).then(response => {
+        console.log(response.data);
         this.API_results = response.data.member;
-        this.balance = this.API_results.balance;
+        //this.balance = this.API_results.balance;
         this.fullName = this.API_results.firstName + " " + this.API_results.lastName;
         this.birthDate = this.API_results.birthDate;
         this.primaryPhone = this.API_results.primaryPhone;
@@ -263,7 +260,9 @@
         this.city = this.API_results.city;
         this.balance = this.API_results.balance;
         this.fee = this.API_results.fee;
+        this.balance = response.data.balance + " eurai";
         this.rfid_id = this.API_results.rfid_id;
+        console.log(this.API_results);
       });
     },
     methods: {
@@ -273,6 +272,7 @@
         if(this.primaryPhone == '' || this.primaryPhone == null) { this.primaryPhone_required = true;verificationStatus = false }
         if(this.birthDate == '' || this.birthDate == null) { this.birthDate_required = true; verificationStatus = false }
         if(this.city == '' || this.city == null) { this.city_required = true; verificationStatus = false }
+        if(this.rfid_id == '' || this.rfid_id == null) { this.rfid_id_required = true; verificationStatus = false }
 
         var fullFullName = this.fullName.split(" ");
         axios.post('/api/members/update', {
@@ -307,6 +307,9 @@
             // console.log(response.data);
           }
         });
+      },
+      pay() {
+        this.$parent.newPayment(this.MemberID, this.API_results);
       }
     }
   }

@@ -21,7 +21,59 @@ class PaymentsController extends Controller
     public function index()
     {
         $payments = payments::all();
-        return view('payments.index', compact('payments'));
+        $members = dancer::all();
+        foreach ($members as $member) {
+            foreach ($payments as $payment) {
+                if($member->id == $payment->member)
+                {
+                    $payment->firstName = $member->firstName;
+                    $payment->lastName = $member->lastName;
+                    $payment->leader = $member->currentGroup->leader;
+                }
+            }
+        }
+        return response()->json($payments);
+        //return view('payments.index', compact('payments'));
+        //
+    }
+
+    /**
+     * Display a listing of the deptors
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function deptors()
+    {
+        $payments = payments::all();
+        $fees = fees::all();
+        $members = dancer::all();
+        foreach ($members as $member) {
+            foreach ($payments as $payment) {
+                if($member->id == $payment->member)
+                {
+                    $member->income += $payment->price;
+                }
+            }
+        }
+        foreach ($members as $member) {
+            foreach ($fees as $fee) {
+                if($member->id == $fee->member)
+                {
+                    $member->outcome += $fee->price;
+                }
+            }
+        }
+
+        foreach ($members as $member) {
+           if($member->income - $member->outcome < 0)
+           {
+            $member->isDeptor = true;
+           }else{
+            $member->isDeptor = false;
+           }
+        }
+        return response()->json($members);
+        //return view('payments.index', compact('payments'));
         //
     }
 
@@ -51,7 +103,7 @@ class PaymentsController extends Controller
             return response()->json(['status' => 'FAILED', 'cause' => '1']);
         }
             $payment = payments::create([
-                'member' => $request->input('id'),
+                'member' => $request->input('member'),
                 'price' => $request->input('price'),
             ]);
 

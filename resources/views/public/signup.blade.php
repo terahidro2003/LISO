@@ -9,6 +9,7 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/public.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/app.css') }}" rel="stylesheet">
 
     <title>Sfinx registracija</title>
 </head>
@@ -22,6 +23,21 @@
      <div class="input-container">
         <span class="title">Registracija | Šokių studija SFINX</span>
       </div>
+      @if($operation == 1)
+        <div class="alert alert-success">
+          Jūsų registracija buvo sėkmingai užfiksuota. Mes su Jumis susisieksime artimiausiu metu
+        </div>
+      @endif
+      @if($operation == 2)
+        <div class="alert alert-danger">
+          Atsiprašome, tačiau mūsų serveryje įvyko klaida. Norėdami baigti registraciją, prašome skambinti žemiau nurodytu telefono numeriu. Dėkojame už supratingumą.
+        </div>
+      @endif
+      @if($operation == 3)
+        <div class="alert alert-danger">
+          Deja, tokia registracija su indentiškais duomenimis jau yra.
+        </div>
+      @endif
       <div class="row-class">
           <div class="input-container">
               <label class="label">Vardas</label>
@@ -55,7 +71,9 @@
             <option value="vilnius" @if(old('birthDate') == 'vilnius') checked @endif>Vilnius</option>
           </select>
       </div>
-      <div class="row-class input-container">
+
+      <button type="submit" class="btn btn-primary mt-3 w-100 btn-small" style="background-color: ">Patvirtinti</button>
+      <div class="row-class input-container w-100">
           <span class="action" style="color: black;">
               Šokių pamokos tris kartus per savaitę | Treniruotės trukmė 1 val. | Mėnesinio abonemento kaina - 35 Eur | Daugiau informacijos telefonu: 860559977 arba 864955599
               Rekvizitai:
@@ -64,7 +82,7 @@
               Įmonės kodas: 304632331
               Sąsk. nr. LT497300010153915573
           </span>
-          <button type="submit" class="btn-submit">Patvirtinti</button>
+
       </div>
     </form>
   </div>

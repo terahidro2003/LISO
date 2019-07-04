@@ -27,7 +27,7 @@
           </select>
         </div>
       </div>
-          <div class="card big">
+         {{--  <div class="card big">
                 <div class="card-header flex-inline">
                   <h2 class="vertical-align">Visos rastos grupes</h2>
                 </div>
@@ -61,7 +61,7 @@
                     </div>
                     @endif
                 </div>
-          </div>
+          </div> --}}
 
             <div class="card big">
                 <div class="card-header flex-inline">

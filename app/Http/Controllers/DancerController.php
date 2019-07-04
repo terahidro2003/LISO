@@ -6,7 +6,7 @@ use App\dancer;
 use Illuminate\Support\Facades\Validator;
 use App\Signups;
 use App\payments;
-use App\fees;
+use App\Fees;
 use App\groups;
 use App\RFID;
 use Illuminate\Http\Request;
@@ -239,10 +239,13 @@ class DancerController extends Controller
       $groups = groups::all();
       $dancer = dancer::where('id', $dancerID)->first();
       $dancer->rfid_id = $dancer->rfid->RFID;
+      $payments = payments::where('member', $dancerID)->get();
+      $fees = fees::where('owner', $dancerID)->get();
+      $balance = calculateBalance($payments, $fees);
       // $payments = payments::where('member', $dancerID)->get();
       // $fees = fees::where('owner', $dancerID)->get();
       // $balance = calculateBalance($payments, $fees);
-      return response()->json(['member' => $dancer]);
+      return response()->json(['member' => $dancer, 'payments' => $payments, 'balance' => $balance]);
     }
 
     /**
@@ -265,6 +268,7 @@ class DancerController extends Controller
         $payments = payments::where('member', $dancerID)->get();
         $fees = fees::where('owner', $dancerID)->get();
         $balance = calculateBalance($payments, $fees);
+
         return view('members.edit', compact('dancer', 'groups', 'balance', 'payments', 'errors'));
     }
 
@@ -306,9 +310,6 @@ class DancerController extends Controller
 
       //ATTTENTION!!!!!!!!!!!!!!!!!!!!!
       // VALIDATOR REQUIRED!!!!!!!!!
-
-
-
       $member = dancer::find($req->id);
       $member->firstName = $req->firstName;
       $member->lastName = $req->lastName;

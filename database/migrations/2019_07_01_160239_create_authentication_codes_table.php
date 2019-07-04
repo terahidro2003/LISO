@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateGroupsTable extends Migration
+class CreateAuthenticationCodesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,12 @@ class CreateGroupsTable extends Migration
      */
     public function up()
     {
-        Schema::create('groups', function (Blueprint $table) {
+        Schema::create('authentication_codes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('groupName')->unique();
-            $table->string('description')->nullable();
-            $table->string('leader')->nullable();
-            $table->integer('level')->nullable();
+            $table->Integer('code');
+            $table->Integer('created_by_user');
+            $table->boolean('used')->default(false);
+            $table->string('purpose'); //signup, login, verify user, verify payment, authorize action
             $table->timestamps();
         });
     }
@@ -30,6 +30,6 @@ class CreateGroupsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('groups');
+        Schema::dropIfExists('authentication_codes');
     }
 }

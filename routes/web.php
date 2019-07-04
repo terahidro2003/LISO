@@ -11,8 +11,8 @@
 |
 */
 //
-Route::get('/new', 'SignupsController@create')->name('SignupFormPublic');
-Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
+Route::get('/registracija', 'SignupsController@create')->name('SignupFormPublic');
+Route::post('/registracija', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
 Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy');
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
@@ -26,14 +26,14 @@ Route::get('groups', 'GroupsController@index')->name('groups.index');
 Route::get('groups/{groupID}/edit', 'GroupsController@edit')->name('groups.edit');
 Route::post('groups/{groupID}/update', 'GroupsController@update')->name('groups.update');
 Route::get('groups/{groupID}/show', 'GroupsController@members')->name('groups.show');
-Route::any('payments/new', 'PaymentsController@store')->name('payments.store');
-Route::get('payments', 'PaymentsController@index')->name('payments.index');
+Route::post('payments/new', 'PaymentsController@store')->name('payments.store');
+// Route::get('payments', 'PaymentsController@index')->name('payments.index');
 Route::get('rfid', 'RFIDController@index')->name('rfid.index');
 Route::any('rfid/scan', 'RFIDController@scan')->name('rfid.scan');
 Route::any('rfid/store', 'RFIDController@store')->name('rfid.store');
 Route::get('stats/studio', 'StatisticsController@index')->name('stats.studio');
 Auth::routes();
-Route::any('/search', "HomeController@search")->name('search.form');
+// Route::any('/search', "HomeController@search")->name('search.form');
 Route::get('system/versions', "HomeController@versionInfo")->name('system.updates');
 Route::post('system/versions/new', "HomeController@newVersion")->name('system.updates.new');
 Route::get('/', 'HomeController@index')->name('home');
@@ -44,6 +44,8 @@ Route::get('/api/factory/signups/generate/{amount}', 'HomeController@signupGener
 Route::get('api/stats/balance/{range}', 'StatisticsController@balanceHistory')->name('api.stats.balance');
 Route::get('api/stats/payments/{range}', 'StatisticsController@paymentsHistory')->name('api.stats.payments');
 Route::get('api/stats/economy/{range}', 'StatisticsController@economyHistory')->name('api.stats.economy');
+Route::get('api/stats/economy/income/{range}', 'StatisticsController@income_history')->name('api.stats.economy.income');
+Route::get('api/stats/members/count', 'StatisticsController@membersCount')->name('api.stats.members.count');
 Route::get('api/stats/signups/{range}', 'StatisticsController@signupChangeCount')->name('api.stats.signups.perRange');
 Route::get('api/signups', 'SignupsController@indexAPI')->name('api.signups');
 Route::get('api/signups/{id}', 'SignupsController@show')->name('api.signups.show');
@@ -60,3 +62,10 @@ Route::post('api/members/update', 'DancerController@updateAPI')->name('api.membe
 Route::post('api/members/filter', 'DancerController@filter')->name('api.members.filter');
 Route::get('api/members', 'DancerController@indexAPI')->name('api.members');
 Route::get('api/members/{id}', 'DancerController@showAPI')->name('api.members.show');
+
+Route::get('api/payments', 'PaymentsController@index')->name('api.payments.index');
+Route::get('api/payments/deptors', 'PaymentsController@deptors')->name('api.payments.deptors');
+
+Route::get('api/entries/all', 'RFIDController@entries')->name('api.rfid.entries');
+Route::get('api/users', 'UserSessionsController@usersList')->name('api.users.list');
+Route::get('/api/users/new/link', 'UserSessionsController@generateNewUserUrl');

@@ -29,10 +29,12 @@
         "feather-icons": "^4.22.1",
         "file-loader": "^3.0.1",
         "sweetalert": "^2.1.2",
-        "sweetalert2": "^8.12.1",
+        "sweetalert2": "^8.13.0",
         "url-loader": "^1.1.2",
+        "vue-bootstrap-datetimepicker": "^5.0.1",
         "vue-cookies": "^1.5.13",
         "vue-feather-icon": "^1.2.0",
+        "vue-phone-number-input": "^0.2.0",
         "vue-router": "^3.0.6",
         "yarn": "^1.16.0"
     }
