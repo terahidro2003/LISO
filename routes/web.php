@@ -11,8 +11,17 @@
 |
 */
 //
-Route::get('/registracija', 'SignupsController@create')->name('SignupFormPublic');
-Route::post('/registracija', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
+
+Route::domain('sfinx.lt')->group(function () {
+    Route::get('/', 'SignupsController@create')->name('SignupFormPublic');
+    Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
+});
+
+Route::domain('dsms.sfinx.lt')->group(function () {
+
+
+// Route::get('/registracija', 'SignupsController@create')->name('SignupFormPublic');
+// Route::post('/registracija', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
 Route::get('signups', 'SignupsController@index')->name('viewSignups');
 Route::post('signups/delete', 'SignupsController@destroy')->name('signup.destroy');
 Route::any('dancer/create', 'DancerController@signup2store')->name('api.signup.member.store');
@@ -69,3 +78,4 @@ Route::get('api/payments/deptors', 'PaymentsController@deptors')->name('api.paym
 Route::get('api/entries/all', 'RFIDController@entries')->name('api.rfid.entries');
 Route::get('api/users', 'UserSessionsController@usersList')->name('api.users.list');
 Route::get('/api/users/new/link', 'UserSessionsController@generateNewUserUrl');
+});
