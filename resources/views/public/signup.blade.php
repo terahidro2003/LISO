@@ -18,10 +18,10 @@
 <div class="signup-background"></div>
 <div class="container uk-position-center">
   <div class="sfinx-signup">
-    <form class="sfinx-signup-form" method="POST" action=" {{action('SignupsController@store')}} ">
+    <form class="sfinx-signup-form" method="POST" action="./">
      @csrf
      <div class="input-container">
-        <span class="title">Registracija | Šokių studija SFINX</span>
+        <span class="title">Šokių studija SFINX | Registracija</span>
       </div>
       @if($operation == 1)
         <div class="alert alert-success">

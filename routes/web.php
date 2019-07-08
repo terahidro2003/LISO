@@ -14,7 +14,9 @@
 
 Route::domain('sfinx.lt')->group(function () {
     Route::get('/', 'SignupsController@create')->name('SignupFormPublic');
-    Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
+    // Route::post('/', ['as' => '/', 'uses' => 'SignupsController@store'])->name('SignupFormPublicPublish');
+    Route::post('/', 'SignupsController@store')->name('SignupFormPublicPublish');
+
 });
 
 Route::domain('dsms.sfinx.lt')->group(function () {
