@@ -3,3 +3,4 @@
   SCHEDULED: <2019-06-13 Thu>
 * [DONE] [#A] Make confirm signup request vue component by the UI based in ./js/components/members.add.vue -> load signup data and let user complete the form
 * [DONE] [#B] Make delete signup request vue modal
+--DEPL=>1.0
