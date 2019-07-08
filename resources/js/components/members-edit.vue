@@ -60,8 +60,8 @@
                             <div class="form-group col-md-6">
                               <label for="inputBname">Miestas</label>
                               <select class="form-control form-control-select" v-model="city" v-bind:class="{form_control_danger: city_required}">
-                                <option value="vilnius">Vilnius</option>
-                                <option value="Klaipeda">Klaipeda</option>
+                                <option value="Vilnius">Vilnius</option>
+                                <option value="Klaipėda">Klaipėda</option>
                               </select>
                               <label class="tag tag-red" v-if="city == null || city == ''">Šis laukelis privalomas</label>
                             </div>
@@ -246,7 +246,6 @@
     },
     mounted() {
       axios.get('/api/members/'+this.MemberID).then(response => {
-        console.log(response.data);
         this.API_results = response.data.member;
         //this.balance = this.API_results.balance;
         this.fullName = this.API_results.firstName + " " + this.API_results.lastName;
@@ -262,7 +261,6 @@
         this.fee = this.API_results.fee;
         this.balance = response.data.balance + " eurai";
         this.rfid_id = this.API_results.rfid_id;
-        console.log(this.API_results);
       });
     },
     methods: {
@@ -304,7 +302,6 @@
             }
 
             if(response.data.cause == 3){this.alreadyExcists = true}
-            // console.log(response.data);
           }
         });
       },

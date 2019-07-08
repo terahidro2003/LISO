@@ -53,8 +53,8 @@
                           <div class="form-group col-md-6">
                             <label for="inputBname">Miestas</label>
                             <select class="form-control form-control-select" v-model="city" v-bind:class="{form_control_danger: city_required}">
-                              <option value="klaipeda" selected>Klaipeda</option>
-                              <option value="vilnius">Vilnius</option>
+                              <option value="Klaipėda" selected>Klaipėda</option>
+                              <option value="Vilnius">Vilnius</option>
                             </select>
                             <label class="text-danger" v-if="city == null">Šis laukelis privalomas</label>
                           </div>
@@ -196,7 +196,6 @@
           if (response.data.status == 'OK')
           {
             if(this.$route.name == "add") {
-              alert("YES");
               this.$router.push("/members");
               return;
             }
@@ -217,7 +216,6 @@
             }
 
             if(response.data.cause == 3){this.alreadyExcists = true}
-            console.log(response.data);
           }
         });
       }

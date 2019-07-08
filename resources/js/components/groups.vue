@@ -63,7 +63,6 @@
       },
     },
     mounted() {
-      console.log('mounted');
 
       axios.get('/api/groups').then(response => {
         this.API_results = response.data;

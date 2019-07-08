@@ -71,12 +71,11 @@
       }
     },
     methods: {
-      //console.log('mounted');
 
       groupMake: function(){ axios.post('/api/groups/create', { groupName:
       this.name, leader: this.leader, description: this.description, level: this.level,
-    }).then(response => { if (response.data == 'OK') { console.log('SUCCESS'); this.$router.push('/groups');
-      }else{ console.log(response.data); } }); } } } </script>
+    }).then(response => { if (response.data == 'OK') {this.$router.push('/groups');
+      }else{ } }); } } } </script>
 
 <style>
 </style>

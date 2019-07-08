@@ -87,7 +87,6 @@
   		}
   	},
     mounted() {
-      console.log('mounted');
 
       axios.get('/api/payments').then(response => {
           this.API_results = response.data;

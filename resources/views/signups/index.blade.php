@@ -17,7 +17,6 @@
         confirmButtonText: 'Patvirtinti',
         showLoaderOnConfirm: true,
         preConfirm: (value) => {
-          console.log("Its working");
           $.ajax({
               url: '/dancer/create',
               type: 'POST',
@@ -56,7 +55,6 @@
                     });
                   }
 
-                  console.log('FAILED');
                 }else{
                   Swal.fire({
                     type: 'success',
@@ -78,7 +76,6 @@
         confirmButtonText: 'Patvirtinti',
         showLoaderOnConfirm: true,
         preConfirm: (value) => {
-          console.log("Its working");
           $.ajax({
               url: '/signups/delete',
               type: 'POST',
@@ -116,7 +113,6 @@
                     });
                   }
 
-                  console.log('FAILED');
                 }else{
                   Swal.fire({
                     type: 'success',

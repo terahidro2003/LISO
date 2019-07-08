@@ -122,16 +122,14 @@
         this.level = response.data.group.level;
         this.leader = response.data.group.leader;
         this.description = response.data.group.description;
-        // console.log(response.data.members);
       });
     },
     methods: {
-      //console.log('mounted');
 
       groupMake: function(){ axios.post('/api/groups/update/' + this.$route.params.id, { groupName:
       this.name, leader: this.leader, description: this.description, level: this.level,
-    }).then(response => { if (response.data.status == 'OK') { console.log('SUCCESS'); this.$router.push('/groups');
-      }else{ console.log(response.data); } }); } } } </script>
+    }).then(response => { if (response.data.status == 'OK') {  this.$router.push('/groups');
+      }else{} }); } } } </script>
 
 <style>
 </style>

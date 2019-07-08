@@ -344,8 +344,11 @@ class DancerController extends Controller
     public function destroy(Request $req)
     {
         try{
-            dancer::where('id', $req->id)->delete();
+            $dancer = dancer::where('id', $req->id)->first();
+            $dancer->rfid->delete();
+            $dancer->delete();
         }catch(exception $e){
+          return $dancer;
             return response(['status' => 'FAILED', 'error' => $e]);
         }
         return response(['status' => 'OK']);

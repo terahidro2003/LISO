@@ -81,7 +81,6 @@
           data: {_token: CSRF_TOKEN, message:$("input[name=searchQ]").val()},
           dataType: 'JSON',
           success: function(data) {
-            console.log(data);
             contentBox.innerHTML = data.message;
             if(data.status == "error") {
                   $("input[name=searchQ]").popover('hide');
@@ -138,7 +137,6 @@
     //                 });
     //               }
     //
-    //               console.log('FAILED');
     //             }else{
     //               Swal.fire({
     //                 type: 'success',

@@ -25,7 +25,7 @@
              <div class="col">
               <label class="label">Miestas</label>
               <select class="form-control white" name="group" @change="filterTable('city', $event)">
-                  <option value="1">Klaipeda</option>
+                  <option value="1">Klaipėda</option>
                   <option value="2">Vilnius</option>
               </select>
             </div>
@@ -123,7 +123,6 @@
       }
   	},
     mounted() {
-      console.log('mounted');
 
       axios.get('/api/signups').then(response => {
       	this.API_results = response.data

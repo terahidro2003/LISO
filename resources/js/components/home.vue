@@ -103,7 +103,6 @@
   		}
   	},
     mounted() {
-      console.log('mounted');
 
       axios.get('api/stats/signups/1').then(response => {
         this.signupsCount = response.data.count;

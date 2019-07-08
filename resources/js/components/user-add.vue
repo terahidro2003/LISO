@@ -78,7 +78,6 @@
             }
 
             if(response.data.cause == 3){this.alreadyExcists = true}
-            console.log(response.data);
           }
         });
       }

@@ -32,6 +32,13 @@ Vue.use(datePicker);
 
 import axios from 'axios';
 
+/**
+ * Uncomment below when compiling to production
+ */
+// Vue.config.devtools = false;
+// Vue.config.debug = false;
+// Vue.config.silent = true;
+
 
 
 // 1. Define route components.
@@ -169,12 +176,10 @@ const app = new Vue({
             RFID: value
           }).then(response => {
             if(response.data.status == "OK") {
-              // console.log(response.data.owner.id);
               this.$router.push({name: 'edit', params: {id: response.data.owner.id} });
             }
             else {
               swal("Atsiprašome", "Sistemoje įvyko klaida. Norėdami užtikrinti jos pašalinimą, prašome apie ją pranešti techninio aptarnavimo personalui. Dėkojame už Jūsų supratingumą", "error");
-              // console.log(response.data.status);
             }
           });
         }
@@ -202,7 +207,6 @@ const app = new Vue({
           }
           else {
             swal("Atliekant procedura ivyko serverio klaida. Atsiprasome uz laikinus nesklandumus!","" ,"error");
-            console.log(response.data);
           }
         });
       });

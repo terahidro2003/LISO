@@ -66,7 +66,6 @@
     },
     mounted() {
       axios.get('/api/users').then(response => {
-        console.log(response.data);
         this.API_results = response.data;
       });
 

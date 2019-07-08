@@ -8,7 +8,6 @@
         confirmButtonText: 'Patvirtinti',
         showLoaderOnConfirm: true,
         preConfirm: (value) => {
-          console.log("Its working");
           $.ajax({
               url: '/members/${ID}/delete',
               type: 'GET',
@@ -21,7 +20,6 @@
                       footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
                   });
 
-                  console.log('FAILED');
                 }else if(data.status == 'OK'){
                   Swal.fire({
                     type: 'success',
@@ -44,7 +42,6 @@
         confirmButtonText: 'Patvirtinti',
         showLoaderOnConfirm: true,
         preConfirm: (value) => {
-          console.log("Its working");
           $.ajax({
               url: '/rfid/store',
               type: 'POST',
@@ -56,7 +53,6 @@
                 Owner: ID,
               },
               success: function(data) {
-                console.log(value);
                 if (data.status != 'OK'){
                     Swal.fire({
                       type: 'error',
@@ -65,7 +61,6 @@
                       footer: '<a href>Kodel yra susiduriama su sia problema?</a>'
                   });
 
-                  console.log('FAILED');
                 }else if(data.status == 'OK'){
                   Swal.fire({
                     type: 'success',
