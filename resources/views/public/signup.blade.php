@@ -18,7 +18,7 @@
 <div class="signup-background"></div>
 <div class="container uk-position-center">
   <div class="sfinx-signup">
-    <form class="sfinx-signup-form" method="POST" action="./">
+    <form class="sfinx-signup-form" method="POST" action="/">
      @csrf
      <div class="input-container">
         <span class="title">Šokių studija SFINX | Registracija</span>
@@ -67,8 +67,8 @@
       <div class="input-container">
           <label class="label">Miestas</label>
           <select name="city" class="form-control">
-            <option value="klaipeda" @if(old('birthDate') == 'klaipeda') checked @endif>Klaipėda</option>
-            <option value="vilnius" @if(old('birthDate') == 'vilnius') checked @endif>Vilnius</option>
+            <option value="Klaipėda" @if(old('birthDate') == 'klaipeda') checked @endif>Klaipėda</option>
+            <option value="Vilnius" @if(old('birthDate') == 'vilnius') checked @endif>Vilnius</option>
           </select>
       </div>
 
